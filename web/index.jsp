@@ -8,27 +8,31 @@
     </head>
     <body>
         <div>TODO write content</div>
-        <form action="/user" method="post">
-            <label> First name </label>
-            <input type="text" id="frname" name="User first name"/>
+        <form action="./user" method="post">
+
+            <label> Nom </label>
+            <input type="text" id="name" name="name"/>
             <br>
-            <label> Familly name </label>
-            <input type="text" id="faname" name="User familly name"/>
-            <br>
+
             <label> Email </label>
-            <input type="email" id="email" name="User email"/>
+            <input type="text" id="email" name="email"/>
             <br>
 
-            <label> Password </label>
-            <input type="password" id="psw" name="User password"/>
-            <br>
-            <label> male </label>
-            <input type="radio" id="male" name="gender" value="male" checked/>
-            <br>
-            <label> female </label>
-            <input type="radio" id="female" name="gender" value="female"/>
+            <label> Mot de passe </label>
+            <input type="password" id="password" name="password"/>
             <br>
 
+            <label> Société </label>
+            <input type="text" id="company" name="company"/>
+            <br>
+
+            <label> Téléphone </label>
+            <input type="text" id="phone" name="phone"/>
+            <br>
+
+            <label> Admin </label>
+            <input type="checkbox" id="admin" name="admin"/>
+            <br>
 
             <input type="submit" value="Submit">
         </form>

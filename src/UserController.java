@@ -10,7 +10,7 @@ import java.util.Hashtable;
 import Model.User;
 
 @WebServlet(
-        name="UserServlet",
+        name="UserServlet"
 )
 public class UserController extends HttpServlet {
     private static Hashtable<Integer, User> usersTable = new Hashtable<Integer, User>();
@@ -20,13 +20,13 @@ public class UserController extends HttpServlet {
         usersTable.put(usersTable.size(), new User(
             1,
             request.getParameter("email"),
-            request.getParameter("mot_de_passe"),
-            request.getParameter("nom"),
-            request.getParameter("societe"),
-            request.getParameter("telephone"),
-            request.getParameter("date_creation"),
-            Boolean.valueOf(request.getParameter("actif")),
-            Boolean.valueOf(request.getParameter("est_admin"))
+            request.getParameter("password"),
+            request.getParameter("name"),
+            request.getParameter("company"),
+            request.getParameter("phone"),
+            "22-03-2019",
+            true,
+            Boolean.valueOf(request.getParameter("admin"))
         ));
 
         response.setContentType("text/html; charset=UTF-8");
