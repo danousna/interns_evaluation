@@ -10,25 +10,28 @@ import java.util.Hashtable;
 import Model.User;
 
 @WebServlet(
-        name="UserController",
-        urlPatterns = "/"
+        name="UserServlet",
+        urlPatterns = ""
 )
 public class UserController extends HttpServlet {
     private static Hashtable<Integer, User> usersTable = new Hashtable<Integer, User>();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
-        dispatcher.forward(request, response);
         usersTable.put(usersTable.size(), new User(
-                request.getParameter("nom"),
-                request.getParameter("prenom"),
-                request.getParameter("email"),
-                1,
-                request.getParameter("sexe"),
-                request.getParameter("mot_de_passe")
+            1,
+            request.getParameter("email"),
+            request.getParameter("mot_de_passe"),
+            request.getParameter("nom"),
+            request.getParameter("societe"),
+            request.getParameter("telephone"),
+            request.getParameter("date_creation"),
+            Boolean.valueOf(request.getParameter("actif")),
+            Boolean.valueOf(request.getParameter("est_admin"))
         ));
+
         response.setContentType("text/html; charset=UTF-8");
+
         try (PrintWriter out = response.getWriter()) {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -45,7 +48,8 @@ public class UserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
+        dispatcher.forward(request, response);
     }
 
     @Override
