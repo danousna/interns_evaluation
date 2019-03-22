@@ -11,7 +11,6 @@ import Model.User;
 
 @WebServlet(
         name="UserServlet",
-        urlPatterns = ""
 )
 public class UserController extends HttpServlet {
     private static Hashtable<Integer, User> usersTable = new Hashtable<Integer, User>();
