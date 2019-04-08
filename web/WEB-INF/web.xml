@@ -6,7 +6,7 @@
            version="4.0">
     <servlet>
         <servlet-name>UserServlet</servlet-name>
-        <servlet-class>UserController</servlet-class>
+        <servlet-class>controllers.User</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserServlet</servlet-name>

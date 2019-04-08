@@ -1,5 +1,5 @@
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
+package controllers;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -7,17 +7,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Hashtable;
-import Model.User;
+import models.User;
 
 @WebServlet(
-        name="UserServlet",
+        name="UserServlet"
 )
-public class UserController extends HttpServlet {
-    private static Hashtable<Integer, User> usersTable = new Hashtable<Integer, User>();
+public class User extends HttpServlet {
+    private static Hashtable<Integer, models.User> usersTable = new Hashtable<Integer, models.User>();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        usersTable.put(usersTable.size(), new User(
+            throws IOException {
+        usersTable.put(usersTable.size(), new models.User(
             1,
             request.getParameter("email"),
             request.getParameter("mot_de_passe"),
@@ -45,15 +45,8 @@ public class UserController extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
-        dispatcher.forward(request, response);
-    }
-
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
         processRequest(request, response);
     }
 

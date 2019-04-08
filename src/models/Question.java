@@ -1,4 +1,4 @@
-package Model;
+package models;
 
 public class Question {
     private int id;

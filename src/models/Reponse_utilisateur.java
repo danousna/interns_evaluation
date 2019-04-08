@@ -1,4 +1,4 @@
-package Model;
+package models;
 
 public class Reponse_utilisateur {
     private int id_utilisateur;
