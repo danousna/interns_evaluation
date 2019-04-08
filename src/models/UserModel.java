@@ -1,8 +1,6 @@
 package models;
 
-import java.util.ArrayList;
-
-public class User {
+public class UserModel {
     private int id;
     private String email;
     private String mot_de_passe;
@@ -13,7 +11,7 @@ public class User {
     private boolean actif;
     private boolean est_admin;
 
-    public User(int id, String email, String mot_de_passe, String nom, String societe, String telephone, String date_creation, boolean actif, boolean est_admin) {
+    public UserModel(int id, String email, String mot_de_passe, String nom, String societe, String telephone, String date_creation, boolean actif, boolean est_admin) {
         this.id = id;
         this.email = email;
         this.mot_de_passe = mot_de_passe;
@@ -99,7 +97,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "UserModel{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", mot_de_passe='" + mot_de_passe + '\'' +

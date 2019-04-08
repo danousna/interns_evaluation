@@ -7,17 +7,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Hashtable;
-import models.User;
 
 @WebServlet(
-        name="UserServlet"
+        name = "UserServlet",
+        urlPatterns = "/user"
 )
-public class User extends HttpServlet {
-    private static Hashtable<Integer, models.User> usersTable = new Hashtable<Integer, models.User>();
+public class UserController extends HttpServlet {
+    private static Hashtable<Integer, models.UserModel> usersTable = new Hashtable<Integer, models.UserModel>();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
-        usersTable.put(usersTable.size(), new models.User(
+        usersTable.put(usersTable.size(), new models.UserModel(
             1,
             request.getParameter("email"),
             request.getParameter("mot_de_passe"),
