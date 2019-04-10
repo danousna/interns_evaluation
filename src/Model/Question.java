@@ -4,7 +4,7 @@ public class Question {
     private int id;
     private String enonce;
     private boolean actif;
-    private  boolean ordre;
+    private boolean ordre;
     private int id_questionnaire;
 
     public Question(int id, String enonce, boolean actif, boolean ordre, int id_questionnaire) {
