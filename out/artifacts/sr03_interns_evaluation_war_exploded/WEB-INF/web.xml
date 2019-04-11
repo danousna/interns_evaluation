@@ -4,6 +4,8 @@
            xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 		  http://java.sun.com/xml/ns/javaee/web-app_4_0.xsd"
            version="4.0">
+
+    <!-- UserServlet-->
     <servlet>
         <servlet-name>UserServlet</servlet-name>
         <servlet-class>UserController</servlet-class>
@@ -11,5 +13,45 @@
     <servlet-mapping>
         <servlet-name>UserServlet</servlet-name>
         <url-pattern>/user</url-pattern>
+    </servlet-mapping>
+
+    <!-- QuestionServlet-->
+    <servlet>
+        <servlet-name>QuestionServlet</servlet-name>
+        <servlet-class>QuestionController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>QuestionServlet</servlet-name>
+        <url-pattern>/question</url-pattern>
+    </servlet-mapping>
+
+    <!-- SujetServlet-->
+    <servlet>
+        <servlet-name>SujetServlet</servlet-name>
+        <servlet-class>SujetController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SujetServlet</servlet-name>
+        <url-pattern>/sujet</url-pattern>
+    </servlet-mapping>
+
+    <!-- ReponseServlet-->
+    <servlet>
+        <servlet-name>ReponseServlet</servlet-name>
+        <servlet-class>ReponseController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ReponseServlet</servlet-name>
+        <url-pattern>/reponse</url-pattern>
+    </servlet-mapping>
+
+    <!-- QuestionnaireServlet-->
+    <servlet>
+        <servlet-name>QuestionnaireServlet</servlet-name>
+        <servlet-class>QuestionnaireController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>QuestionnaireServlet</servlet-name>
+        <url-pattern>/questionnaire</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -2,39 +2,21 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
-        <title>Créer un utilisateur</title>
+        <title>Accueil</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>TODO write content</div>
-        <form action="./user" method="post">
-
-            <label> Nom </label>
-            <input type="text" id="name" name="name"/>
-            <br>
-
-            <label> Email </label>
-            <input type="text" id="email" name="email"/>
-            <br>
-
-            <label> Mot de passe </label>
-            <input type="password" id="password" name="password"/>
-            <br>
-
-            <label> Société </label>
-            <input type="text" id="company" name="company"/>
-            <br>
-
-            <label> Téléphone </label>
-            <input type="text" id="phone" name="phone"/>
-            <br>
-
-            <label> Admin </label>
-            <input type="checkbox" id="admin" name="admin"/>
-            <br>
-
-            <input type="submit" value="Submit">
-        </form>
+        <h1>Accueil du site</h1>
+        <h3>Que voulez-vous faire ?</h3>
+        <div>
+            <ul>
+                <li><a href="./user.jsp">Ajouter un utilisateur</a></li>
+                <li><a href="./sujet.jsp">Ajouter un sujet</a></li>
+                <li><a href="./questionnaire.jsp">Ajouter un questionnaire</a></li>
+                <li><a href="./question.jsp">Ajouter une question</a></li>
+                <li><a href="./reponse.jsp">Ajouter une réponse</a></li>
+            </ul>
+        </div>
     </body>
 </html>
