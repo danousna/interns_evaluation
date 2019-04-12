@@ -1,3 +1,5 @@
+package src.controllers;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,26 +9,23 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Hashtable;
-import Model.Sujet;
 
 @WebServlet(
         name="SujetServlet"
 )
 public class SujetController extends HttpServlet {
-    private static Hashtable<Integer, Sujet> reponseTable = new Hashtable<Integer, Sujet>();
+    private static Hashtable<Integer, models.Sujet> sujetTable = new Hashtable<Integer, models.Sujet>();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        sujetTable.put(sujetTable.size(), new Reponse(
+        sujetTable.put(sujetTable.size(), new models.Sujet(
                 1,
-                request.getParameter("nom"), // nom
-                true, // actif
-                1 // id_sujet
+                request.getParameter("nom") // nom
         ));
 
         response.setContentType("text/html; charset=UTF-8");
 
-        try (PrintWriter out = sujet.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");

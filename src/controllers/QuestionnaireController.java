@@ -1,3 +1,5 @@
+package src.controllers;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,17 +9,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Hashtable;
-import Model.Questionnaire;
 
 @WebServlet(
         name="QuestionnaireServlet"
 )
 public class QuestionnaireController extends HttpServlet {
-    private static Hashtable<Integer, Questionnaire> questionnaireTable = new Hashtable<Integer, Questionnaire>();
+    private static Hashtable<Integer, models.Questionnaire> questionnaireTable = new Hashtable<Integer, models.Questionnaire>();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        questionnaireTable.put(questionnaireTable.size(), new Questionnaire(
+        questionnaireTable.put(questionnaireTable.size(), new models.Questionnaire(
                 1,
                 request.getParameter("nom"), // nom
                 true, // actif

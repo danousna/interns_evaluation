@@ -1,3 +1,5 @@
+package src.controllers;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,17 +9,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Hashtable;
-import Model.Question;
 
 @WebServlet(
         name="QuestionServlet"
 )
 public class QuestionController extends HttpServlet {
-    private static Hashtable<Integer, Question> questionTable = new Hashtable<Integer, Question>();
+    private static Hashtable<Integer, models.Question> questionTable = new Hashtable<Integer, models.Question>();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        questionTable.put(questionTable.size(), new Question(
+        questionTable.put(questionTable.size(), new models.Question(
                 1,
                 request.getParameter("enonce"), // enonce
                 true, // actif

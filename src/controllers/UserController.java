@@ -1,4 +1,4 @@
-package controllers;
+package src.controllers;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,7 +9,7 @@ import java.io.PrintWriter;
 import java.util.Hashtable;
 
 @WebServlet(
-        name="UserServlet",
+        name="UserServlet"
 )
 public class UserController extends HttpServlet {
     private static Hashtable<Integer, models.UserModel> usersTable = new Hashtable<Integer, models.UserModel>();
