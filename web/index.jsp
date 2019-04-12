@@ -2,35 +2,21 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
-        <title>Créer un utilisateur</title>
+        <title>Accueil</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>TODO write content</div>
-        <form action="/user" method="post">
-            <label> First name </label>
-            <input type="text" id="frname" name="User first name"/>
-            <br>
-            <label> Familly name </label>
-            <input type="text" id="faname" name="User familly name"/>
-            <br>
-            <label> Email </label>
-            <input type="email" id="email" name="User email"/>
-            <br>
-
-            <label> Password </label>
-            <input type="password" id="psw" name="User password"/>
-            <br>
-            <label> male </label>
-            <input type="radio" id="male" name="gender" value="male" checked/>
-            <br>
-            <label> female </label>
-            <input type="radio" id="female" name="gender" value="female"/>
-            <br>
-
-
-            <input type="submit" value="Submit">
-        </form>
+        <h1>Accueil du site</h1>
+        <h3>Que voulez-vous faire ?</h3>
+        <div>
+            <ul>
+                <li><a href="./user.jsp">Ajouter un utilisateur</a></li>
+                <li><a href="./sujet.jsp">Ajouter un sujet</a></li>
+                <li><a href="./questionnaire.jsp">Ajouter un questionnaire</a></li>
+                <li><a href="./question.jsp">Ajouter une question</a></li>
+                <li><a href="./reponse.jsp">Ajouter une réponse</a></li>
+            </ul>
+        </div>
     </body>
 </html>
