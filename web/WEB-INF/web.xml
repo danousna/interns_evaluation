@@ -7,7 +7,7 @@
     <!-- UserServlet-->
     <servlet>
         <servlet-name>UserServlet</servlet-name>
-        <servlet-class>UserController</servlet-class>
+        <servlet-class>controllers.UserController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserServlet</servlet-name>

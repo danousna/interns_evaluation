@@ -11,7 +11,7 @@
     <title>Créer un sujet</title>
 </head>
 <body>
-<form action="./sujet.jsp" method="post">
+<form action="./sujet" method="post">
 
     <label for="nom"> Nom du sujet :</label>
     <input type="text" id="nom" name="nom"/>

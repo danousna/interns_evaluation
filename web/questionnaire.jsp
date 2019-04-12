@@ -11,7 +11,7 @@
     <title>Créer un questionnaire</title>
 </head>
 <body>
-<form action="./question" method="post">
+<form action="./questionnaire" method="post">
 
     <label for="sujet"> De quel questionnaire ? </label>
     <select id="sujet" name="sujet">
