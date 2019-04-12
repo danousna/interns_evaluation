@@ -11,6 +11,18 @@
     <title>Créer un questionnaire</title>
 </head>
 <body>
+<form action="./question" method="post">
 
+    <label for="sujet"> De quel questionnaire ? </label>
+    <select id="sujet" name="sujet">
+    </select>
+    <br />
+
+    <label for="nom"> Nom du questionnaire :</label>
+    <input type="text" id="nom" name="nom"/>
+    <br />
+
+    <input type="submit" value="Submit">
+</form>
 </body>
 </html>
