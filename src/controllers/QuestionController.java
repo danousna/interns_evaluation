@@ -11,7 +11,8 @@ import java.io.PrintWriter;
 import java.util.Hashtable;
 
 @WebServlet(
-        name="QuestionServlet"
+        name="QuestionServlet",
+        urlPatterns = "/question"
 )
 public class QuestionController extends HttpServlet {
     private static Hashtable<Integer, models.Question> questionTable = new Hashtable<Integer, models.Question>();

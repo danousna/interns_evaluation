@@ -6,10 +6,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Hashtable;
 
 @WebServlet(
-        name="UserServlet"
+        name="UserServlet",
+        urlPatterns = "/user"
 )
 public class UserController extends HttpServlet {
     private static Hashtable<Integer, models.UserModel> usersTable = new Hashtable<Integer, models.UserModel>();
@@ -23,9 +26,9 @@ public class UserController extends HttpServlet {
             request.getParameter("name"),
             request.getParameter("company"),
             request.getParameter("phone"),
-            "22-03-2019",
+            new SimpleDateFormat("dd-MM-yyyy").format(new Date()),
             true,
-            Boolean.valueOf(request.getParameter("admin"))
+            request.getParameter("admin") != null
         ));
 
         response.setContentType("text/html; charset=UTF-8");
@@ -37,7 +40,14 @@ public class UserController extends HttpServlet {
             out.println("<title>Controller:</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1> Utilisateur crée " + usersTable.get(usersTable.size()-1).toString() + "</h1>");
+            out.println("<h1> L'Utilisateur suivant a été créé</h1>");
+            out.println("<div>");
+            out.println("<p> Nom : " + usersTable.get(0).getDate_creation() + "</p><br />");
+            out.println("<p> Email : " + usersTable.get(0).getEmail() + "</p><br />");
+            out.println("<p> Société : " + usersTable.get(0).getSociete() + "</p><br />");
+            out.println("<p> Téléphone : " + usersTable.get(0).getTelephone() + "</p><br />");
+            out.println(usersTable.get(0).isEst_admin()?"Administrateur":"Utilisateur");
+            out.println("</div>");
             out.println("</body>");
             out.println("</html>");
         }

@@ -27,7 +27,7 @@ CREATE TABLE question (
     id int PRIMARY KEY NOT NULL,
     enonce varchar(255),
     actif bit,
-    ordre bit,
+    ordre int,
     id_questionnaire int,
     FOREIGN KEY (id_questionnaire) REFERENCES questionnaire(id)
 );

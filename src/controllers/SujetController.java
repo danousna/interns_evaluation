@@ -11,7 +11,8 @@ import java.io.PrintWriter;
 import java.util.Hashtable;
 
 @WebServlet(
-        name="SujetServlet"
+        name="SujetServlet",
+        urlPatterns = "/sujet"
 )
 public class SujetController extends HttpServlet {
     private static Hashtable<Integer, models.Sujet> sujetTable = new Hashtable<Integer, models.Sujet>();
@@ -32,7 +33,10 @@ public class SujetController extends HttpServlet {
             out.println("<title>Controller:</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1> Question créée " + sujetTable.get(sujetTable.size()-1).toString() + "</h1>");
+            out.println("<h1>Le sujet suivant a été créé</h1>");
+            out.println("<div>");
+            out.println("<p> Nom : " + sujetTable.get(0).getNom() + "</p><br />");
+            out.println("</div>");
             out.println("</body>");
             out.println("</html>");
         }

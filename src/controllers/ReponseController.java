@@ -11,18 +11,19 @@ import java.io.PrintWriter;
 import java.util.Hashtable;
 
 @WebServlet(
-        name="ReponseServlet"
+        name="ReponseServlet",
+        urlPatterns = "/reponse"
 )
 public class ReponseController extends HttpServlet {
     private static Hashtable<Integer, models.Reponse> reponseTable = new Hashtable<Integer, models.Reponse>();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        reponseTable.put(reponseTable.size(), new models.Reponse(
+    reponseTable.put(reponseTable.size(), new models.Reponse(
                 1,
                 request.getParameter("valeur"), // valeur
                 true, // actif
-                false, // id_sujet
+                request.getParameter("correct") != null, // id_sujet
                 true,
                 1
         ));
@@ -36,7 +37,10 @@ public class ReponseController extends HttpServlet {
             out.println("<title>Controller:</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1> Question créée " + reponseTable.get(reponseTable.size()-1).toString() + "</h1>");
+            out.println("<h1> La réponse suivante a été créée </h1>");
+            out.println("<div>");
+            out.println("<p> Réponse : " + reponseTable.get(0).getValeur() + " (" + reponseTable.get(0).isCorrect()?"correct":"incorrect" + ")</p><br />");
+            out.println("</div>");
             out.println("</body>");
             out.println("</html>");
         }
