@@ -30,12 +30,13 @@ public class SujetController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Controller:</title>");
+            out.println("<title>Ajouter un sujet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Le sujet suivant a été créé</h1>");
             out.println("<div>");
-            out.println("<p> Nom : " + sujetTable.get(0).getNom() + "</p><br />");
+            out.println("<p> Nom : " + sujetTable.get(sujetTable.size() - 1).getNom() + "</p><br />");
+            out.println("<a href=\"./\" name=\"accueil\">Accueil</a>");
             out.println("</div>");
             out.println("</body>");
             out.println("</html>");

@@ -32,10 +32,14 @@ public class QuestionnaireController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Controller:</title>");
+            out.println("<title>Ajouter une questionnaire</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1> Questionnaire créé " + questionnaireTable.get(questionnaireTable.size()-1).toString() + "</h1>");
+            out.println("<h1> Le questionnaire suivant a été créé </h1>");
+            out.println("<div>");
+            out.println("<p> Nom : " + questionnaireTable.get(questionnaireTable.size() - 1).getNom() + "</p><br />");
+            out.println("<a href=\"./\" name=\"accueil\">Accueil</a>");
+            out.println("</div>");
             out.println("</body>");
             out.println("</html>");
         }
