@@ -16,3 +16,4 @@ public class DAOConfigurationException {
         super(ex);
     }
 }
+
