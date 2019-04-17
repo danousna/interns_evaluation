@@ -33,10 +33,14 @@ public class QuestionController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Controller:</title>");
+            out.println("<title>Ajouter une question</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1> Question créée " + questionTable.get(questionTable.size()-1).toString() + "</h1>");
+            out.println("<h1> La question suivante a été créé  </h1>");
+            out.println("<div>");
+            out.println("<p> Énoncé : " + questionTable.get(questionTable.size() - 1).getEnonce() + "</p><br />");
+            out.println("<a href=\"./\" name=\"accueil\">Accueil</a>");
+            out.println("</div>");
             out.println("</body>");
             out.println("</html>");
         }

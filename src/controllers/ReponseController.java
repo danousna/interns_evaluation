@@ -19,11 +19,11 @@ public class ReponseController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    reponseTable.put(reponseTable.size(), new models.Reponse(
+        reponseTable.put(reponseTable.size(), new models.Reponse(
                 1,
-                request.getParameter("valeur"), // valeur
+                request.getParameter("reponse"),
                 true, // actif
-                request.getParameter("correct") != null, // id_sujet
+                request.getParameter("correct") != null,
                 true,
                 1
         ));
@@ -34,12 +34,13 @@ public class ReponseController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Controller:</title>");
+            out.println("<title>Ajouter une réponse à une question</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1> La réponse suivante a été créée </h1>");
             out.println("<div>");
-            out.println("<p> Réponse : " + reponseTable.get(0).getValeur() + " (" + reponseTable.get(0).isCorrect()?"correct":"incorrect" + ")</p><br />");
+            out.println("<p> Réponse : " + reponseTable.get(reponseTable.size() - 1).getValeur() + " (" + (reponseTable.get(reponseTable.size() - 1).isCorrect()?"correct":"incorrect") + ")</p><br />");
+            out.println("<a href=\"./\" name=\"accueil\">Accueil</a>");
             out.println("</div>");
             out.println("</body>");
             out.println("</html>");

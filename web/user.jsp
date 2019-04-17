@@ -41,5 +41,6 @@
 
     <input type="submit" value="Submit">
 </form>
+<a href="./" name="accueil">Accueil</a>
 </body>
 </html>
