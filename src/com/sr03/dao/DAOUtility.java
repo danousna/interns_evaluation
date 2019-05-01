@@ -1,4 +1,4 @@
-package src.dao;
+package com.sr03.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -53,13 +53,13 @@ public class DAOUtility {
     }
 
     /* Fermetures silencieuses du statement et de la connexion */
-    public static void slientClosures(Statement statement, Connection conn) {
+    public static void silentClosures(Statement statement, Connection conn) {
         silentClose(statement);
         silentClose(conn);
     }
 
     /* Fermetures silencieuses du resultset, du statement et de la connexion */
-    public static void slientClosures(ResultSet resultSet, Statement statement, Connection conn) {
+    public static void silentClosures(ResultSet resultSet, Statement statement, Connection conn) {
         silentClose(resultSet);
         silentClose(statement);
         silentClose(conn);

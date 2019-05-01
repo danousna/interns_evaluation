@@ -1,4 +1,6 @@
-package src.controllers;
+package src.com.sr03.servlets;
+
+import src.com.sr03.beans.Questionnaire;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,20 +13,19 @@ import java.io.PrintWriter;
 import java.util.Hashtable;
 
 @WebServlet(
-        name="QuestionServlet",
-        urlPatterns = "/question"
+        name="QuestionnaireServlet",
+        urlPatterns = "/questionnaire"
 )
-public class QuestionController extends HttpServlet {
-    private static Hashtable<Integer, models.Question> questionTable = new Hashtable<Integer, models.Question>();
+public class QuestionnaireController extends HttpServlet {
+    private static Hashtable<Integer, Questionnaire> questionnaireTable = new Hashtable<Integer, Questionnaire>();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        questionTable.put(questionTable.size(), new models.Question(
+        questionnaireTable.put(questionnaireTable.size(), new Questionnaire(
                 1,
-                request.getParameter("enonce"), // enonce
+                request.getParameter("nom"), // nom
                 true, // actif
-                true, // ordre
-                1 // id_questionnaire
+                1 // id_sujet
         ));
 
         response.setContentType("text/html; charset=UTF-8");
@@ -33,12 +34,12 @@ public class QuestionController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Ajouter une question</title>");
+            out.println("<title>Ajouter une questionnaire</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1> La question suivante a été créé  </h1>");
+            out.println("<h1> Le questionnaire suivant a été créé </h1>");
             out.println("<div>");
-            out.println("<p> Énoncé : " + questionTable.get(questionTable.size() - 1).getEnonce() + "</p><br />");
+            out.println("<p> Nom : " + questionnaireTable.get(questionnaireTable.size() - 1).getNom() + "</p><br />");
             out.println("<a href=\"./\" name=\"accueil\">Accueil</a>");
             out.println("</div>");
             out.println("</body>");

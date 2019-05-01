@@ -1,4 +1,4 @@
-package src.dao;
+package com.sr03.dao;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,7 +9,7 @@ import java.util.Properties;
 
 public class DAOFactory {
 
-    private static final String PROP_FILE       = "/src/dao/dao.properties";
+    private static final String PROP_FILE       = "/src/com/sr03/dao/dao.properties";
     private static final String PROP_URL        = "url";
     private static final String PROP_DRIVER     = "driver";
     private static final String PROP_USER       = "user";
@@ -72,7 +72,7 @@ public class DAOFactory {
      * Méthodes de récupération de l'implémentation des différents DAO (un seul
      * pour le moment)
      */
-    public UtilisateurDao getUtilisateurDao() {
-        return new UtilisateurDaoImpl(this);
+    public UserDao getUserDao() {
+        return new UserDaoImpl(this);
     }
 }

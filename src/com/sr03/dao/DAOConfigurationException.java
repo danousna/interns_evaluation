@@ -1,4 +1,4 @@
-package src.dao;
+package com.sr03.dao;
 
 public class DAOConfigurationException {
     /*

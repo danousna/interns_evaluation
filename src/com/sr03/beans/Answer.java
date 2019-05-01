@@ -1,6 +1,6 @@
-package models;
+package com.sr03.beans;
 
-public class Reponse {
+public class Answer {
     private int id;
     private String valeur;
     private boolean actif;
@@ -8,7 +8,7 @@ public class Reponse {
     private boolean ordre;
     private int id_question;
 
-    public Reponse(int id, String valeur, boolean actif, boolean correct, boolean ordre, int id_question) {
+    public Answer(int id, String valeur, boolean actif, boolean correct, boolean ordre, int id_question) {
         this.id = id;
         this.valeur = valeur;
         this.actif = actif;
@@ -67,7 +67,7 @@ public class Reponse {
 
     @Override
     public String toString() {
-        return "Reponse{" +
+        return "Answer{" +
                 "id=" + id +
                 ", valeur='" + valeur + '\'' +
                 ", actif=" + actif +

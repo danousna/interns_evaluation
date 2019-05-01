@@ -1,5 +1,6 @@
-package src.controllers;
+package src.com.sr03.servlets;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -8,18 +9,44 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Hashtable;
+
+import src.com.sr03.beans.UserModel;
+import src.com.sr03.dao.DAOFactory;
+import src.com.sr03.dao.UserDao;
 
 @WebServlet(
         name="UserServlet",
         urlPatterns = "/user"
 )
 public class UserController extends HttpServlet {
-    private static Hashtable<Integer, models.UserModel> usersTable = new Hashtable<Integer, models.UserModel>();
+    public static final String CONF_DAO_FACTORY = "daoFactory";
+    public static final String ATT_USER = "utilisateur";
+    public static final String ATT_FORM = "form";
+    public static final String VUE = "/WEB-INF/user.jsp";
+
+    private UserDao userDao;
+
+    public void init() {
+        this.userDao = ((DAOFactory) getServletContext().getAttribute(CONF_DAO_FACTORY)).getUserDao();
+    }
+
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        this.getServletContext().getRequestDispatcher(VUE).forward(request, response);
+    }
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RegisterForm form = new RegisterForm(userDao);
+        User user = form.registerUser(request);
+
+        request.setAttribute(ATT_FORM, form);
+        request.setAttribute(ATT_USER, user);
+
+        this.getServletContext().getRequestDispatcher(VUE).forward(request, response);
+    }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
-        usersTable.put(usersTable.size(), new models.UserModel(
+        usersTable.put(usersTable.size(), new UserModel(
             1,
             request.getParameter("email"),
             request.getParameter("password"),

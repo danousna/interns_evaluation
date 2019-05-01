@@ -4,6 +4,9 @@
            xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 		  http://java.sun.com/xml/ns/javaee/web-app_4_0.xsd"
            version="4.0">
+    <listener>
+        <listener-class>src.com.sr03.config.InitDaoFactory</listener-class>
+    </listener>
     <!--&lt;!&ndash; UserServlet&ndash;&gt;-->
     <!--<servlet>-->
         <!--<servlet-name>UserServlet</servlet-name>-->

@@ -1,10 +1,10 @@
-package models;
+package com.sr03.beans;
 
-public class Reponse_utilisateur {
+public class AnswerUser {
     private int id_utilisateur;
     private int id_reponse;
 
-    public Reponse_utilisateur(int id_utilisateur, int id_reponse) {
+    public AnswerUser(int id_utilisateur, int id_reponse) {
         this.id_utilisateur = id_utilisateur;
         this.id_reponse = id_reponse;
     }
@@ -27,7 +27,7 @@ public class Reponse_utilisateur {
 
     @Override
     public String toString() {
-        return "Reponse_utilisateur{" +
+        return "AnswerUser{" +
                 "id_utilisateur=" + id_utilisateur +
                 ", id_reponse=" + id_reponse +
                 '}';

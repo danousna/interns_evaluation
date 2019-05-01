@@ -1,4 +1,6 @@
-package src.controllers;
+package src.com.sr03.servlets;
+
+import src.com.sr03.beans.Sujet;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,21 +13,17 @@ import java.io.PrintWriter;
 import java.util.Hashtable;
 
 @WebServlet(
-        name="ReponseServlet",
-        urlPatterns = "/reponse"
+        name="SujetServlet",
+        urlPatterns = "/sujet"
 )
-public class ReponseController extends HttpServlet {
-    private static Hashtable<Integer, models.Reponse> reponseTable = new Hashtable<Integer, models.Reponse>();
+public class SujetController extends HttpServlet {
+    private static Hashtable<Integer, Sujet> sujetTable = new Hashtable<Integer, Sujet>();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        reponseTable.put(reponseTable.size(), new models.Reponse(
+        sujetTable.put(sujetTable.size(), new Sujet(
                 1,
-                request.getParameter("reponse"),
-                true, // actif
-                request.getParameter("correct") != null,
-                true,
-                1
+                request.getParameter("nom") // nom
         ));
 
         response.setContentType("text/html; charset=UTF-8");
@@ -34,12 +32,12 @@ public class ReponseController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Ajouter une réponse à une question</title>");
+            out.println("<title>Ajouter un sujet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1> La réponse suivante a été créée </h1>");
+            out.println("<h1>Le sujet suivant a été créé</h1>");
             out.println("<div>");
-            out.println("<p> Réponse : " + reponseTable.get(reponseTable.size() - 1).getValeur() + " (" + (reponseTable.get(reponseTable.size() - 1).isCorrect()?"correct":"incorrect") + ")</p><br />");
+            out.println("<p> Nom : " + sujetTable.get(sujetTable.size() - 1).getNom() + "</p><br />");
             out.println("<a href=\"./\" name=\"accueil\">Accueil</a>");
             out.println("</div>");
             out.println("</body>");

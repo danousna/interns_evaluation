@@ -1,6 +1,6 @@
-package models;
+package com.sr03.beans;
 
-public class UserModel {
+public class User {
     private int id;
     private String email;
     private String mot_de_passe;
@@ -11,7 +11,7 @@ public class UserModel {
     private boolean actif;
     private boolean est_admin;
 
-    public UserModel(int id, String email, String mot_de_passe, String nom, String societe, String telephone, String date_creation, boolean actif, boolean est_admin) {
+    public User(int id, String email, String mot_de_passe, String nom, String societe, String telephone, String date_creation, boolean actif, boolean est_admin) {
         this.id = id;
         this.email = email;
         this.mot_de_passe = mot_de_passe;
@@ -97,7 +97,7 @@ public class UserModel {
 
     @Override
     public String toString() {
-        return "UserModel{" +
+        return "User{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", mot_de_passe='" + mot_de_passe + '\'' +
