@@ -9,7 +9,7 @@ import java.io.IOException;
 
 import com.sr03.beans.User;
 import com.sr03.dao.DAOFactory;
-import com.sr03.dao.UserDao;
+import com.sr03.dao.UserDaoImpl;
 import com.sr03.forms.RegisterForm;
 
 @WebServlet(
@@ -22,7 +22,7 @@ public class RegisterServlet extends HttpServlet {
     public static final String ATT_FORM = "form";
     public static final String VUE = "/web/register.jsp";
 
-    private UserDao userDao;
+    private UserDaoImpl userDao;
 
     public void init() {
         this.userDao = ((DAOFactory) getServletContext().getAttribute(CONF_DAO_FACTORY)).getUserDao();

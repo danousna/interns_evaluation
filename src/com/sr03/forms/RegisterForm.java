@@ -5,11 +5,12 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.sr03.dao.UserDaoImpl;
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 import com.sr03.beans.User;
 import com.sr03.dao.DAOException;
-import com.sr03.dao.UserDao;
+import com.sr03.dao.Dao;
 
 public final class RegisterForm {
     private static final String FIELD_EMAIL = "email";
@@ -21,9 +22,9 @@ public final class RegisterForm {
 
     private String result;
     private Map<String, String> errors = new HashMap<String, String>();
-    private UserDao userDao;
+    private UserDaoImpl userDao;
 
-    public RegisterForm(UserDao userDao ) {
+    public RegisterForm(UserDaoImpl userDao) {
         this.userDao = userDao;
     }
 
@@ -115,7 +116,7 @@ public final class RegisterForm {
         if ( email != null ) {
             if ( !email.matches( "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)" ) ) {
                 throw new FormValidationException( "Merci de saisir une adresse email valide." );
-            } else if ( userDao.find( email ) != null ) {
+            } else if ( userDao.get(email) != null ) {
                 throw new FormValidationException( "Cette adresse email est déjà utilisée, merci d'en choisir une autre." );
             }
         } else {
