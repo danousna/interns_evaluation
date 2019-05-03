@@ -1,6 +1,6 @@
 package com.sr03.dao;
 
-public class DAOConfigurationException {
+public class DAOConfigurationException extends RuntimeException {
     /*
      * Constructors
      */

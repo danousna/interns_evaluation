@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DAOFactory {
-
     private static final String PROP_FILE       = "/src/com/sr03/dao/dao.properties";
     private static final String PROP_URL        = "url";
     private static final String PROP_DRIVER     = "driver";
@@ -44,28 +43,27 @@ public class DAOFactory {
         }
 
         try {
-            properties.load( propFile );
-            url = properties.getProperty( PROP_URL );
-            driver = properties.getProperty( PROP_DRIVER );
-            user = properties.getProperty( PROP_USER );
-            password = properties.getProperty( PROP_PASSWORD );
-        } catch ( IOException e ) {
-            throw new DAOConfigurationException( "Impossible de charger le fichier properties " + PROP_FILE, e );
+            properties.load(propFile);
+            url = properties.getProperty(PROP_URL);
+            driver = properties.getProperty(PROP_DRIVER);
+            user = properties.getProperty(PROP_USER);
+            password = properties.getProperty(PROP_PASSWORD);
+        } catch (IOException e) {
+            throw new DAOConfigurationException("Impossible de charger le fichier properties " + PROP_FILE, e);
         }
 
         try {
-            Class.forName( driver );
-        } catch ( ClassNotFoundException e ) {
-            throw new DAOConfigurationException( "Le driver est introuvable dans le classpath.", e );
+            Class.forName(driver);
+        } catch (ClassNotFoundException e) {
+            throw new DAOConfigurationException("Le driver est introuvable dans le classpath.", e);
         }
 
-        DAOFactory instance = new DAOFactory( url, user, password );
-        return instance;
+        return new DAOFactory(url, user, password);
     }
 
     /* Méthode chargée de fournir une connexion à la base de données */
-    /* package */ Connection getConnection() throws SQLException {
-        return DriverManager.getConnection( url, username, password );
+    Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(url, username, password);
     }
 
     /*

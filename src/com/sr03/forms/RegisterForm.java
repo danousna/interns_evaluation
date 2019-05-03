@@ -11,7 +11,7 @@ import com.sr03.beans.User;
 import com.sr03.dao.DAOException;
 import com.sr03.dao.UserDao;
 
-public final class Register {
+public final class RegisterForm {
     private static final String FIELD_EMAIL = "email";
     private static final String FIELD_PASS = "password";
     private static final String FIELD_CONF = "confirmation";
@@ -23,7 +23,7 @@ public final class Register {
     private Map<String, String> errors = new HashMap<String, String>();
     private UserDao userDao;
 
-    public Register( UserDao userDao ) {
+    public RegisterForm(UserDao userDao ) {
         this.userDao = userDao;
     }
 
@@ -43,17 +43,17 @@ public final class Register {
 
         User user = new User();
         try {
-            processEmail( email, user );
-            processPassword( password, confirmation, user );
-            processName( nom, user );
+            processEmail(email, user);
+            processPassword(password, confirmation, user);
+            processName(nom, user);
 
-            if ( errors.isEmpty() ) {
-                userDao.creer( user );
+            if (errors.isEmpty()) {
+                userDao.create(user);
                 result = "Succès de l'inscription.";
             } else {
                 result = "Échec de l'inscription.";
             }
-        } catch ( DAOException e ) {
+        } catch (DAOException e) {
             result = "Échec de l'inscription : une erreur imprévue est survenue, merci de réessayer dans quelques instants.";
             e.printStackTrace();
         }
@@ -94,7 +94,7 @@ public final class Register {
         passwordEncryptor.setPlainDigest( false );
         String encryptedPassword = passwordEncryptor.encryptPassword( password );
 
-        user.setMotDePasse( encryptedPassword );
+        user.setPassword( encryptedPassword );
     }
 
     /*
@@ -107,7 +107,7 @@ public final class Register {
         } catch ( FormValidationException e ) {
             setError( FIELD_NAME, e.getMessage() );
         }
-        user.setNom( nom );
+        user.setName( nom );
     }
 
     /* Validation de l'adresse email */

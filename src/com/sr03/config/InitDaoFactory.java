@@ -1,11 +1,13 @@
 package com.sr03.config;
 
-import com.sr03.dao.DAOFactory;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
 
+import com.sr03.dao.DAOFactory;
+
+@WebListener
 public class InitDaoFactory implements ServletContextListener {
     private static final String ATT_DAO_FACTORY = "daoFactory";
     private DAOFactory daoFactory;

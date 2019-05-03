@@ -11,7 +11,7 @@
         <h3>Que voulez-vous faire ?</h3>
         <div>
             <ul>
-                <li><a href="./user.jsp">Ajouter un utilisateur</a></li>
+                <li><a href="./register.jsp">Ajouter un utilisateur</a></li>
                 <li><a href="./sujet.jsp">Ajouter un sujet</a></li>
                 <li><a href="./questionnaire.jsp">Ajouter un questionnaire</a></li>
                 <li><a href="./question.jsp">Ajouter une question</a></li>

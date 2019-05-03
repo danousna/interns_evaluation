@@ -1,9 +1,9 @@
 package com.sr03.dao;
 
-import src.com.sr03.beans.UserModel;
+import com.sr03.beans.User;
 
 public interface UserDao {
-    void create(UserModel user) throws DAOException;
-    UserModel find(String email) throws DAOException;
+    void create(User user) throws DAOException;
+    User find(String email) throws DAOException;
 }
 
