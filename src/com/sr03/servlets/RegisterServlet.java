@@ -20,7 +20,7 @@ public class RegisterServlet extends HttpServlet {
     public static final String CONF_DAO_FACTORY = "daoFactory";
     public static final String ATT_USER = "utilisateur";
     public static final String ATT_FORM = "form";
-    public static final String VUE = "/web/register.jsp";
+    public static final String VUE = "/register.jsp";
 
     private UserDaoImpl userDao;
 
@@ -38,6 +38,7 @@ public class RegisterServlet extends HttpServlet {
 
         request.setAttribute(ATT_FORM, form);
         request.setAttribute(ATT_USER, user);
+
 
         this.getServletContext().getRequestDispatcher(VUE).forward(request, response);
     }
