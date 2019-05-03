@@ -6,10 +6,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 import static com.sr03.dao.DAOUtility.*;
 
-public class UserDaoImpl implements UserDao {
+public class UserDaoImpl implements Dao<User> {
     private DAOFactory daoFactory;
     private static final String SQL_SELECT_BY_EMAIL = "SELECT id, email, nom, mot_de_passe, date_inscription FROM Utilisateur WHERE email = ?";
     private static final String SQL_INSERT = "INSERT INTO Utilisateur (email, mot_de_passe, nom, date_inscription) VALUES (?, ?, ?, NOW())";
@@ -48,7 +49,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User find(String email) throws DAOException {
+    public User get(String email) throws DAOException {
         Connection conn = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -71,6 +72,16 @@ public class UserDaoImpl implements UserDao {
         }
 
         return user;
+    }
+
+    @Override
+    public void update(User user) throws DAOException {
+
+    }
+
+    @Override
+    public void delete(User user) throws DAOException {
+
     }
 
     /*
