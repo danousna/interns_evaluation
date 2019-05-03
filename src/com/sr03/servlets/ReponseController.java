@@ -1,6 +1,6 @@
-package src.com.sr03.servlets;
+package com.sr03.servlets;
 
-import src.com.sr03.beans.Reponse;
+import com.sr03.beans.Answer;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,11 +17,11 @@ import java.util.Hashtable;
         urlPatterns = "/reponse"
 )
 public class ReponseController extends HttpServlet {
-    private static Hashtable<Integer, Reponse> reponseTable = new Hashtable<Integer, Reponse>();
+    private static Hashtable<Integer, Answer> reponseTable = new Hashtable<Integer, Answer>();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        reponseTable.put(reponseTable.size(), new Reponse(
+        reponseTable.put(reponseTable.size(), new Answer(
                 1,
                 request.getParameter("reponse"),
                 true, // actif

@@ -1,6 +1,6 @@
-package src.com.sr03.servlets;
+package com.sr03.servlets;
 
-import src.com.sr03.beans.Question;
+import com.sr03.beans.Question;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

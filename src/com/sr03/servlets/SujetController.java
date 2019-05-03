@@ -1,6 +1,6 @@
-package src.com.sr03.servlets;
+package com.sr03.servlets;
 
-import src.com.sr03.beans.Sujet;
+import com.sr03.beans.Subject;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,11 +17,11 @@ import java.util.Hashtable;
         urlPatterns = "/sujet"
 )
 public class SujetController extends HttpServlet {
-    private static Hashtable<Integer, Sujet> sujetTable = new Hashtable<Integer, Sujet>();
+    private static Hashtable<Integer, Subject> sujetTable = new Hashtable<Integer, Subject>();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        sujetTable.put(sujetTable.size(), new Sujet(
+        sujetTable.put(sujetTable.size(), new Subject(
                 1,
                 request.getParameter("nom") // nom
         ));
