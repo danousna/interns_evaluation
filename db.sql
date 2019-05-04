@@ -28,7 +28,7 @@ CREATE TABLE question (
     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
     body varchar(255),
     is_active bit,
-    'order' int,
+    `order` int,
     quiz_id int,
 
     FOREIGN KEY (quiz_id) REFERENCES quiz(id)
@@ -39,7 +39,7 @@ CREATE TABLE answer (
     body varchar(255),
     is_active bit,
     is_correct bit,
-    'order' int,
+    `order` int,
     question_id int,
 
     FOREIGN KEY (question_id) REFERENCES question(id)
