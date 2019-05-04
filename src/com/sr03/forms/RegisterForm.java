@@ -116,9 +116,10 @@ public final class RegisterForm {
         if ( email != null ) {
             if ( !email.matches( "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)" ) ) {
                 throw new FormValidationException( "Merci de saisir une adresse email valide." );
-            } else if ( userDao.get(email) != null ) {
-                throw new FormValidationException( "Cette adresse email est déjà utilisée, merci d'en choisir une autre." );
             }
+            // else if ( userDao.get(email) != null ) {
+                // throw new FormValidationException( "Cette adresse email est déjà utilisée, merci d'en choisir une autre." );
+            // }
         } else {
             throw new FormValidationException( "Merci de saisir une adresse email." );
         }
