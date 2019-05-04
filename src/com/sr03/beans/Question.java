@@ -1,4 +1,4 @@
-package models;
+package com.sr03.beans;
 
 public class Question {
     private int id;

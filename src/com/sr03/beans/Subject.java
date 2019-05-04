@@ -1,10 +1,10 @@
-package models;
+package com.sr03.beans;
 
-public class Sujet {
+public class Subject {
     private int id;
     private String nom;
 
-    public Sujet(int id, String nom) {
+    public Subject(int id, String nom) {
         this.id = id;
         this.nom = nom;
     }
@@ -27,7 +27,7 @@ public class Sujet {
 
     @Override
     public String toString() {
-        return "Sujet{" +
+        return "Subject{" +
                 "id=" + id +
                 ", nom='" + nom + '\'' +
                 '}';
