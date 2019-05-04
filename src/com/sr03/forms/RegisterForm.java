@@ -5,12 +5,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.sr03.dao.UserDaoImpl;
+import com.sr03.dao.UserDAO;
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 import com.sr03.beans.User;
 import com.sr03.dao.DAOException;
-import com.sr03.dao.Dao;
 
 public final class RegisterForm {
     private static final String FIELD_EMAIL = "email";
@@ -22,9 +21,9 @@ public final class RegisterForm {
 
     private String result;
     private Map<String, String> errors = new HashMap<String, String>();
-    private UserDaoImpl userDao;
+    private UserDAO userDao;
 
-    public RegisterForm(UserDaoImpl userDao) {
+    public RegisterForm(UserDAO userDao) {
         this.userDao = userDao;
     }
 
