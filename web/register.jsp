@@ -51,7 +51,7 @@
     <input type="submit" value="Submit">
     <br />
 
-    <p class="${empty erreurs ? 'succes' : 'erreur'}">${resultat}</p>
+    <p class="${empty form.errors ? 'succes' : 'erreur'}">${form.result}</p>
 </form>
 <a href="./" name="accueil">Accueil</a>
 </body>
