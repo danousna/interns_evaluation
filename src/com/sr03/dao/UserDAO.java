@@ -12,9 +12,9 @@ import static com.sr03.dao.DAOUtility.*;
 public class UserDAO implements DAO<User> {
     private DAOFactory daoFactory;
     private static final String SQL_SELECT_BY_EMAIL = "SELECT id, email, nom, mot_de_passe, societe, telephone, date_creation, actif, est_admin FROM Utilisateur WHERE email = ?";
-    private static final String SQL_INSERT = "INSERT INTO Utilisateur (email, nom, mot_de_passe, societe, telephone, date_creation, actif, est_admin) VALUES (?, ?, ?, ?, ?, NOW(), ?, ?)";
-    private static final String SQL_UPDATE = "UPDATE Utilisateur SET email = ?, nom = ?, mot_de_passe = ?, societe = ?, telephone = ?, actif = ?, est_admin = ? WHERE email = ?";
-    private static final String SQL_DELETE = "DELETE FROM Utilisateur WHERE email = ?";
+    private static final String SQL_INSERT = "INSERT INTO utilisateur (email, nom, mot_de_passe, societe, telephone, date_creation, actif, est_admin) VALUES (?, ?, ?, ?, ?, NOW(), ?, ?)";
+    private static final String SQL_UPDATE = "UPDATE utilisateur SET email = ?, nom = ?, mot_de_passe = ?, societe = ?, telephone = ?, actif = ?, est_admin = ? WHERE email = ?";
+    private static final String SQL_DELETE = "DELETE FROM utilisateur WHERE email = ?";
 
     UserDAO(DAOFactory daoFactory) {
         this.daoFactory = daoFactory;

@@ -19,7 +19,7 @@ import com.sr03.forms.RegisterForm;
 )
 public class RegisterServlet extends HttpServlet {
     public static final String CONF_DAO_FACTORY = "daoFactory";
-    public static final String ATT_USER = "utilisateur";
+    public static final String ATT_USER = "user";
     public static final String ATT_FORM = "form";
     public static final String VIEW = "/register.jsp";
 
@@ -40,10 +40,6 @@ public class RegisterServlet extends HttpServlet {
         request.setAttribute(ATT_FORM, form);
         request.setAttribute(ATT_USER, user);
 
-        try(PrintWriter out = response.getWriter()) {
-            out.println(user.getEmail());
-        }
-
-        // this.getServletContext().getRequestDispatcher(VIEW).forward(request, response);
+        this.getServletContext().getRequestDispatcher(VIEW).forward(request, response);
     }
 }

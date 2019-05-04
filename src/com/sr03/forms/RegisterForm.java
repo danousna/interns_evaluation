@@ -1,5 +1,7 @@
 package com.sr03.forms;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,10 +14,13 @@ import com.sr03.beans.User;
 import com.sr03.dao.DAOException;
 
 public final class RegisterForm {
+    private static final String FIELD_NAME = "name";
     private static final String FIELD_EMAIL = "email";
     private static final String FIELD_PASS = "password";
-    private static final String FIELD_CONF = "confirmation";
-    private static final String FIELD_NAME = "name";
+    private static final String FIELD_PASS_CONF = "password_confirmation";
+    private static final String FIELD_COMPANY = "company";
+    private static final String FIELD_PHONE = "phone";
+    private static final String FIELD_IS_ADMIN = "is_admin";
 
     private static final String ENCRYPTION_METHOD = "SHA-256";
 
@@ -36,19 +41,28 @@ public final class RegisterForm {
     }
 
     public User registerUser( HttpServletRequest request ) {
-        String email = getValeurChamp( request, FIELD_EMAIL );
-        String password = getValeurChamp( request, FIELD_PASS );
-        String confirmation = getValeurChamp( request, FIELD_CONF );
-        String nom = getValeurChamp( request, FIELD_NAME );
+        String email = getFieldValue( request, FIELD_EMAIL );
+        String password = getFieldValue( request, FIELD_PASS );
+        String password_confirmation = getFieldValue( request, FIELD_PASS_CONF );
 
         User user = new User();
+
         try {
+            user.setName(getFieldValue( request, FIELD_NAME ));
+            user.setCompany(getFieldValue( request, FIELD_COMPANY ));
+            user.setPhone(getFieldValue( request, FIELD_PHONE ));
+            user.setIs_admin(Boolean.valueOf(getFieldValue( request, FIELD_IS_ADMIN )));
+
             processEmail(email, user);
-            processPassword(password, confirmation, user);
-            processName(nom, user);
+            processPassword(password, password_confirmation, user);
 
             if (errors.isEmpty()) {
+                Date date = new Date();
+                user.setCreated_at(new Timestamp(date.getTime()));
+                user.setIs_admin(true);
+
                 userDao.create(user);
+
                 result = "Succès de l'inscription.";
             } else {
                 result = "Échec de l'inscription.";
@@ -78,12 +92,12 @@ public final class RegisterForm {
      * Appel à la validation des mots de passe reçus, chiffrement du mot de
      * passe et initialisation de la propriété password du bean
      */
-    private void processPassword( String password, String confirmation, User user ) {
+    private void processPassword( String password, String password_confirmation, User user ) {
         try {
-            validatePassword( password, confirmation );
+            validatePassword( password, password_confirmation );
         } catch ( FormValidationException e ) {
             setError( FIELD_PASS, e.getMessage() );
-            setError( FIELD_CONF, null );
+            setError( FIELD_PASS_CONF, null );
         }
 
         /*
@@ -95,19 +109,6 @@ public final class RegisterForm {
         String encryptedPassword = passwordEncryptor.encryptPassword( password );
 
         user.setPassword( encryptedPassword );
-    }
-
-    /*
-     * Appel à la validation du nom reçu et initialisation de la propriété nom
-     * du bean
-     */
-    private void processName( String nom, User user ) {
-        try {
-            validationNom( nom );
-        } catch ( FormValidationException e ) {
-            setError( FIELD_NAME, e.getMessage() );
-        }
-        user.setName( nom );
     }
 
     /* Validation de l'adresse email */
@@ -124,9 +125,9 @@ public final class RegisterForm {
     }
 
     /* Validation des mots de passe */
-    private void validatePassword( String password, String confirmation ) throws FormValidationException {
-        if ( password != null && confirmation != null ) {
-            if ( !password.equals( confirmation ) ) {
+    private void validatePassword( String password, String password_confirmation ) throws FormValidationException {
+        if ( password != null && password_confirmation != null ) {
+            if ( !password.equals( password_confirmation ) ) {
                 throw new FormValidationException( "Les mots de passe entrÃ©s sont différents, merci de les saisir à nouveau." );
             } else if ( password.length() < 3 ) {
                 throw new FormValidationException( "Les mots de passe doivent contenir au moins 3 caractères." );
@@ -136,30 +137,23 @@ public final class RegisterForm {
         }
     }
 
-    /* Validation du nom */
-    private void validationNom( String nom ) throws FormValidationException {
-        if ( nom != null && nom.length() < 3 ) {
-            throw new FormValidationException( "Le nom d'utilisateur doit contenir au moins 3 caractères." );
-        }
-    }
-
     /*
      * Ajoute un message correspondant au champ spécifié à la map des erreurs.
      */
-    private void setError( String champ, String message ) {
-        errors.put( champ, message );
+    private void setError( String field, String message ) {
+        errors.put( field, message );
     }
 
     /*
      * Méthode utilitaire qui retourne null si un champ est vide, et son contenu
      * sinon.
      */
-    private static String getValeurChamp( HttpServletRequest request, String nomChamp ) {
-        String valeur = request.getParameter( nomChamp );
-        if ( valeur == null || valeur.trim().length() == 0 ) {
+    private static String getFieldValue( HttpServletRequest request, String field ) {
+        String value = request.getParameter( field );
+        if ( value == null || value.trim().length() == 0 ) {
             return null;
         } else {
-            return valeur;
+            return value;
         }
     }
 }

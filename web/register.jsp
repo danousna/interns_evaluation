@@ -17,32 +17,35 @@
 <form action="./register" method="post">
 
     <label> Nom </label>
-    <input type="text" id="name" name="name" value="<c:out value="${user.name}"/>" />
+    <input type="text" name="name" value="<c:out value="${user.name}"/>" />
 
     <br>
 
     <label> Email </label>
-    <input type="text" id="email" name="email" value="<c:out value="${user.email}"/>"/>
+    <input type="text" name="email" value="<c:out value="${user.email}"/>"/>
 
     <span>${form.errors['email']}</span>
     <br>
 
     <label> Mot de passe </label>
-    <input type="password" id="password" name="password"/>
-
+    <input type="password" name="password"/>
     <span>${form.errors['password']}</span>
+    <br />
+
+    <label> Confirmez le mot de passe </label>
+    <input type="password" name="password_confirmation"/>
     <br>
 
     <label> Société </label>
-    <input type="text" id="company" name="company" value="<c:out value="${user.company}"/>"/>
+    <input type="text" name="company" value="<c:out value="${user.company}"/>"/>
     <br>
 
     <label> Téléphone </label>
-    <input type="text" id="phone" name="phone" value="<c:out value="${user.phone_number}"/>"/>
+    <input type="text" name="phone" value="<c:out value="${user.phone}"/>"/>
     <br>
 
     <label> Admin </label>
-    <input type="checkbox" id="admin" name="admin" value="<c:out value="${user.is_admin}"/>"/>
+    <input type="checkbox" name="admin" value="<c:out value="${user.is_admin}"/>"/>
     <br>
 
     <input type="submit" value="Submit">
