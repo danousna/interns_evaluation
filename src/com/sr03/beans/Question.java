@@ -1,6 +1,13 @@
 package com.sr03.beans;
 
-public class Question {
+import java.io.Serializable;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+
+@ManagedBean
+@RequestScoped
+public class Question implements Serializable {
     private int id;
     private String enonce;
     private boolean actif;

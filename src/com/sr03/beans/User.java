@@ -1,8 +1,14 @@
 package com.sr03.beans;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class User {
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+
+@ManagedBean
+@RequestScoped
+public class User implements Serializable {
     private Long id;
     private Boolean is_active;
     private Boolean is_admin;

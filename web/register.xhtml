@@ -2,49 +2,49 @@
 <!DOCTYPE html
         PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xml:lang="en" lang="en">
+<h:head>
     <title>Créer un utilisateur</title>
-</head>
+</h:head>
 <body>
 <form action="./register" method="post">
 
     <label> Nom </label>
-    <input type="text" name="name" value="<c:out value="${user.name}"/>" />
+    <input type="text" name="name" value="#{user.name}"/>
 
-    <br>
+    <br />
 
     <label> Email </label>
-    <input type="text" name="email" value="<c:out value="${user.email}"/>"/>
+    <input type="text" name="email" value="#{user.email}"/>
 
-    <span>${form.errors['email']}</span>
-    <br>
+    <!--<span>#{form.errors['email']}</span>-->
+    <br/>
 
     <label> Mot de passe </label>
     <input type="password" name="password"/>
-    <span>${form.errors['password']}</span>
+    <!--<span>${form.errors['password']}</span>-->
     <br />
 
     <label> Confirmez le mot de passe </label>
     <input type="password" name="password_confirmation"/>
-    <br>
-
-    <label> Société </label>
-    <input type="text" name="company" value="<c:out value="${user.company}"/>"/>
-    <br>
-
-    <label> Téléphone </label>
-    <input type="text" name="phone" value="<c:out value="${user.phone}"/>"/>
-    <br>
-
-    <label> Admin </label>
-    <input type="checkbox" name="admin" value="<c:out value="${user.is_admin}"/>"/>
-    <br>
-
-    <input type="submit" value="Submit">
     <br />
 
-    <p class="${empty form.errors ? 'succes' : 'erreur'}">${form.result}</p>
+    <label> Société </label>
+    <input type="text" name="company" value="${user.company}"/>
+    <br />
+
+    <label> Téléphone </label>
+    <input type="text" name="phone" value="${user.phone}"/>
+    <br />
+
+    <label> Admin </label>
+    <input type="checkbox" name="admin" value="${user.is_admin}"/>
+    <br />
+
+    <input type="submit" value="Submit" />
+    <br />
+
+    <!--<p class="${empty form.errors ? 'succes' : 'erreur'}">${form.result}</p>-->
 </form>
 <a href="./" name="accueil">Accueil</a>
 </body>

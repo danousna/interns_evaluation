@@ -1,6 +1,13 @@
 package com.sr03.beans;
 
-public class Questionnaire {
+import java.io.Serializable;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+
+@ManagedBean
+@RequestScoped
+public class Questionnaire implements Serializable {
     private int id;
     private String nom;
     private boolean actif;

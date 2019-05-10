@@ -1,6 +1,13 @@
 package com.sr03.beans;
 
-public class Subject {
+import java.io.Serializable;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+
+@ManagedBean
+@RequestScoped
+public class Subject implements Serializable {
     private int id;
     private String nom;
 
