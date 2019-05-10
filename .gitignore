@@ -12,7 +12,7 @@
 
 # Package Files #
 *.jar
-!web/WEB-INF/lib/*.jar
+web/WEB-INF/lib/*.jar
 *.war
 *.nar
 *.ear
@@ -25,5 +25,3 @@ hs_err_pid*
 
 out/
 *.idea
-
-web/WEB-INF/lib
