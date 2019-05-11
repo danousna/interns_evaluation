@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html
-        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xml:lang="en" lang="en">
-<head>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f = "http://java.sun.com/jsf/core"
+      xml:lang="en" lang="en">
+<h:head>
     <title>Créer un questionnaire</title>
-</head>
-<body>
-<form action="./questionnaire" method="post">
+</h:head>
+<h:body>
+<h:form>
+    <fieldset>
+        <legend>Ajouter une question</legend>
+        <h:outputLabel for="sujet">De quel sujet ?</h:outputLabel>
+        <h:selectOneMenu id="sujet" name="sujet">
+            <f:selectItem itemValue = "1" itemLabel = "Item 1" />
+            <f:selectItem itemValue = "2" itemLabel = "Item 2" />
+        </h:selectOneMenu>
+        <br />
 
-    <label for="sujet"> De quel questionnaire ? </label>
-    <select id="sujet" name="sujet">
-    </select>
-    <br />
+        <h:outputLabel for="nom">Nom du questionnaire</h:outputLabel>
+        <h:inputText id="nom" required="true" size="20" maxlength="60" />
+        <br />
 
-    <label for="nom"> Nom du questionnaire :</label>
-    <input type="text" id="nom" name="nom"/>
-    <br />
-
-    <input type="submit" value="Submit" />
-</form>
-<a href="./" name="accueil">Accueil</a>
-</body>
+        <h:commandButton value="Envoyer" />
+    </fieldset>
+</h:form>
+<h:link outcome="index" value="Accueil"/>
+</h:body>
 </html>

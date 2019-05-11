@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html
-        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xml:lang="en" lang="en">
-<head>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f = "http://java.sun.com/jsf/core"
+      xml:lang="en" lang="en">
+<h:head>
     <title>Créer un sujet</title>
-</head>
-<body>
-    <form action="./sujet" method="post">
-
-        <label for="nom"> Nom du sujet :</label>
-        <input type="text" id="nom" name="nom"/>
+</h:head>
+<h:body>
+<h:form>
+    <fieldset>
+        <legend>Ajouter un sujet</legend>
+        <h:outputLabel for="nom">Nom</h:outputLabel>
+        <h:inputText id="nom" required="true" size="20" maxlength="60" />
         <br />
 
         <input type="submit" value="Submit" />
-    </form>
-    <a href="./" name="accueil">Accueil</a>
-</body>
+    </fieldset>
+</h:form>
+<h:link outcome="index" value="Accueil"/>
+</h:body>
 </html>

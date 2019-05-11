@@ -1,5 +1,9 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xml:lang="en" lang="en">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xml:lang="en" lang="en">
 <h:head>
     <title>Accueil</title>
 </h:head>
@@ -8,11 +12,11 @@
     <h3>Que voulez-vous faire ?</h3>
     <div>
         <ul>
-            <li><a href="register.xhtml">Ajouter un utilisateur</a></li>
-            <li><a href="sujet.xhtml">Ajouter un sujet</a></li>
-            <li><a href="questionnaire.xhtml">Ajouter un questionnaire</a></li>
-            <li><a href="question.xhtml">Ajouter une question</a></li>
-            <li><a href="reponse.xhtml">Ajouter une réponse</a></li>
+            <li><h:link outcome="register" value="Ajouter un utilisateur"/></li>
+            <li><h:link outcome="sujet" value="Ajouter un sujet"/></li>
+            <li><h:link outcome="questionnaire" value="Ajouter un questionnaire"/></li>
+            <li><h:link outcome="question" value="Ajouter une question"/></li>
+            <li><h:link outcome="reponse" value="Ajouter une réponse"/></li>
         </ul>
     </div>
 </h:body>

@@ -1,51 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html
-        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f = "http://java.sun.com/jsf/core"
+      xml:lang="en" lang="en">
 <h:head>
     <title>Créer un utilisateur</title>
 </h:head>
-<body>
-<form action="./register" method="post">
+<h:body>
+<h:form>
+    <fieldset>
+        <legend>Ajouter un utilisateur</legend>
 
-    <label> Nom </label>
-    <input type="text" name="name" value="#{user.name}"/>
+        <h:outputLabel for="nom">Nom</h:outputLabel>
+        <h:inputText id="nom" required="true" size="20" maxlength="60" />
+        <br />
 
-    <br />
+        <h:outputLabel for="email">Email</h:outputLabel>
+        <h:inputText id="email" required="true" size="20" maxlength="60" />
+        <br />
 
-    <label> Email </label>
-    <input type="text" name="email" value="#{user.email}"/>
+        <h:outputLabel for="password">Mot de passe</h:outputLabel>
+        <h:inputSecret id="password" required="true" />
+        <br />
 
-    <!--<span>#{form.errors['email']}</span>-->
-    <br/>
+        <h:outputLabel for="password_confirmation">Confirmation mot de passe</h:outputLabel>
+        <h:inputSecret id="password_confirmation" required="true"/>
+        <br />
 
-    <label> Mot de passe </label>
-    <input type="password" name="password"/>
-    <!--<span>${form.errors['password']}</span>-->
-    <br />
+        <h:outputLabel for="company">Entreprise</h:outputLabel>
+        <h:inputText id="company" required="true" size="20" maxlength="60" />
+        <br />
 
-    <label> Confirmez le mot de passe </label>
-    <input type="password" name="password_confirmation"/>
-    <br />
+        <h:outputLabel for="phone">Téléphone</h:outputLabel>
+        <h:inputText id="phone" required="true" size="20" maxlength="60" />
+        <br />
 
-    <label> Société </label>
-    <input type="text" name="company" value="${user.company}"/>
-    <br />
+        <h:outputLabel for="admin">Admin</h:outputLabel>
+        <h:selectBooleanCheckbox id="admin" />
+        <br />
 
-    <label> Téléphone </label>
-    <input type="text" name="phone" value="${user.phone}"/>
-    <br />
-
-    <label> Admin </label>
-    <input type="checkbox" name="admin" value="${user.is_admin}"/>
-    <br />
-
-    <input type="submit" value="Submit" />
-    <br />
-
-    <!--<p class="${empty form.errors ? 'succes' : 'erreur'}">${form.result}</p>-->
-</form>
-<a href="./" name="accueil">Accueil</a>
-</body>
+        <h:commandButton value="Envoyer" />
+    </fieldset>
+</h:form>
+<h:link outcome="index" value="Accueil"/>
+</h:body>
 </html>
