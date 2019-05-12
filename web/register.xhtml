@@ -9,39 +9,47 @@
     <title>Créer un utilisateur</title>
 </h:head>
 <h:body>
-<h:form>
+<h:form id="registerForm">
     <fieldset>
         <legend>Ajouter un utilisateur</legend>
 
         <h:outputLabel for="nom">Nom</h:outputLabel>
-        <h:inputText id="nom" required="true" size="20" maxlength="60" />
+        <h:inputText id="nom" value="#{registerBean.user.name}" required="true" size="20" maxlength="60" label="Nom" requiredMessage="Veuillez saisir un nom" />
+        <h:message id="nomMessage" for="nom" errorClass="erreur" />
         <br />
 
         <h:outputLabel for="email">Email</h:outputLabel>
-        <h:inputText id="email" required="true" size="20" maxlength="60" />
+        <h:inputText id="email" value="#{registerBean.user.email}" required="true" size="20" maxlength="60" label="Email" requiredMessage="Veuillez saisir une adresse email" />
+        <h:message id="emailMessage" for="email" errorClass="erreur" />
         <br />
 
         <h:outputLabel for="password">Mot de passe</h:outputLabel>
-        <h:inputSecret id="password" required="true" />
+        <h:inputSecret id="password" value="#{registerBean.user.password}" required="true" label="Mot de passe" requiredMessage="Veuillez saisir un mot de passe" />
+        <h:message id="passwordMessage" for="password" errorClass="erreur" />
         <br />
 
         <h:outputLabel for="password_confirmation">Confirmation mot de passe</h:outputLabel>
-        <h:inputSecret id="password_confirmation" required="true"/>
+        <h:inputSecret id="password_confirmation" value="#{registerBean.user.password}" required="true" label="Confirmation de mot de passe" requiredMessage="Veuillez saisir une confirmation de mot de passe" />
+        <h:message id="password_confirmationMessage" for="password_confirmation" errorClass="erreur" />
         <br />
 
         <h:outputLabel for="company">Entreprise</h:outputLabel>
-        <h:inputText id="company" required="true" size="20" maxlength="60" />
+        <h:inputText id="company" value="#{registerBean.user.company}" required="true" size="20" maxlength="60" label="Entreprise" requiredMessage="Veuillez saisir une entreprise" />
+        <h:message id="companyMessage" for="company" errorClass="erreur" />
         <br />
 
         <h:outputLabel for="phone">Téléphone</h:outputLabel>
-        <h:inputText id="phone" required="true" size="20" maxlength="60" />
+        <h:inputText id="phone" value="#{registerBean.user.phone}" required="true" size="20" maxlength="60" label="Téléphone" requiredMessage="Veuillez saisir un numéro de téléphone" />
+        <h:message id="phoneMessage" for="phone" errorClass="erreur" />
         <br />
 
         <h:outputLabel for="admin">Admin</h:outputLabel>
-        <h:selectBooleanCheckbox id="admin" />
+        <h:selectBooleanCheckbox id="admin" value="#{registerBean.user.is_admin}" />
         <br />
 
-        <h:commandButton value="Envoyer" />
+        <h:messages globalOnly="true" infoClass="info" />
+
+        <h:commandButton value="Envoyer" action="#{registerBean.register}" />
     </fieldset>
 </h:form>
 <h:link outcome="index" value="Accueil"/>
