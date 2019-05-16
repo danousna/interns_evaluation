@@ -13,6 +13,10 @@ public class Questionnaire implements Serializable {
     private boolean actif;
     private int id_sujet;
 
+    public Questionnaire() {
+
+    }
+
     public Questionnaire(int id, String nom, boolean actif, int id_sujet) {
         this.id = id;
         this.nom = nom;

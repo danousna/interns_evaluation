@@ -15,6 +15,10 @@ public class Answer implements Serializable{
     private boolean ordre;
     private int id_question;
 
+    public Answer() {
+
+    }
+
     public Answer(int id, String valeur, boolean actif, boolean correct, boolean ordre, int id_question) {
         this.id = id;
         this.valeur = valeur;

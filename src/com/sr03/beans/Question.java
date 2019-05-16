@@ -14,6 +14,10 @@ public class Question implements Serializable {
     private boolean ordre;
     private int id_questionnaire;
 
+    public Question() {
+
+    }
+
     public Question(int id, String enonce, boolean actif, boolean ordre, int id_questionnaire) {
         this.id = id;
         this.enonce = enonce;

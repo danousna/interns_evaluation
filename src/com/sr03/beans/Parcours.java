@@ -14,6 +14,10 @@ public class Parcours implements Serializable {
     private String date_fin;
     private int id_questionnaire;
 
+    public Parcours() {
+
+    }
+
     public Parcours(int id, int score, String date_debut, String date_fin, int id_questionnaire) {
         this.id = id;
         this.score = score;

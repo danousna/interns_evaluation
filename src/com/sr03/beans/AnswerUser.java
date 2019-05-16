@@ -11,6 +11,10 @@ public class AnswerUser implements Serializable {
     private int id_utilisateur;
     private int id_reponse;
 
+    public AnswerUser() {
+
+    }
+
     public AnswerUser(int id_utilisateur, int id_reponse) {
         this.id_utilisateur = id_utilisateur;
         this.id_reponse = id_reponse;
