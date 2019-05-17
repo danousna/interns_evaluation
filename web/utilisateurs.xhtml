@@ -6,9 +6,10 @@
       xmlns:c = "http://java.sun.com/jsf/core"
       xml:lang="fr" lang="fr">
 <h:head>
-    <title>Créer un sujet</title>
+    <title>Gestion des utilisateurs</title>
 </h:head>
 <h:body>
+    <h1>Gestion des utilisateurs</h1>
     <h:form>
         <h:form>
             <h:dataTable value="#{listUsersBean.users}" var="user" border="2"
@@ -25,8 +26,17 @@
                     <c:facet name="header">Company</c:facet>
                     #{user.company}
                 </h:column>
+                <h:column>
+                    <c:facet name="header">Active user</c:facet>
+                    #{user.is_active ? "oui" : "non"}
+                    <h:link outcome="index" rendered="#{user.is_active}" value="(désactiver)"/>
+                    <h:link outcome="index" rendered="#{!user.is_active}" value="(activer)"/>
+                </h:column>
+
             </h:dataTable>
         </h:form>
     </h:form>
+    <br />
+    <h:link outcome="index" value="Accueil"/>
 </h:body>
 </html>
