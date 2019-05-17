@@ -2,15 +2,14 @@ package com.sr03.dao;
 
 import com.sr03.beans.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 
 import static com.sr03.dao.DAOUtility.*;
 
 public class UserDAO implements DAO<User> {
     private DAOFactory daoFactory;
+    private static final String SQL_SELECT_ALL = "SELECT * FROM users";
     private static final String SQL_SELECT_BY_ID = "SELECT id, email, name, password, company, phone, created_at, is_active, is_admin FROM users WHERE id = ?";
     private static final String SQL_INSERT = "INSERT INTO users (email, name, password, company, phone, created_at, is_active, is_admin) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String SQL_UPDATE = "UPDATE users SET email = ?, name = ?, password = ?, company = ?, phone = ?, is_active = ?, is_admin = ? WHERE id = ?";
@@ -82,6 +81,29 @@ public class UserDAO implements DAO<User> {
         }
 
         return user;
+    }
+
+    public ArrayList<User> getAll() throws DAOException {
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        ArrayList<User> users = new ArrayList<>();
+
+        try {
+            conn = daoFactory.getConnection();
+            preparedStatement = initPreparedStatement(conn, SQL_SELECT_ALL, false);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                users.add(map(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            silentClosures(resultSet, preparedStatement, conn);
+        }
+
+        return users;
     }
 
     @Override
