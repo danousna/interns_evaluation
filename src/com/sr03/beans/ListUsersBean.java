@@ -38,5 +38,6 @@ public class ListUsersBean extends HttpServlet {
         User changedUser = userDao.get(id);
         FacesMessage message = new FacesMessage( "User N°" + changedUser.getId() + " " + changedUser.getName() + " " + (changedUser.getIs_active() ? "ACTIVÉ" : "DÉSACTIVÉ"));
         FacesContext.getCurrentInstance().addMessage( null, message );
+        init();
     }
 }

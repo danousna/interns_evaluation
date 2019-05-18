@@ -32,10 +32,10 @@
             <h:column>
                 <c:facet name="header">Active user</c:facet>
                 #{user.is_active ? "oui" : "non"}
-                <h:commandLink action="#{listUsersBean.changeUserActivity(user.id)}" rendered="#{user.is_active}" value="(désactiver)">
-                </h:commandLink>
-                <h:commandLink action="#{listUsersBean.changeUserActivity(user.id)}" rendered="#{!user.is_active}" value="(activer)">
-                </h:commandLink>
+                <h:commandButton action="#{listUsersBean.changeUserActivity(user.id)}" rendered="#{user.is_active}" value="désactiver">
+                </h:commandButton>
+                <h:commandButton action="#{listUsersBean.changeUserActivity(user.id)}" rendered="#{!user.is_active}" value="activer">
+                </h:commandButton>
             </h:column>
 
         </h:dataTable>
