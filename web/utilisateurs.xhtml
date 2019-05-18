@@ -11,30 +11,35 @@
 <h:body>
     <h1>Gestion des utilisateurs</h1>
     <h:form>
-        <h:form>
-            <h:dataTable value="#{listUsersBean.users}" var="user" border="2"
-                         cellspacing="1" cellpadding="1">
-                <h:column>
-                    <c:facet name="header">Name</c:facet>
-                    #{user.name}
-                </h:column>
-                <h:column>
-                    <c:facet name="header">Email</c:facet>
-                    #{user.email}
-                </h:column>
-                <h:column>
-                    <c:facet name="header">Company</c:facet>
-                    #{user.company}
-                </h:column>
-                <h:column>
-                    <c:facet name="header">Active user</c:facet>
-                    #{user.is_active ? "oui" : "non"}
-                    <h:link outcome="index" rendered="#{user.is_active}" value="(désactiver)"/>
-                    <h:link outcome="index" rendered="#{!user.is_active}" value="(activer)"/>
-                </h:column>
+        <h:dataTable value="#{listUsersBean.users}" var="user" border="2"
+                     cellspacing="1" cellpadding="1">
+            <h:column>
+                <c:facet name="header">ID</c:facet>
+                #{user.id}
+            </h:column>
+            <h:column>
+                <c:facet name="header">Name</c:facet>
+                #{user.name}
+            </h:column>
+            <h:column>
+                <c:facet name="header">Email</c:facet>
+                #{user.email}
+            </h:column>
+            <h:column>
+                <c:facet name="header">Company</c:facet>
+                #{user.company}
+            </h:column>
+            <h:column>
+                <c:facet name="header">Active user</c:facet>
+                #{user.is_active ? "oui" : "non"}
+                <h:commandLink action="#{listUsersBean.changeUserActivity(user.id)}" rendered="#{user.is_active}" value="(désactiver)">
+                </h:commandLink>
+                <h:commandLink action="#{listUsersBean.changeUserActivity(user.id)}" rendered="#{!user.is_active}" value="(activer)">
+                </h:commandLink>
+            </h:column>
 
-            </h:dataTable>
-        </h:form>
+        </h:dataTable>
+        <h:messages globalOnly="true" infoClass="info" />
     </h:form>
     <br />
     <h:link outcome="index" value="Accueil"/>
