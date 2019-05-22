@@ -30,11 +30,15 @@
                 #{user.company}
             </h:column>
             <h:column>
-                <c:facet name="header">Active user</c:facet>
-                #{user.is_active ? "oui" : "non"}
+                <c:facet name="header">Change status</c:facet>
                 <h:commandButton action="#{listUsersBean.changeUserActivity(user.id)}" rendered="#{user.is_active}" value="désactiver">
                 </h:commandButton>
                 <h:commandButton action="#{listUsersBean.changeUserActivity(user.id)}" rendered="#{!user.is_active}" value="activer">
+                </h:commandButton>
+            </h:column>
+            <h:column>
+                <c:facet name="header">Modification</c:facet>
+                <h:commandButton action="TODO" value="éditer"> <!-- action à changer ou changer en lien vers une page d'édition de chaque user-->
                 </h:commandButton>
             </h:column>
 
