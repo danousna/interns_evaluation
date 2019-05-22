@@ -22,11 +22,6 @@ public class LoginBean implements Serializable {
     private String password;
     private String message;
 
-    @Override
-    public void init() {
-        userDAO = DAOFactory.getInstance().getUserDao();
-    }
-
     public String getUsername() {
         return username;
     }
@@ -52,6 +47,7 @@ public class LoginBean implements Serializable {
     }
 
     public String validate() {
+        userDAO = DAOFactory.getInstance().getUserDao();
         boolean valid = userDAO.validate(username, password);
         if (valid) {
             HttpSession session = SessionUtils.getSession();
@@ -60,6 +56,7 @@ public class LoginBean implements Serializable {
         } else {
             FacesMessage message = new FacesMessage( "Connexion impossible !");
             FacesContext.getCurrentInstance().addMessage( null, message );
+            return "login";
         }
     }
 
