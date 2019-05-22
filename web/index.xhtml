@@ -19,12 +19,10 @@
             <li><h:link outcome="reponse" value="Ajouter une réponse"/></li>
 
             <li><h:link outcome="utilisateurs" value="Gestion des utilisateurs"/></li>
-<!--            <li><h:link outcome="sujets" value="Gestion des sujets"/></li>-->
-<!--            <li><h:link outcome="questionnaires" value="Gestion des questionnaires"/></li>-->
-<!--            <li><h:link outcome="questions" value="Gestion des questions"/></li>-->
-<!--            <li><h:link outcome="reponses" value="Gestion des réponses"/></li>-->
-
         </ul>
+        <h:form>
+            <h:commandLink action="#{authenticationBean.logout}" value="Déconnexion" />
+        </h:form>
     </div>
 </h:body>
 </html>

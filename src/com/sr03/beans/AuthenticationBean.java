@@ -3,6 +3,7 @@ package com.sr03.beans;
 import com.sr03.dao.DAOFactory;
 import com.sr03.dao.UserDAO;
 import com.sr03.utilities.SessionUtils;
+import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -13,7 +14,7 @@ import java.io.Serializable;
 
 @ManagedBean
 @SessionScoped
-public class LoginBean implements Serializable {
+public class AuthenticationBean implements Serializable {
     private static final long serialVersionUID = 1094801825228386363L;
 
     private UserDAO userDAO;
@@ -46,18 +47,26 @@ public class LoginBean implements Serializable {
         this.message = message;
     }
 
-    public String validate() {
+    public String login() {
         userDAO = DAOFactory.getInstance().getUserDao();
-        boolean valid = userDAO.validate(username, password);
-        if (valid) {
-            HttpSession session = SessionUtils.getSession();
-            session.setAttribute("username", username);
-            return "admin";
+        User user= userDAO.get(username);
+
+        if (user != null) {
+            ConfigurablePasswordEncryptor passwordEncryptor = new ConfigurablePasswordEncryptor();
+            passwordEncryptor.setAlgorithm( "SHA-256" );
+            passwordEncryptor.setPlainDigest( false );
+
+            if(passwordEncryptor.checkPassword(password, user.getPassword())) {
+                HttpSession session = SessionUtils.getSession();
+                session.setAttribute("username", user.getName());
+                return "authenticated";
+            }
         } else {
             FacesMessage message = new FacesMessage( "Connexion impossible !");
             FacesContext.getCurrentInstance().addMessage( null, message );
-            return "login";
         }
+
+        return "login";
     }
 
     public String logout() {
