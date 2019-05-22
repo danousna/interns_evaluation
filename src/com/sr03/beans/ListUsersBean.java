@@ -4,7 +4,6 @@ import com.sr03.dao.DAOFactory;
 import com.sr03.dao.UserDAO;
 import com.sr03.beans.User;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +16,7 @@ public class ListUsersBean extends HttpServlet {
 
     private UserDAO userDao;
 
-    @PostConstruct
+    @Override
     public void init() {
         this.userDao = DAOFactory.getInstance().getUserDao();
         this.users = userDao.getAll();

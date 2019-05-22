@@ -40,10 +40,10 @@ public final class RegisterForm {
         return result;
     }
 
-    public User registerUser( HttpServletRequest request ) {
-        String email = getFieldValue( request, FIELD_EMAIL );
-        String password = getFieldValue( request, FIELD_PASS );
-        String password_confirmation = getFieldValue( request, FIELD_PASS_CONF );
+    public User registerUser(User user) {
+        String email = user.getEmail();
+        String password = user.getPassword();
+        String password_confirmation = user.getPassword();
 
         User user = new User();
 
@@ -53,7 +53,7 @@ public final class RegisterForm {
             user.setPhone(getFieldValue( request, FIELD_PHONE ));
             user.setIs_admin(Boolean.valueOf(getFieldValue( request, FIELD_IS_ADMIN )));
 
-            processEmail(email, user);
+            processEmail(email, user)
             processPassword(password, password_confirmation, user);
 
             if (errors.isEmpty()) {

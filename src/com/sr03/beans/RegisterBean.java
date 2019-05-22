@@ -12,11 +12,12 @@ import javax.servlet.http.HttpServlet;
 
 import com.sr03.dao.DAOFactory;
 import com.sr03.dao.UserDAO;
+import com.sr03.forms.RegisterForm;
 
 @ManagedBean
 @ViewScoped
 public class RegisterBean extends HttpServlet implements Serializable {
-        private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     private User user;
 
@@ -36,7 +37,9 @@ public class RegisterBean extends HttpServlet implements Serializable {
         init();
         initDate();
         initIsActive();
-        userDAO.create(user);
+        RegisterForm form = new RegisterForm(userDAO);
+        form.registerUser(user);
+
         FacesMessage message = new FacesMessage( "Succès de l'inscription !");
         FacesContext.getCurrentInstance().addMessage( null, message );
     }
