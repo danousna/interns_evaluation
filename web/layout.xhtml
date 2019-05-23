@@ -11,16 +11,16 @@
     <meta name="author" content="Guillaume et Natan" />
 </h:head>
 <h:body style="padding: 60px;">
-    <b:navBar brand="Évaluation des stagiaires" brandHref="./" fixed="top" inverse="true">
-        <b:navbarLinks>
-            <b:navLink value="Utilisateurs" href="./users.xhtml" />
-            <b:navLink value="Questionnaires" href="./quizzes.xhtml" />
-            <b:navLink value="Questions" href="./questions.xhtml" />
-            <h:form style="display: inline-block;">
-                <b:navCommandLink action="#{authenticationBean.logout}" value="Déconnexion" />
-            </h:form>
-        </b:navbarLinks>
-    </b:navBar>
+    <h:form style="display: inline-block;">
+        <b:navBar brand="Évaluation des stagiaires" brandHref="./" fixed="top" inverse="true">
+            <b:navbarLinks>
+                <b:navLink value="Utilisateurs" href="./users.xhtml" />
+                <b:navLink value="Questionnaires" href="./quizzes.xhtml" />
+                <b:navLink value="Questions" href="./questions.xhtml" />
+                <b:navCommandLink action="#{authenticationBean.logout}" value="Déconnexion" rendered="#{sessionScope.get('username') != null}" />
+            </b:navbarLinks>
+        </b:navBar>
+    </h:form>
     <ui:insert name="content">
     </ui:insert>
 </h:body>
