@@ -25,7 +25,7 @@ public class AuthenticationFilter implements Filter {
 
             String loginURI = request.getContextPath() + "/login.xhtml";
 
-            boolean loggedIn = session != null && session.getAttribute("username") != null;
+            boolean loggedIn = session != null && session.getAttribute("email") != null;
             boolean loginRequest = request.getRequestURI().equals(loginURI);
             boolean resourceRequest = request.getRequestURI().startsWith(request.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER);
 

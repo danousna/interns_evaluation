@@ -11,7 +11,7 @@ public class UserDAO implements DAO<User> {
     private DAOFactory daoFactory;
     private static final String SQL_SELECT_ALL = "SELECT * FROM users";
     private static final String SQL_SELECT_BY_ID = "SELECT * FROM users WHERE id = ?";
-    private static final String SQL_SELECT_BY_NAME = "SELECT * FROM users WHERE name = ?";
+    private static final String SQL_SELECT_BY_EMAIL = "SELECT * FROM users WHERE email = ?";
     private static final String SQL_INSERT = "INSERT INTO users (email, name, password, company, phone, created_at, is_active, is_admin) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String SQL_UPDATE = "UPDATE users SET email = ?, name = ?, password = ?, company = ?, phone = ?, is_active = ?, is_admin = ? WHERE id = ?";
     private static final String SQL_CHANGE_ACTIVITY = "UPDATE users SET is_active = (is_active + 1)%2 WHERE id = ?";
@@ -85,7 +85,7 @@ public class UserDAO implements DAO<User> {
         return user;
     }
 
-    public User get(String name) throws DAOException {
+    public User get(String email) throws DAOException {
         Connection conn = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -93,7 +93,7 @@ public class UserDAO implements DAO<User> {
 
         try {
             conn = daoFactory.getConnection();
-            preparedStatement = initPreparedStatement(conn, SQL_SELECT_BY_NAME, false, name);
+            preparedStatement = initPreparedStatement(conn, SQL_SELECT_BY_EMAIL, false, email);
             resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {

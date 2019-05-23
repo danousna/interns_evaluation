@@ -16,15 +16,15 @@ import java.io.Serializable;
 public class AuthenticationBean implements Serializable {
     private static final long serialVersionUID = 1094801825228386363L;
 
-    private String username;
+    private String email;
     private String password;
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -38,7 +38,7 @@ public class AuthenticationBean implements Serializable {
     public void login() {
         FacesContext context = FacesContext.getCurrentInstance();
         UserDAO userDAO = DAOFactory.getInstance().getUserDao();
-        User user= userDAO.get(username);
+        User user= userDAO.get(email);
 
         if (user != null) {
             ConfigurablePasswordEncryptor passwordEncryptor = new ConfigurablePasswordEncryptor();
@@ -46,7 +46,9 @@ public class AuthenticationBean implements Serializable {
             passwordEncryptor.setPlainDigest( false );
 
             if(passwordEncryptor.checkPassword(password, user.getPassword())) {
-                context.getExternalContext().getSessionMap().put("username", user.getName());
+                context.getExternalContext().getSessionMap().put("name", user.getName());
+                context.getExternalContext().getSessionMap().put("email", user.getEmail());
+
                 try {
                     context.getExternalContext().redirect("index.xhtml");
                 } catch (IOException e) {

@@ -10,6 +10,11 @@
     <ui:define name="content">
         <b:container>
             <h1>Utilisateurs</h1>
+            <b:row>
+                <b:column>
+                    <b:link styleClass="btn btn-primary" href="./create_user.xhtml">Créer un utilisateur</b:link>
+                </b:column>
+            </b:row>
         </b:container>
         <b:container>
             <h3>Liste des utilisateurs</h3>
@@ -29,32 +34,6 @@
                         </h:outputText>
                     </b:dataTableColumn>
                 </b:dataTable>
-            </h:form>
-        </b:container>
-        <b:container>
-            <h3>Créer un utilisateur</h3>
-
-            <h:form>
-                <b:inputText id="name" value="#{usersBean.user.name}" required="true" maxlength="60" label="Nom" requiredMessage="Veuillez saisir un nom" />
-                <b:message id="nameMessage" for="name" />
-
-                <b:inputText id="email" value="#{usersBean.user.email}" required="true" maxlength="60" label="Adresse email" requiredMessage="Veuillez saisir une adresse email" />
-                <b:message id="emailMessage" for="email" />
-
-                <b:inputText id="password" value="#{usersBean.user.password}" required="true" maxlength="60" label="Mot de passe" requiredMessage="Veuillez saisir un mot de passe" />
-                <b:message id="passwordMessage" for="password" />
-
-                <b:inputText id="company" value="#{usersBean.user.company}" required="true" maxlength="60" label="Entreprise" requiredMessage="Veuillez saisir une entreprise" />
-                <b:message id="companyMessage" for="company" />
-
-                <b:inputText id="phone" value="#{usersBean.user.phone}" required="true" maxlength="60" label="Téléphone" requiredMessage="Veuillez saisir un numéro de téléphone" />
-                <b:message id="phoneMessage" for="phone" />
-
-                <b:selectBooleanCheckbox value="#{usersBean.user.is_admin}" caption="Administrateur" />
-
-                <h:messages globalOnly="true" infoClass="info" />
-
-                <b:commandButton value="Envoyer" action="#{usersBean.create}" />
             </h:form>
         </b:container>
     </ui:define>

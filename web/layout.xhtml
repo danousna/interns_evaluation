@@ -16,7 +16,6 @@
             <b:navbarLinks>
                 <b:navLink value="Utilisateurs" href="./users.xhtml" active="#{view.viewId eq '/users.xhtml' ? 'true' : ''}" />
                 <b:navLink value="Questionnaires" href="./quizzes.xhtml" />
-                <b:navLink value="Questions" href="./questions.xhtml" />
                 <b:navCommandLink action="#{authenticationBean.logout}" value="Déconnexion" rendered="#{sessionScope.get('username') != null}" />
             </b:navbarLinks>
         </b:navBar>
