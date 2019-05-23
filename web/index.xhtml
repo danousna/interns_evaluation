@@ -2,27 +2,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xml:lang="en" lang="en">
-<h:head>
-    <title>Accueil</title>
-</h:head>
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
 <h:body>
-    <h1>Accueil du site</h1>
-    <h3>Que voulez-vous faire ?</h3>
-    <div>
-        <ul>
-            <li><h:link outcome="register" value="Ajouter un utilisateur"/></li>
-            <li><h:link outcome="sujet" value="Ajouter un sujet"/></li>
-            <li><h:link outcome="questionnaire" value="Ajouter un questionnaire"/></li>
-            <li><h:link outcome="question" value="Ajouter une question"/></li>
-            <li><h:link outcome="reponse" value="Ajouter une réponse"/></li>
-
-            <li><h:link outcome="utilisateurs" value="Gestion des utilisateurs"/></li>
-        </ul>
-        <h:form>
-            <h:commandLink action="#{authenticationBean.logout}" value="Déconnexion" />
-        </h:form>
-    </div>
+    <ui:composition template="layout.xhtml">
+        <ui:define name="content">
+            <b:container>
+                <h1>Bonjour !</h1>
+            </b:container>
+        </ui:define>
+    </ui:composition>
 </h:body>
 </html>

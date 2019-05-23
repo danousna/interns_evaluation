@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
+<h:head>
+    <title>Évaluation des stagiaires</title>
+    <meta name="author" content="Guillaume et Natan" />
+</h:head>
+<h:body style="padding: 60px;">
+    <b:navBar brand="Évaluation des stagiaires" brandHref="./" fixed="top" inverse="true">
+        <b:navbarLinks>
+            <b:navLink value="Utilisateurs" href="./users.xhtml" />
+            <b:navLink value="Questionnaires" href="./quizzes.xhtml" />
+            <b:navLink value="Questions" href="./questions.xhtml" />
+            <h:form style="display: inline-block;">
+                <b:navCommandLink action="#{authenticationBean.logout}" value="Déconnexion" />
+            </h:form>
+        </b:navbarLinks>
+    </b:navBar>
+    <ui:insert name="content">
+    </ui:insert>
+</h:body>
+</html>

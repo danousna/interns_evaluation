@@ -2,22 +2,19 @@ package com.sr03.beans;
 
 import com.sr03.dao.DAOFactory;
 import com.sr03.dao.UserDAO;
-import com.sr03.utilities.SessionUtils;
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.io.Serializable;
 
 @ManagedBean
 @SessionScoped
 public class AuthenticationBean implements Serializable {
     private static final long serialVersionUID = 1094801825228386363L;
-
-    private UserDAO userDAO;
 
     private String username;
     private String password;
@@ -47,8 +44,9 @@ public class AuthenticationBean implements Serializable {
         this.message = message;
     }
 
-    public String login() {
-        userDAO = DAOFactory.getInstance().getUserDao();
+    public void login() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        UserDAO userDAO = DAOFactory.getInstance().getUserDao();
         User user= userDAO.get(username);
 
         if (user != null) {
@@ -57,21 +55,25 @@ public class AuthenticationBean implements Serializable {
             passwordEncryptor.setPlainDigest( false );
 
             if(passwordEncryptor.checkPassword(password, user.getPassword())) {
-                HttpSession session = SessionUtils.getSession();
-                session.setAttribute("username", user.getName());
-                return "authenticated";
+                context.getExternalContext().getSessionMap().put("username", user.getName());
+                try {
+                    context.getExternalContext().redirect("index.xhtml");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         } else {
-            FacesMessage message = new FacesMessage( "Connexion impossible !");
-            FacesContext.getCurrentInstance().addMessage( null, message );
+            context.addMessage(null, new FacesMessage("Connexion impossible."));
         }
-
-        return "login";
     }
 
-    public String logout() {
-        HttpSession session = SessionUtils.getSession();
-        session.invalidate();
-        return "login";
+    public void logout() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().invalidateSession();
+        try {
+            context.getExternalContext().redirect("login.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
