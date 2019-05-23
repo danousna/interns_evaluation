@@ -3,6 +3,7 @@ package com.sr03.beans;
 import com.sr03.dao.DAOException;
 import com.sr03.dao.DAOFactory;
 import com.sr03.dao.UserDAO;
+import com.sr03.entities.UserEntity;
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 import javax.faces.application.FacesMessage;
@@ -17,18 +18,18 @@ import java.util.List;
 
 @ManagedBean
 @ViewScoped
-public class CreateUserBean extends HttpServlet {
-    private User user;
+public class UserCreateBean extends HttpServlet {
+    private UserEntity user;
     private UserDAO userDAO;
 
     private List<String> errors = new ArrayList<>();
 
-    public CreateUserBean() {
-        this.userDAO = DAOFactory.getInstance().getUserDao();
-        this.user = new User();
+    public UserCreateBean() {
+        this.userDAO = DAOFactory.getInstance().getUserDAO();
+        this.user = new UserEntity();
     }
 
-    public User getUser() {
+    public UserEntity getUser() {
         return user;
     }
 

@@ -1,4 +1,4 @@
-package com.sr03.beans;
+package com.sr03.entities;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -8,7 +8,7 @@ import javax.faces.bean.RequestScoped;
 
 @ManagedBean
 @RequestScoped
-public class User implements Serializable {
+public class UserEntity implements Serializable {
     private Long id;
     private Boolean is_active;
     private Boolean is_admin;
@@ -19,11 +19,11 @@ public class User implements Serializable {
     private String phone;
     private Timestamp created_at;
 
-    public User() {
+    public UserEntity() {
 
     }
 
-    public User(Long id, Boolean is_active, Boolean is_admin, String name, String email, String password, String company, String phone, Timestamp created_at) {
+    public UserEntity(Long id, Boolean is_active, Boolean is_admin, String name, String email, String password, String company, String phone, Timestamp created_at) {
         this.id = id;
         this.is_active = is_active;
         this.is_admin = is_admin;

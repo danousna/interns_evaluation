@@ -12,28 +12,28 @@
             <h3>Créer un utilisateur</h3>
 
             <h:form>
-                <ui:repeat value="#{createUserBean.errors}" var="error" rendered="#{!createUserBean.errors.isEmpty()}">
+                <ui:repeat value="#{userCreateBean.errors}" var="error" rendered="#{!userCreateBean.errors.isEmpty()}">
                     <p>#{error}</p>
                 </ui:repeat>
 
-                <b:inputText id="name" value="#{createUserBean.user.name}" required="true" maxlength="60" label="Nom" requiredMessage="Veuillez saisir un nom" />
+                <b:inputText id="name" value="#{userCreateBean.user.name}" required="true" maxlength="60" label="Nom" requiredMessage="Veuillez saisir un nom" />
                 <b:message id="nameMessage" for="name" />
 
-                <b:inputText id="email" value="#{createUserBean.user.email}" required="true" maxlength="60" label="Adresse email" requiredMessage="Veuillez saisir une adresse email" />
+                <b:inputText id="email" value="#{userCreateBean.user.email}" required="true" maxlength="60" label="Adresse email" requiredMessage="Veuillez saisir une adresse email" />
                 <b:message id="emailMessage" for="email" />
 
-                <b:inputSecret id="password" value="#{createUserBean.user.password}" required="true" minlength="6" maxlength="60" label="Mot de passe" requiredMessage="Veuillez saisir un mot de passe" />
+                <b:inputSecret id="password" value="#{userCreateBean.user.password}" required="true" minlength="6" maxlength="60" label="Mot de passe" requiredMessage="Veuillez saisir un mot de passe" />
                 <b:message id="passwordMessage" for="password" />
 
-                <b:inputText id="company" value="#{createUserBean.user.company}" required="true" maxlength="60" label="Entreprise" requiredMessage="Veuillez saisir une entreprise" />
+                <b:inputText id="company" value="#{userCreateBean.user.company}" required="true" maxlength="60" label="Entreprise" requiredMessage="Veuillez saisir une entreprise" />
                 <b:message id="companyMessage" for="company" />
 
-                <b:inputText id="phone" value="#{createUserBean.user.phone}" required="true" maxlength="60" label="Téléphone" requiredMessage="Veuillez saisir un numéro de téléphone" />
+                <b:inputText id="phone" value="#{userCreateBean.user.phone}" required="true" maxlength="60" label="Téléphone" requiredMessage="Veuillez saisir un numéro de téléphone" />
                 <b:message id="phoneMessage" for="phone" />
 
-                <b:selectBooleanCheckbox value="#{createUserBean.user.is_admin}" caption="Administrateur" />
+                <b:selectBooleanCheckbox value="#{userCreateBean.user.is_admin}" caption="Administrateur" />
 
-                <b:commandButton value="Envoyer" action="#{createUserBean.create}" />
+                <b:commandButton value="Envoyer" action="#{userCreateBean.create}" />
             </h:form>
         </b:container>
     </ui:define>

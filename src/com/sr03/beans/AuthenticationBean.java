@@ -2,6 +2,7 @@ package com.sr03.beans;
 
 import com.sr03.dao.DAOFactory;
 import com.sr03.dao.UserDAO;
+import com.sr03.entities.UserEntity;
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 import javax.faces.application.FacesMessage;
@@ -37,8 +38,8 @@ public class AuthenticationBean implements Serializable {
 
     public void login() {
         FacesContext context = FacesContext.getCurrentInstance();
-        UserDAO userDAO = DAOFactory.getInstance().getUserDao();
-        User user= userDAO.get(email);
+        UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
+        UserEntity user= userDAO.get(email);
 
         if (user != null) {
             ConfigurablePasswordEncryptor passwordEncryptor = new ConfigurablePasswordEncryptor();
