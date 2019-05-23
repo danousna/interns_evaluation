@@ -18,7 +18,6 @@ public class AuthenticationBean implements Serializable {
 
     private String username;
     private String password;
-    private String message;
 
     public String getUsername() {
         return username;
@@ -34,14 +33,6 @@ public class AuthenticationBean implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public void login() {
@@ -63,7 +54,11 @@ public class AuthenticationBean implements Serializable {
                 }
             }
         } else {
-            context.addMessage(null, new FacesMessage("Connexion impossible."));
+            context.addMessage(null, new FacesMessage(
+                    FacesMessage.SEVERITY_ERROR,
+                    "Connexion impossible.",
+                    "Vérifiez vos identifiants de connexion"
+            ));
         }
     }
 

@@ -14,13 +14,21 @@
     <h:form style="display: inline-block;">
         <b:navBar brand="Évaluation des stagiaires" brandHref="./" fixed="top" inverse="true">
             <b:navbarLinks>
-                <b:navLink value="Utilisateurs" href="./users.xhtml" />
+                <b:navLink value="Utilisateurs" href="./users.xhtml" active="#{view.viewId eq '/users.xhtml' ? 'true' : ''}" />
                 <b:navLink value="Questionnaires" href="./quizzes.xhtml" />
                 <b:navLink value="Questions" href="./questions.xhtml" />
                 <b:navCommandLink action="#{authenticationBean.logout}" value="Déconnexion" rendered="#{sessionScope.get('username') != null}" />
             </b:navbarLinks>
         </b:navBar>
     </h:form>
+    <b:messages id="messages"
+                globalOnly="true"
+                severity="error,fatal"/>
+    <b:growl id="growl"
+             globalOnly="true"
+             showDetail="true"
+             severity="info,warn"
+    />
     <ui:insert name="content">
     </ui:insert>
 </h:body>
