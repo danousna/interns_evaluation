@@ -89,12 +89,6 @@ public class UserCreateBean extends HttpServlet {
         FacesMessage message = new FacesMessage( "User N°" + changedUser.getId() + " " + changedUser.getName() + " " + (changedUser.getIs_active() ? "ACTIVÉ" : "DÉSACTIVÉ"));
         context.addMessage( null, message );
 
-        try {
-            context.getExternalContext().redirect("users.xhtml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         return "success";
     }
 

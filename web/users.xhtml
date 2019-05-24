@@ -21,7 +21,7 @@
             <h:form>
                 <b:dataTable value="#{usersBean.users}"
                              var="user"
-                             id="users-table"
+                             id="usersTable"
                 >
                     <b:dataTableColumn value="#{user.id}" label="ID" />
                     <b:dataTableColumn value="#{user.name}" label="Nom" />
@@ -33,10 +33,13 @@
                             <f:convertDateTime type="date" pattern="dd-MM-yyyy à HH:mm"/>
                         </h:outputText>
                     </b:dataTableColumn>
-                    <b:dataTableColumn value="#{user.phone}" label="Téléphone" />
+                    <b:dataTableColumn value="#{user.is_active}" label="Actif" />
                     <b:dataTableColumn label="Actions">
-                        <h:commandButton action="#{userCreateBean.changeUserActivity(user.id)}" rendered="#{user.is_active}" value="désactiver" />
-                        <h:commandButton action="#{userCreateBean.changeUserActivity(user.id)}" rendered="#{!user.is_active}" value="activer" />
+                        <b:commandButton
+                                value="#{user.is_active ? 'Désactiver' : 'Activer'}"
+                                ajax="true"
+                                onclick="ajax:userCreateBean.changeUserActivity(user.id);javascript:return false;"
+                                update="@(#usersTable)" />
                     </b:dataTableColumn>
                 </b:dataTable>
             </h:form>
