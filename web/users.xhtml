@@ -33,6 +33,11 @@
                             <f:convertDateTime type="date" pattern="dd-MM-yyyy à HH:mm"/>
                         </h:outputText>
                     </b:dataTableColumn>
+                    <b:dataTableColumn value="#{user.phone}" label="Téléphone" />
+                    <b:dataTableColumn label="Actions">
+                        <h:commandButton action="#{userCreateBean.changeUserActivity(user.id)}" rendered="#{user.is_active}" value="désactiver" />
+                        <h:commandButton action="#{userCreateBean.changeUserActivity(user.id)}" rendered="#{!user.is_active}" value="activer" />
+                    </b:dataTableColumn>
                 </b:dataTable>
             </h:form>
         </b:container>
