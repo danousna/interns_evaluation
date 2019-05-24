@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
+<ui:composition template="layout.xhtml">
+    <ui:define name="content">
+        <b:container>
+            <h1>Questionnaires</h1>
+            <b:row>
+                <b:column>
+                    <b:link styleClass="btn btn-primary" href="./create_quiz.xhtml">Créer un quiz</b:link>
+                </b:column>
+            </b:row>
+        </b:container>
+        <b:container>
+            <h3>Liste des questionnaires</h3>
+            <h:form>
+                <b:dataTable value="#{quizzesBean.quizzes}"
+                             var="quiz"
+                             id="quiz-table"
+                >
+                    <b:dataTableColumn value="#{quiz.id}" label="ID" />
+                    <b:dataTableColumn value="#{quiz.name}" label="Nom du questionnaire" />
+                    <b:dataTableColumn value="#{quiz.subject_id}" label="Sujet associé  " />
+                    <b:dataTableColumn label="Actions">
+                        <h:commandButton action="#{quiz}" rendered="#{user.is_active}" value="désactiver" />
+                        <h:commandButton action="#{userCreateBean.changeUserActivity(user.id)}" rendered="#{!user.is_active}" value="activer" />
+                    </b:dataTableColumn>
+                </b:dataTable>
+            </h:form>
+        </b:container>
+    </ui:define>
+</ui:composition>
+</html>
