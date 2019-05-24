@@ -13,10 +13,9 @@
             <b:jumbotron>
                 <h3>Connexion</h3>
                 <h:form>
-                    <h:messages globalOnly="true" style="color:red;margin:8px;" />
-                    <b:inputText id="username" value="#{authenticationBean.username}" label="Nom" />
+                    <b:inputText id="email" value="#{authenticationBean.email}" label="Nom" />
                     <b:inputSecret id="password" value="#{authenticationBean.password}" label="Mot de passe" />
-                    <h:commandButton action="#{authenticationBean.login}" value="Connexion" />
+                    <b:commandButton action="#{authenticationBean.login}" value="Connexion" />
                 </h:form>
             </b:jumbotron>
         </b:container>

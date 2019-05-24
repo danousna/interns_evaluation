@@ -4,6 +4,43 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
+<ui:composition template="layout.xhtml">
+    <ui:define name="content">
+        <b:container>
+            <h1>Utilisateurs</h1>
+            <b:row>
+                <b:column>
+                    <b:link styleClass="btn btn-primary" href="./create_user.xhtml">Créer un utilisateur</b:link>
+                </b:column>
+            </b:row>
+        </b:container>
+        <b:container>
+            <h3>Liste des utilisateurs</h3>
+            <h:form>
+                <b:dataTable value="#{usersBean.users}"
+                             var="user"
+                             id="users-table"
+                >
+                    <b:dataTableColumn value="#{user.id}" label="ID" />
+                    <b:dataTableColumn value="#{user.name}" label="Nom" />
+                    <b:dataTableColumn value="#{user.email}" label="Email" />
+                    <b:dataTableColumn value="#{user.company}" label="Entreprise" />
+                    <b:dataTableColumn value="#{user.phone}" label="Téléphone" />
+                    <b:dataTableColumn label="Date d'inscription">
+                        <h:outputText value="#{user.created_at}">
+                            <f:convertDateTime type="date" pattern="dd-MM-yyyy à HH:mm"/>
+                        </h:outputText>
+                    </b:dataTableColumn>
+                    <b:dataTableColumn value="#{user.phone}" label="Téléphone" />
+                    <b:dataTableColumn label="Actions">
+                        <h:commandButton action="#{userCreateBean.changeUserActivity(user.id)}" rendered="#{user.is_active}" value="désactiver" />
+                        <h:commandButton action="#{userCreateBean.changeUserActivity(user.id)}" rendered="#{!user.is_active}" value="activer" />
+                    </b:dataTableColumn>
+                </b:dataTable>
+            </h:form>
+        </b:container>
+    </ui:define>
+</ui:composition>
 </html>

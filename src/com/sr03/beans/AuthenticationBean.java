@@ -2,6 +2,7 @@ package com.sr03.beans;
 
 import com.sr03.dao.DAOFactory;
 import com.sr03.dao.UserDAO;
+import com.sr03.entities.UserEntity;
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 import javax.faces.application.FacesMessage;
@@ -16,16 +17,15 @@ import java.io.Serializable;
 public class AuthenticationBean implements Serializable {
     private static final long serialVersionUID = 1094801825228386363L;
 
-    private String username;
+    private String email;
     private String password;
-    private String message;
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -36,18 +36,10 @@ public class AuthenticationBean implements Serializable {
         this.password = password;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
     public void login() {
         FacesContext context = FacesContext.getCurrentInstance();
-        UserDAO userDAO = DAOFactory.getInstance().getUserDao();
-        User user= userDAO.get(username);
+        UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
+        UserEntity user= userDAO.get(email);
 
         if (user != null) {
             ConfigurablePasswordEncryptor passwordEncryptor = new ConfigurablePasswordEncryptor();
@@ -55,7 +47,9 @@ public class AuthenticationBean implements Serializable {
             passwordEncryptor.setPlainDigest( false );
 
             if(passwordEncryptor.checkPassword(password, user.getPassword())) {
-                context.getExternalContext().getSessionMap().put("username", user.getName());
+                context.getExternalContext().getSessionMap().put("name", user.getName());
+                context.getExternalContext().getSessionMap().put("email", user.getEmail());
+
                 try {
                     context.getExternalContext().redirect("index.xhtml");
                 } catch (IOException e) {
@@ -63,7 +57,11 @@ public class AuthenticationBean implements Serializable {
                 }
             }
         } else {
-            context.addMessage(null, new FacesMessage("Connexion impossible."));
+            context.addMessage(null, new FacesMessage(
+                    FacesMessage.SEVERITY_ERROR,
+                    "Connexion impossible.",
+                    "Vérifiez vos identifiants de connexion"
+            ));
         }
     }
 
