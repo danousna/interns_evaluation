@@ -12,7 +12,7 @@
             <h1>Questionnaires</h1>
             <b:row>
                 <b:column>
-                    <b:link styleClass="btn btn-primary" href="./create_quiz.xhtml">Créer un quiz</b:link>
+                    <b:link styleClass="btn btn-primary" href="./create_quiz.xhtml">Créer un questionnaire</b:link>
                 </b:column>
             </b:row>
         </b:container>
@@ -25,10 +25,15 @@
                 >
                     <b:dataTableColumn value="#{quiz.id}" label="ID" />
                     <b:dataTableColumn value="#{quiz.name}" label="Nom du questionnaire" />
-                    <b:dataTableColumn value="#{quiz.subject_id}" label="Sujet associé  " />
+                    <b:dataTableColumn value="#{subjectsBean.subjects.stream().filter(subject -> quiz.subject_id.equals(subject.getId())).toArray()[0].getName()}" label="Sujet associé" />
                     <b:dataTableColumn label="Actions">
-                        <h:commandButton action="#{quiz}" rendered="#{user.is_active}" value="désactiver" />
-                        <h:commandButton action="#{userCreateBean.changeUserActivity(user.id)}" rendered="#{!user.is_active}" value="activer" />
+                        <b:switch value="#{quiz.is_active}" onText="ACTIF" offText="INACTIF">
+                            <f:ajax listener="#{quizzesBean.changeQuizAvailability(quiz.id)}" />
+                        </b:switch>
+                        <b:buttonGroup>
+                            <b:commandButton look="primary" value="Éditer" />
+                            <b:commandButton action="#{quizzesBean.deleteQuiz(quiz.id)}" look="danger" value="Supprimer" />
+                        </b:buttonGroup>
                     </b:dataTableColumn>
                 </b:dataTable>
             </h:form>

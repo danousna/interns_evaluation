@@ -26,7 +26,10 @@
                     <b:dataTableColumn value="#{subject.id}" label="ID" />
                     <b:dataTableColumn value="#{subject.name}" label="Nom" />
                     <b:dataTableColumn label="Actions">
-
+                    <b:buttonGroup>
+                        <b:commandButton look="primary" value="Éditer" />
+                        <b:commandButton action="#{subjectsBean.deleteSubject(subject.id)}" look="danger" value="Supprimer" />
+                    </b:buttonGroup>
                     </b:dataTableColumn>
                 </b:dataTable>
             </h:form>

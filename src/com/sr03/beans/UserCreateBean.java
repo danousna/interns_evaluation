@@ -81,23 +81,6 @@ public class UserCreateBean extends HttpServlet {
         }
     }
 
-    public String changeUserActivity(Long id) {
-        FacesContext context = FacesContext.getCurrentInstance();
-
-        userDAO.changeUserActivity(id);
-        UserEntity changedUser = userDAO.get(id);
-        FacesMessage message = new FacesMessage( "User N°" + changedUser.getId() + " " + changedUser.getName() + " " + (changedUser.getIs_active() ? "ACTIVÉ" : "DÉSACTIVÉ"));
-        context.addMessage( null, message );
-
-        try {
-            context.getExternalContext().redirect("users.xhtml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return "success";
-    }
-
     private void processPassword() {
         String password = user.getPassword();
 

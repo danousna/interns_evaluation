@@ -35,8 +35,13 @@
                     </b:dataTableColumn>
                     <b:dataTableColumn value="#{user.phone}" label="Téléphone" />
                     <b:dataTableColumn label="Actions">
-                        <h:commandButton action="#{userCreateBean.changeUserActivity(user.id)}" rendered="#{user.is_active}" value="désactiver" />
-                        <h:commandButton action="#{userCreateBean.changeUserActivity(user.id)}" rendered="#{!user.is_active}" value="activer" />
+                        <b:switch value="#{user.is_active}" onText="ACTIF" offText="INACTIF">
+                            <f:ajax listener="#{usersBean.changeUserActivity(user.id)}" />
+                        </b:switch>
+                        <b:buttonGroup>
+                            <b:commandButton look="primary" value="Éditer" />
+                            <b:commandButton action="#{usersBean.deleteUser(user.id)}" look="danger" value="Supprimer" />
+                        </b:buttonGroup>
                     </b:dataTableColumn>
                 </b:dataTable>
             </h:form>
