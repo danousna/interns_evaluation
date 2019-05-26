@@ -18,13 +18,14 @@ import java.util.List;
 
 @ManagedBean
 @ViewScoped
-public class UserCreateBean extends HttpServlet {
+public class UserBean extends HttpServlet {
     private UserEntity user;
     private UserDAO userDAO;
+    private Boolean modify = false;
 
     private List<String> errors = new ArrayList<>();
 
-    public UserCreateBean() {
+    public UserBean() {
         this.userDAO = DAOFactory.getInstance().getUserDAO();
         this.user = new UserEntity();
     }
@@ -41,24 +42,51 @@ public class UserCreateBean extends HttpServlet {
         this.errors = errors;
     }
 
-    public void create()  {
+    public Boolean getModify() {
+        return modify;
+    }
+
+    public void setModify(Boolean modify) {
+        this.modify = modify;
+    }
+
+    public String modifyUser(Long id) {
+        user = userDAO.get(id);
+        modify = true;
+
+        return "user_form";
+    }
+
+    public void save()  {
         FacesContext context = FacesContext.getCurrentInstance();
+
+        System.out.println(modify);
 
         try {
             processPassword();
 
             if (errors.isEmpty()) {
-                Timestamp date = new Timestamp(System.currentTimeMillis());
-                user.setCreated_at(date);
-                user.setIs_active(true);
+                if (!modify) {
+                    Timestamp date = new Timestamp(System.currentTimeMillis());
+                    user.setCreated_at(date);
+                    user.setIs_active(true);
 
-                userDAO.create(user);
+                    userDAO.create(user);
+                } else {
+                    userDAO.update(user);
+                }
+
+                // We reset user object.
+                user = new UserEntity();
 
                 context.addMessage(null, new FacesMessage(
                         FacesMessage.SEVERITY_INFO,
                         "Utilisateur enregistré.",
                         null
                 ));
+
+                // Ici, on redirige au lieu de simplement changer de view.
+                // Cela permet d'actualiser la liste des users.
                 try {
                     context.getExternalContext().redirect("users.xhtml");
                 } catch (IOException e) {
@@ -67,29 +95,18 @@ public class UserCreateBean extends HttpServlet {
             } else {
                 context.addMessage(null, new FacesMessage(
                         FacesMessage.SEVERITY_ERROR,
-                        "Echec lors de la création de l'utilisateur.",
+                        "Echec lors de l'enregistrement de l'utilisateur.",
                         null
                 ));
             }
         } catch (DAOException e) {
             context.addMessage(null, new FacesMessage(
                     FacesMessage.SEVERITY_ERROR,
-                    "Échec de l'inscription : une erreur imprévue est survenue, merci de réessayer dans quelques instants.",
+                    "Échec de l'enregistrement : une erreur imprévue est survenue, merci de réessayer dans quelques instants.",
                     null
             ));
             e.printStackTrace();
         }
-    }
-
-    public String changeUserActivity(Long id) {
-        FacesContext context = FacesContext.getCurrentInstance();
-
-        userDAO.changeUserActivity(id);
-        UserEntity changedUser = userDAO.get(id);
-        FacesMessage message = new FacesMessage( "User N°" + changedUser.getId() + " " + changedUser.getName() + " " + (changedUser.getIs_active() ? "ACTIVÉ" : "DÉSACTIVÉ"));
-        context.addMessage( null, message );
-
-        return "success";
     }
 
     private void processPassword() {
