@@ -21,7 +21,7 @@ CREATE TABLE quizzes (
     is_active bit,
     subject_id int,
 
-    FOREIGN KEY (subject_id) REFERENCES subjects(id)
+    FOREIGN KEY (subject_id) REFERENCES subjects(id) ON DELETE CASCADE
 );
 
 CREATE TABLE questions (
@@ -31,7 +31,7 @@ CREATE TABLE questions (
     `order` int,
     quiz_id int,
 
-    FOREIGN KEY (quiz_id) REFERENCES quizzes(id)
+    FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE
 );
 
 CREATE TABLE answers (
@@ -42,16 +42,18 @@ CREATE TABLE answers (
     `order` int,
     question_id int,
 
-    FOREIGN KEY (question_id) REFERENCES questions(id)
+    FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE
 );
 
 CREATE TABLE users_answers (
     user_id int,
+    question_id int,
     answer_id int,
 
-    PRIMARY KEY (user_id, answer_id),
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (answer_id) REFERENCES answers(id)
+    PRIMARY KEY (user_id, question_id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE,
+    FOREIGN KEY (answer_id) REFERENCES answers(id) ON DELETE CASCADE
 );
 
 CREATE TABLE courses (
@@ -61,6 +63,6 @@ CREATE TABLE courses (
     finished_at date,
     quiz_id int,
 
-    FOREIGN KEY (quiz_id) REFERENCES quizzes(id)
+    FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE
 );
 
