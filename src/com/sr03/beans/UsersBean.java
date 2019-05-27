@@ -43,7 +43,7 @@ public class UsersBean extends HttpServlet {
         return "users.xhtml?faces-redirect=true";
     }
 
-    public String deleteUser(Long id) {
+    public String delete(Long id) {
         FacesContext context = FacesContext.getCurrentInstance();
 
         userDAO.delete(id);

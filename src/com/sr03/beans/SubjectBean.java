@@ -16,15 +16,23 @@ import java.util.List;
 
 @ManagedBean
 @ViewScoped
-public class SubjectCreateBean {
+public class SubjectBean {
     private SubjectEntity subject;
     private SubjectDAO subjectDAO;
 
+    private Long editId;
+
     private List<String> errors = new ArrayList<>();
 
-    public SubjectCreateBean() {
+    public SubjectBean() {
         this.subjectDAO = DAOFactory.getInstance().getSubjetDAO();
         this.subject = new SubjectEntity();
+    }
+
+    public void init() {
+        if (editId != null) {
+            subject = subjectDAO.get(editId);
+        }
     }
 
     public SubjectEntity getSubject() {
@@ -39,37 +47,52 @@ public class SubjectCreateBean {
         this.errors = errors;
     }
 
-    public void create()  {
+    public Long getEditId() {
+        return editId;
+    }
+
+    public void setEditId(Long editId) {
+        this.editId = editId;
+    }
+
+    public String save()  {
         FacesContext context = FacesContext.getCurrentInstance();
 
         try {
             if (errors.isEmpty()) {
-                subjectDAO.create(subject);
+                if (editId == null) {
+                    subjectDAO.create(subject);
+                } else {
+                    subjectDAO.update(subject);
+                }
 
                 context.addMessage(null, new FacesMessage(
                         FacesMessage.SEVERITY_INFO,
                         "Sujet enregistré.",
                         null
                 ));
-                try {
-                    context.getExternalContext().redirect("subjects.xhtml");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+
+                return "subjects.xhtml?faces-redirect=true";
             } else {
                 context.addMessage(null, new FacesMessage(
                         FacesMessage.SEVERITY_ERROR,
-                        "Echec lors de la création du sujet.",
+                        "Echec lors de l'enregistrement du sujet.",
                         null
                 ));
             }
         } catch (DAOException e) {
             context.addMessage(null, new FacesMessage(
                     FacesMessage.SEVERITY_ERROR,
-                    "Échec de l'ajout du sujet : une erreur imprévue est survenue, merci de réessayer dans quelques instants.",
+                    "Échec de l'enregistrement : une erreur imprévue est survenue, merci de réessayer dans quelques instants.",
                     null
             ));
             e.printStackTrace();
+        }
+
+        if (editId != null) {
+            return "subject_form?id=" + editId;
+        } else {
+            return "subject_form";
         }
     }
 }

@@ -8,7 +8,7 @@ import static com.sr03.dao.DAOUtility.*;
 
 public class SubjectDAO extends DAO<SubjectEntity> {
     private static final String SQL_INSERT = "INSERT INTO subjects (name) VALUES (?)";
-    private static final String SQL_UPDATE = "UPDATE subjects SET email = ?, name = ?, password = ?, company = ?, phone = ?, is_active = ?, is_admin = ? WHERE id = ?";
+    private static final String SQL_UPDATE = "UPDATE subjects SET name = ? WHERE id = ?";
 
     SubjectDAO(DAOFactory daoFactory) { super(daoFactory, "subjects"); }
 
@@ -36,8 +36,8 @@ public class SubjectDAO extends DAO<SubjectEntity> {
             preparedStatement = initPreparedStatement(conn, SQL_INSERT, true,
                     subject.getName()
             );
-
             int status = preparedStatement.executeUpdate();
+
             if (status == 0) {
                 throw new DAOException("Échec de la création du sujet.");
             }
@@ -62,7 +62,10 @@ public class SubjectDAO extends DAO<SubjectEntity> {
 
         try {
             conn = daoFactory.getConnection();
-            preparedStatement = initPreparedStatement(conn, SQL_UPDATE, false);
+            preparedStatement = initPreparedStatement(conn, SQL_UPDATE, false,
+                    subject.getName(),
+                    subject.getId()
+            );
             int status = preparedStatement.executeUpdate();
 
             if (status == 0) {

@@ -29,12 +29,15 @@ public class SubjectsBean extends HttpServlet {
 
     public void setSubjects(List<SubjectEntity> s) { subjects = s; }
 
-    public String deleteSubject(Long id) {
+    public String delete(Long id) {
         FacesContext context = FacesContext.getCurrentInstance();
 
         subjectDAO.delete(id);
-        FacesMessage message = new FacesMessage( "Sujet SUPPRIMÉ");
-        context.addMessage( null, message );
+        context.addMessage(null, new FacesMessage(
+                FacesMessage.SEVERITY_INFO,
+                "Succès de la suppression.",
+                null
+        ));
 
         try {
             context.getExternalContext().redirect("subjects.xhtml");
@@ -42,6 +45,6 @@ public class SubjectsBean extends HttpServlet {
             e.printStackTrace();
         }
 
-        return "success";
+        return "subjects.xhtml?faces-redirect=true";
     }
 }

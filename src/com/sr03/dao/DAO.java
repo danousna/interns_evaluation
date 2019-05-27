@@ -16,7 +16,7 @@ abstract class DAO<T> {
     private static final String SQL_DELETE = "DELETE FROM {0} WHERE id = ?";
 
     DAOFactory daoFactory;
-    String database;
+    private String database;
 
     DAO(DAOFactory daoFactory, String database) {
         this.daoFactory = daoFactory;

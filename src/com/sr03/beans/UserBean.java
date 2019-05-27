@@ -105,7 +105,6 @@ public class UserBean extends HttpServlet {
         } else {
             return "user_form";
         }
-
     }
 
     private void processPassword() {
