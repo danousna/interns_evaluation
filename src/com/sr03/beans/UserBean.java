@@ -8,7 +8,6 @@ import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServlet;
@@ -21,8 +20,6 @@ import java.util.List;
 public class UserBean extends HttpServlet {
     private UserEntity user;
     private UserDAO userDAO;
-    private final String ACTION_UPDATE = "update";
-    private final String ACTION_CREATE = "create";
 
     private Long editId;
 
