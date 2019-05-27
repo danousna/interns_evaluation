@@ -8,20 +8,25 @@
       xmlns:b="http://bootsfaces.net/ui">
 <ui:composition template="layout.xhtml">
     <ui:define name="content">
-        <b:container>
-            <h1>Utilisateurs</h1>
-            <b:row>
-                <b:column>
-                    <b:link styleClass="btn btn-primary" href="./create_user.xhtml">Créer un utilisateur</b:link>
-                </b:column>
-            </b:row>
-        </b:container>
-        <b:container>
-            <h3>Liste des utilisateurs</h3>
-            <h:form>
+        <h:form>
+            <b:container>
+                <h1>Utilisateurs</h1>
+                <b:row>
+                    <b:column>
+                        <b:link
+                                look="primary"
+                                outcome="user_form"
+                                value="Créer un utilisateur"
+                                style="display: inline;"/>
+                    </b:column>
+                </b:row>
+            </b:container>
+            <b:container>
+                <h3>Liste des utilisateurs</h3>
                 <b:dataTable value="#{usersBean.users}"
                              var="user"
-                             id="users-table"
+                             id="usersTable"
+                             autoUpdate="true"
                 >
                     <b:dataTableColumn value="#{user.id}" label="ID" />
                     <b:dataTableColumn value="#{user.name}" label="Nom" />
@@ -30,22 +35,31 @@
                     <b:dataTableColumn value="#{user.phone}" label="Téléphone" />
                     <b:dataTableColumn label="Date d'inscription">
                         <h:outputText value="#{user.created_at}">
-                            <f:convertDateTime type="date" pattern="dd-MM-yyyy à HH:mm"/>
+                            <f:convertDateTime type="date" pattern="dd-MM-yyyy à HH:mm" timeZone="Europe/Paris" />
                         </h:outputText>
                     </b:dataTableColumn>
-                    <b:dataTableColumn value="#{user.phone}" label="Téléphone" />
                     <b:dataTableColumn label="Actions">
-                        <b:switch value="#{user.is_active}" onText="ACTIF" offText="INACTIF">
-                            <f:ajax listener="#{usersBean.changeUserActivity(user.id)}" />
-                        </b:switch>
-                        <b:buttonGroup>
-                            <b:commandButton look="primary" value="Éditer" />
-                            <b:commandButton action="#{usersBean.deleteUser(user.id)}" look="danger" value="Supprimer" />
-                        </b:buttonGroup>
+                        <b:commandButton
+                                value="#{user.is_active ? 'Désactiver' : 'Activer'}"
+                                action="#{usersBean.changeUserActivity(user.id)}" />
+                        &nbsp;
+                        <b:commandLink
+                                display="inline-block"
+                                look="default"
+                                outcome="user_form"
+                                value="Modifier"
+                                style="display: inline;">
+                            <f:param name="id" value="#{user.id}" />
+                        </b:commandLink>
+                        &nbsp;
+                        <b:commandButton
+                                look="danger"
+                                value="Supprimer"
+                                action="#{usersBean.delete(user.id)}" />
                     </b:dataTableColumn>
                 </b:dataTable>
-            </h:form>
-        </b:container>
+            </b:container>
+        </h:form>
     </ui:define>
 </ui:composition>
 </html>

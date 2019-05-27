@@ -8,7 +8,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import java.io.IOException;
 import javax.servlet.http.HttpServlet;
 import java.util.List;
 
@@ -20,6 +19,10 @@ public class SubjectsBean extends HttpServlet {
 
     public SubjectsBean() {
         this.subjectDAO = DAOFactory.getInstance().getSubjetDAO();
+        init();
+    }
+
+    public void init() {
         this.subjects = subjectDAO.getAll();
     }
 
@@ -29,19 +32,16 @@ public class SubjectsBean extends HttpServlet {
 
     public void setSubjects(List<SubjectEntity> s) { subjects = s; }
 
-    public String deleteSubject(Long id) {
+    public String delete(Long id) {
         FacesContext context = FacesContext.getCurrentInstance();
 
-        subjectDAO.deleteSubject(id);
-        FacesMessage message = new FacesMessage( "Sujet SUPPRIMÉ");
-        context.addMessage( null, message );
+        subjectDAO.delete(id);
+        context.addMessage(null, new FacesMessage(
+                FacesMessage.SEVERITY_INFO,
+                "Succès de la suppression.",
+                null
+        ));
 
-        try {
-            context.getExternalContext().redirect("subjects.xhtml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return "success";
+        return "subjects.xhtml?faces-redirect=true";
     }
 }

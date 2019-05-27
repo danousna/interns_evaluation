@@ -1,14 +1,8 @@
 package com.sr03.entities;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-
-@ManagedBean
-@RequestScoped
-public class UserEntity implements Serializable {
+public class UserEntity {
     private Long id;
     private Boolean is_active;
     private Boolean is_admin;
@@ -21,18 +15,6 @@ public class UserEntity implements Serializable {
 
     public UserEntity() {
 
-    }
-
-    public UserEntity(Long id, Boolean is_active, Boolean is_admin, String name, String email, String password, String company, String phone, Timestamp created_at) {
-        this.id = id;
-        this.is_active = is_active;
-        this.is_admin = is_admin;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.company = company;
-        this.phone = phone;
-        this.created_at = created_at;
     }
 
     public Long getId() {

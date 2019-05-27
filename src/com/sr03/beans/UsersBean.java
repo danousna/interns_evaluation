@@ -8,7 +8,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import java.io.IOException;
 import javax.servlet.http.HttpServlet;
 import java.util.List;
 
@@ -35,32 +34,25 @@ public class UsersBean extends HttpServlet {
         FacesContext context = FacesContext.getCurrentInstance();
 
         userDAO.changeUserActivity(id);
-        UserEntity changedUser = userDAO.get(id);
-        FacesMessage message = new FacesMessage( "Utilisateur N°" + changedUser.getId() + " " + changedUser.getName() + " " + (changedUser.getIs_active() ? "ACTIVÉ" : "DÉSACTIVÉ"));
-        context.addMessage( null, message );
+        context.addMessage(null, new FacesMessage(
+                FacesMessage.SEVERITY_INFO,
+                "Succès de la modification.",
+                null
+        ));
 
-//        try {
-//            context.getExternalContext().redirect("users.xhtml");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-        return "success";
+        return "users.xhtml?faces-redirect=true";
     }
 
-    public String deleteUser(Long id) {
+    public String delete(Long id) {
         FacesContext context = FacesContext.getCurrentInstance();
 
-        userDAO.deleteUser(id);
-        FacesMessage message = new FacesMessage( "Utilisateur SUPPRIMÉ");
-        context.addMessage( null, message );
+        userDAO.delete(id);
+        context.addMessage(null, new FacesMessage(
+                FacesMessage.SEVERITY_INFO,
+                "Succès de la suppression.",
+                null
+        ));
 
-        try {
-            context.getExternalContext().redirect("users.xhtml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return "success";
+        return "users.xhtml?faces-redirect=true";
     }
 }

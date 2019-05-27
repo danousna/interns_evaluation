@@ -6,25 +6,32 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:b="http://bootsfaces.net/ui">
+<f:metadata>
+    <f:viewParam name="id" value="#{quizBean.editId}" />
+    <f:viewAction action="#{quizBean.init}" />
+</f:metadata>
 <ui:composition template="layout.xhtml">
     <ui:define name="content">
         <b:container>
             <h3>Créer un quiz</h3>
+            <h3>#{empty quizBean.quiz.id ? "Créer" : "Modifier"} un questionnaire</h3>
 
             <h:form>
-                <ui:repeat value="#{quizCreateBean.errors}" var="error" rendered="#{!quizCreateBean.errors.isEmpty()}">
+                <ui:repeat value="#{quizBean.errors}" var="error" rendered="#{!quizBean.errors.isEmpty()}">
                     <p>#{error}</p>
                 </ui:repeat>
 
-                <b:selectOneMenu id="subject_id" value="#{quizCreateBean.quiz.subject_id}" required="true" label="Sujet" requiredMessage="Veuillez saisir un sujet">
+                <b:selectOneMenu id="subject_id" value="#{quizBean.quiz.subject_id}" required="true" label="Sujet" requiredMessage="Veuillez saisir un sujet">
                     <f:selectItems value="#{subjectsBean.subjects}" var="subj" itemValue="#{subj.id}" itemLabel="#{subj.name}" itemDescription="#{subj.name}"/>
                 </b:selectOneMenu>
+
                 <b:message id="subject_idMessage" for="subject_id" />
 
-                <b:inputText id="name" value="#{quizCreateBean.quiz.name}" required="true" maxlength="60" label="Nom" requiredMessage="Veuillez saisir un nom" />
+                <b:inputText id="name" value="#{quizBean.quiz.name}" required="true" maxlength="60" label="Nom" requiredMessage="Veuillez saisir un nom" />
                 <b:message id="nameMessage" for="name" />
 
-                <b:commandButton value="Envoyer" action="#{quizCreateBean.create}" />
+                <b:commandButton value="Créer" action="#{quizBean.save}" rendered="#{empty quizBean.quiz.id}" />
+                <b:commandButton value="Enregistrer" action="#{quizBean.save}" rendered="#{!empty quizBean.quiz.id}" />
             </h:form>
         </b:container>
     </ui:define>

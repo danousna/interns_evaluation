@@ -12,7 +12,11 @@
             <h1>Sujets</h1>
             <b:row>
                 <b:column>
-                    <b:link styleClass="btn btn-primary" href="./create_subject.xhtml">Créer un sujet</b:link>
+                    <b:link
+                            look="primary"
+                            outcome="subject_form"
+                            value="Créer un sujet"
+                            style="display: inline;"/>
                 </b:column>
             </b:row>
         </b:container>
@@ -26,10 +30,19 @@
                     <b:dataTableColumn value="#{subject.id}" label="ID" />
                     <b:dataTableColumn value="#{subject.name}" label="Nom" />
                     <b:dataTableColumn label="Actions">
-                    <b:buttonGroup>
-                        <b:commandButton look="primary" value="Éditer" />
-                        <b:commandButton action="#{subjectsBean.deleteSubject(subject.id)}" look="danger" value="Supprimer" />
-                    </b:buttonGroup>
+                        <b:commandLink
+                                display="inline-block"
+                                look="default"
+                                outcome="subject_form"
+                                value="Modifier"
+                                style="display: inline;">
+                            <f:param name="id" value="#{subject.id}" />
+                        </b:commandLink>
+                        &nbsp;
+                        <b:commandButton
+                                look="danger"
+                                value="Supprimer"
+                                action="#{subjectsBean.delete(subject.id)}" />
                     </b:dataTableColumn>
                 </b:dataTable>
             </h:form>

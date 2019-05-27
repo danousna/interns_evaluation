@@ -1,7 +1,5 @@
 package com.sr03.dao;
 
-import com.sr03.beans.Subject;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -71,9 +69,7 @@ public class DAOFactory {
     /*
      * Méthodes de récupération de l'implémentation des différents DAO
      */
-    public UserDAO getUserDAO() {
-        return new UserDAO(this);
-    }
+    public UserDAO getUserDAO() { return new UserDAO(this); }
 
     public SubjectDAO getSubjetDAO() {
         return new SubjectDAO(this);
