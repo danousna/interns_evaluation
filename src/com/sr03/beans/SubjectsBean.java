@@ -32,7 +32,7 @@ public class SubjectsBean extends HttpServlet {
     public String deleteSubject(Long id) {
         FacesContext context = FacesContext.getCurrentInstance();
 
-        subjectDAO.deleteSubject(id);
+        subjectDAO.delete(id);
         FacesMessage message = new FacesMessage( "Sujet SUPPRIMÉ");
         context.addMessage( null, message );
 

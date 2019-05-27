@@ -16,13 +16,6 @@ public class QuizEntity implements Serializable {
     public QuizEntity() {
     }
 
-    public QuizEntity(Long id, String name, Boolean is_active, Long subject_id) {
-        this.id = id;
-        this.name = name;
-        this.is_active = is_active;
-        this.subject_id = subject_id;
-    }
-
     public Long getId() {
         return id;
     }

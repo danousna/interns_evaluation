@@ -49,7 +49,7 @@ public class QuizzesBean extends HttpServlet {
     public String deleteQuiz(Long id) {
         FacesContext context = FacesContext.getCurrentInstance();
 
-        quizDAO.deleteQuiz(id);
+        quizDAO.delete(id);
         FacesMessage message = new FacesMessage( "Questionnaire SUPPRIMÉ");
         context.addMessage( null, message );
 
