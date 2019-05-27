@@ -22,6 +22,9 @@ public class QuizBean {
 
     private List<String> errors = new ArrayList<>();
 
+    // UI
+    // List of questions
+
     public QuizBean() {
         this.quizDAO = DAOFactory.getInstance().getQuizDAO();
         this.quiz = new QuizEntity();

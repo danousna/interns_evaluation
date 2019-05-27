@@ -15,7 +15,6 @@
         <b:navBar brand="Évaluation des stagiaires" brandHref="./" fixed="top" inverse="true">
             <b:navbarLinks>
                 <b:navLink value="Utilisateurs" href="./users.xhtml" active="#{view.viewId eq '/users.xhtml' ? 'true' : ''}" />
-                <b:navLink value="Sujets" href="./subjects.xhtml" active="#{view.viewId eq '/subjects.xhtml' ? 'true' : ''}" />
                 <b:navLink value="Questionnaires" href="./quizzes.xhtml" active="#{view.viewId eq '/quizzes.xhtml' ? 'true' : ''}" />
                 <b:navLink value="PhpMyAdmin" href="http://localhost/phpmyadmin" />
                 <b:navCommandLink action="#{authenticationBean.logout}" value="Déconnexion" rendered="#{sessionScope.get('username') != null}" />
