@@ -9,7 +9,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServlet;
-import java.io.IOException;
 import java.util.List;
 
 @ManagedBean
@@ -33,32 +32,25 @@ public class QuizzesBean extends HttpServlet {
         FacesContext context = FacesContext.getCurrentInstance();
 
         quizDAO.changeQuizAvailability(id);
-        QuizEntity changedQuiz = quizDAO.get(id);
-        FacesMessage message = new FacesMessage( "Questionnaire N°" + changedQuiz.getId() + " " + changedQuiz.getName() + " " + (changedQuiz.getIs_active() ? "ACTIVÉ" : "DÉSACTIVÉ"));
-        context.addMessage( null, message );
+        context.addMessage(null, new FacesMessage(
+                FacesMessage.SEVERITY_INFO,
+                "Succès de la modification.",
+                null
+        ));
 
-//        try {
-//            context.getExternalContext().redirect("quizzes.xhtml");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-        return "success";
+        return "quizzes.xhtml?faces-redirect=true";
     }
 
-    public String deleteQuiz(Long id) {
+    public String delete(Long id) {
         FacesContext context = FacesContext.getCurrentInstance();
 
         quizDAO.delete(id);
-        FacesMessage message = new FacesMessage( "Questionnaire SUPPRIMÉ");
-        context.addMessage( null, message );
+        context.addMessage(null, new FacesMessage(
+                FacesMessage.SEVERITY_INFO,
+                "Succès de la suppression.",
+                null
+        ));
 
-        try {
-            context.getExternalContext().redirect("quizzes.xhtml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return "success";
+        return "quizzes.xhtml?faces-redirect=true";
     }
 }

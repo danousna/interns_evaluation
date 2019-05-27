@@ -1,8 +1,10 @@
 package com.sr03.dao;
 
 import com.sr03.entities.QuizEntity;
+import com.sr03.entities.SubjectEntity;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 import static com.sr03.dao.DAOUtility.*;
 
@@ -11,7 +13,12 @@ public class QuizDAO extends DAO<QuizEntity> {
     private static final String SQL_UPDATE = "UPDATE quizzes SET name = ?, subject_id, is_active = ?, is_admin = ? WHERE id = ?";
     private static final String SQL_CHANGE_AVAILABILITY = "UPDATE quizzes SET is_active = (is_active + 1)%2 WHERE id = ?";
 
-    QuizDAO(DAOFactory daoFactory) { super(daoFactory, "subjects"); }
+    private SubjectDAO subjectDAO;
+
+    QuizDAO(DAOFactory daoFactory) {
+        super(daoFactory, "quizzes");
+        this.subjectDAO = new SubjectDAO(daoFactory);
+    }
 
     @Override
     public QuizEntity map(ResultSet resultSet) {
@@ -25,6 +32,22 @@ public class QuizDAO extends DAO<QuizEntity> {
             e.printStackTrace();
         }
         return quiz;
+    }
+
+    @Override
+    public QuizEntity get(Long id) {
+        QuizEntity quiz = super.get(id);
+        quiz.setSubject(subjectDAO.get(quiz.getSubject_id()));
+        return quiz;
+    }
+
+    @Override
+    public ArrayList<QuizEntity> getAll() {
+        ArrayList<QuizEntity> quizzes = super.getAll();
+        for (QuizEntity quiz : quizzes) {
+            quiz.setSubject(subjectDAO.get(quiz.getSubject_id()));
+        }
+        return quizzes;
     }
 
     @Override

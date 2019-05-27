@@ -13,6 +13,8 @@ public class QuizEntity implements Serializable {
     private Boolean is_active;
     private Long subject_id;
 
+    private SubjectEntity subject;
+
     public QuizEntity() {
     }
 
@@ -46,5 +48,13 @@ public class QuizEntity implements Serializable {
 
     public void setSubject_id(Long subject_id) {
         this.subject_id = subject_id;
+    }
+
+    public SubjectEntity getSubject() {
+        return subject;
+    }
+
+    public void setSubject(SubjectEntity subject) {
+        this.subject = subject;
     }
 }
