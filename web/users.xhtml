@@ -13,7 +13,11 @@
                 <h1>Utilisateurs</h1>
                 <b:row>
                     <b:column>
-                        <b:commandButton look="primary" value="Créer un utilisateur" action="user_form" />
+                        <b:link
+                                look="primary"
+                                outcome="user_form"
+                                value="Créer un utilisateur"
+                                style="display: inline;"/>
                     </b:column>
                 </b:row>
             </b:container>
@@ -37,18 +41,21 @@
                     <b:dataTableColumn label="Actions">
                         <b:commandButton
                                 value="#{user.is_active ? 'Désactiver' : 'Activer'}"
-                                ajax="true"
-                                onclick="ajax:usersBean.changeUserActivity(user.id)" />
+                                action="#{usersBean.changeUserActivity(user.id)}" />
                         &nbsp;
-                        <b:commandButton
-                                action="#{userBean.modifyUser(user.id)}"
-                                value="Modifier" />
+                        <b:commandLink
+                                display="inline-block"
+                                look="default"
+                                outcome="user_form"
+                                value="Modifier"
+                                style="display: inline;">
+                            <f:param name="id" value="#{user.id}" />
+                        </b:commandLink>
                         &nbsp;
                         <b:commandButton
                                 look="danger"
                                 value="Supprimer"
-                                ajax="true"
-                                onclick="ajax:usersBean.deleteUser(user.id)"/>
+                                action="#{usersBean.deleteUser(user.id)}" />
                     </b:dataTableColumn>
                 </b:dataTable>
             </b:container>

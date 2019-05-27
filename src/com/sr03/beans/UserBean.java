@@ -8,10 +8,10 @@ import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServlet;
-import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,10 @@ import java.util.List;
 public class UserBean extends HttpServlet {
     private UserEntity user;
     private UserDAO userDAO;
-    private Boolean modify = false;
+    private final String ACTION_UPDATE = "update";
+    private final String ACTION_CREATE = "create";
+
+    private Long editId;
 
     private List<String> errors = new ArrayList<>();
 
@@ -30,9 +33,17 @@ public class UserBean extends HttpServlet {
         this.user = new UserEntity();
     }
 
+    public void init() {
+        if (editId != null) {
+            user = userDAO.get(editId);
+        }
+    }
+
     public UserEntity getUser() {
         return user;
     }
+
+    public void setUser(UserEntity user) { this.user = user; }
 
     public List<String> getErrors() {
         return errors;
@@ -42,31 +53,24 @@ public class UserBean extends HttpServlet {
         this.errors = errors;
     }
 
-    public Boolean getModify() {
-        return modify;
+    public Long getEditId() {
+        return editId;
     }
 
-    public void setModify(Boolean modify) {
-        this.modify = modify;
+    public void setEditId(Long editId) {
+        this.editId = editId;
     }
 
-    public String modifyUser(Long id) {
-        user = userDAO.get(id);
-        modify = true;
-
-        return "user_form";
-    }
-
-    public void save()  {
+    public String save()  {
         FacesContext context = FacesContext.getCurrentInstance();
 
-        System.out.println(modify);
-
         try {
-            processPassword();
+            if (editId == null) {
+                processPassword();
+            }
 
             if (errors.isEmpty()) {
-                if (!modify) {
+                if (editId == null) {
                     Timestamp date = new Timestamp(System.currentTimeMillis());
                     user.setCreated_at(date);
                     user.setIs_active(true);
@@ -76,22 +80,13 @@ public class UserBean extends HttpServlet {
                     userDAO.update(user);
                 }
 
-                // We reset user object.
-                user = new UserEntity();
-
                 context.addMessage(null, new FacesMessage(
                         FacesMessage.SEVERITY_INFO,
                         "Utilisateur enregistré.",
                         null
                 ));
 
-                // Ici, on redirige au lieu de simplement changer de view.
-                // Cela permet d'actualiser la liste des users.
-                try {
-                    context.getExternalContext().redirect("users.xhtml");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                return "users.xhtml?faces-redirect=true";
             } else {
                 context.addMessage(null, new FacesMessage(
                         FacesMessage.SEVERITY_ERROR,
@@ -107,6 +102,13 @@ public class UserBean extends HttpServlet {
             ));
             e.printStackTrace();
         }
+
+        if (editId != null) {
+            return "user_form?id=" + editId;
+        } else {
+            return "user_form";
+        }
+
     }
 
     private void processPassword() {
