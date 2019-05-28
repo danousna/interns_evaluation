@@ -3,6 +3,7 @@ package com.sr03.beans;
 import com.sr03.dao.DAOException;
 import com.sr03.dao.DAOFactory;
 import com.sr03.dao.QuizDAO;
+import com.sr03.entities.AnswerEntity;
 import com.sr03.entities.QuestionEntity;
 import com.sr03.entities.QuizEntity;
 
@@ -19,7 +20,7 @@ public class QuizBean {
     private QuizEntity quiz;
     private QuizDAO quizDAO;
 
-    private Long editId;
+    private Long id;
 
     private List<String> errors = new ArrayList<>();
 
@@ -29,8 +30,8 @@ public class QuizBean {
     }
 
     public void init() {
-        if (editId != null) {
-            quiz = quizDAO.get(editId);
+        if (id != null) {
+            quiz = quizDAO.get(id);
         }
     }
 
@@ -46,12 +47,12 @@ public class QuizBean {
         this.errors = errors;
     }
 
-    public Long getEditId() {
-        return editId;
+    public Long getId() {
+        return id;
     }
 
-    public void setEditId(Long editId) {
-        this.editId = editId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String save()  {
@@ -59,7 +60,7 @@ public class QuizBean {
 
         try {
             if (errors.isEmpty()) {
-                if (editId == null) {
+                if (id == null) {
                     quiz.setIs_active(true);
                     quizDAO.create(quiz);
                 } else {
@@ -89,8 +90,8 @@ public class QuizBean {
             e.printStackTrace();
         }
 
-        if (editId != null) {
-            return "quiz_form?id=" + editId;
+        if (id != null) {
+            return "quiz_form?id=" + id;
         } else {
             return "quiz_form";
         }
@@ -107,9 +108,32 @@ public class QuizBean {
         quiz.setQuestions(questions);
     }
 
+    public void addQuestionAnswer(int index) {
+        ArrayList<QuestionEntity> questions = quiz.getQuestions();
+        ArrayList<AnswerEntity> answers = questions.get(index).getAnswers();
+
+        if (answers == null) {
+            answers = new ArrayList<>();
+        }
+        answers.add(new AnswerEntity());
+        questions.get(index).setAnswers(answers);
+
+        quiz.setQuestions(questions);
+    }
+
     public void removeQuestion(int index) {
         ArrayList<QuestionEntity> questions = quiz.getQuestions();
         questions.remove(index);
+        quiz.setQuestions(questions);
+    }
+
+    public void removeQuestionAnswer(int index, int answerIndex) {
+        ArrayList<QuestionEntity> questions = quiz.getQuestions();
+        ArrayList<AnswerEntity> answers = questions.get(index).getAnswers();
+
+        answers.remove(answerIndex);
+        questions.get(index).setAnswers(answers);
+
         quiz.setQuestions(questions);
     }
 }

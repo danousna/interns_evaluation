@@ -7,8 +7,8 @@ import java.sql.*;
 import static com.sr03.dao.DAOUtility.*;
 
 public class AnswerDAO extends DAO<AnswerEntity> {
-    private static final String SQL_INSERT = "INSERT INTO answers (body, is_active, is_correct, order, question_id) VALUES (?, ?, ?, ?, ?)";
-    private static final String SQL_UPDATE = "UPDATE answers SET body = ?, is_active = ?, is_correct = ?, order = ?, question_id = ? WHERE id = ?";
+    private static final String SQL_INSERT = "INSERT INTO answers (body, is_active, is_correct, `order`, question_id) VALUES (?, ?, ?, ?, ?)";
+    private static final String SQL_UPDATE = "UPDATE answers SET body = ?, is_active = ?, is_correct = ?, `order` = ?, question_id = ? WHERE id = ?";
 
     AnswerDAO(DAOFactory daoFactory) {
         super(daoFactory, "answers");

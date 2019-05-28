@@ -7,7 +7,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:b="http://bootsfaces.net/ui">
 <f:metadata>
-    <f:viewParam name="id" value="#{quizBean.editId}" />
+    <f:viewParam name="id" value="#{quizBean.id}" />
     <f:viewAction action="#{quizBean.init}" />
 </f:metadata>
 <ui:composition template="layout.xhtml">
@@ -22,10 +22,10 @@
             <h:form>
                 <b:dataTable value="#{quizBean.quiz.questions}"
                              var="question"
-                             id="quiz-table"
+                             id="questions-table"
                 >
                     <b:dataTableColumn value="#{question.id}" label="ID" />
-                    <b:dataTableColumn value="#{question.body}" label="Nom du questionnaire" />
+                    <b:dataTableColumn value="#{question.body}" label="Énoncé" />
                     <b:dataTableColumn label="Actions">
                         <b:commandLink
                                 value="Détail"
