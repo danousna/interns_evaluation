@@ -1,6 +1,7 @@
 package com.sr03.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -14,6 +15,7 @@ public class QuizEntity implements Serializable {
     private Long subject_id;
 
     private SubjectEntity subject;
+    private ArrayList<QuestionEntity> questions;
 
     public QuizEntity() {
     }
@@ -56,5 +58,13 @@ public class QuizEntity implements Serializable {
 
     public void setSubject(SubjectEntity subject) {
         this.subject = subject;
+    }
+
+    public ArrayList<QuestionEntity> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(ArrayList<QuestionEntity> questions) {
+        this.questions = questions;
     }
 }

@@ -1,5 +1,7 @@
 package com.sr03.entities;
 
+import java.util.ArrayList;
+
 public class QuestionEntity {
     private Long id;
     private String body;
@@ -8,6 +10,7 @@ public class QuestionEntity {
     private Long quiz_id;
 
     private QuizEntity quiz;
+    private ArrayList<AnswerEntity> answers;
 
     public QuestionEntity() {
     }
@@ -58,5 +61,13 @@ public class QuestionEntity {
 
     public void setQuiz(QuizEntity quiz) {
         this.quiz = quiz;
+    }
+
+    public ArrayList<AnswerEntity> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(ArrayList<AnswerEntity> answers) {
+        this.answers = answers;
     }
 }

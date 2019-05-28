@@ -78,4 +78,12 @@ public class DAOFactory {
     public QuizDAO getQuizDAO() {
         return new QuizDAO(this);
     }
+
+    public QuestionDAO getQuestionDAO() {
+        return new QuestionDAO(this);
+    }
+
+    public AnswerDAO getAnswerDAO() {
+        return new AnswerDAO(this);
+    }
 }

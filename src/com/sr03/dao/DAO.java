@@ -50,7 +50,7 @@ abstract class DAO<T> {
         return entity;
     }
 
-    private ArrayList<T> getManyQuery(String query) throws DAOException {
+    public ArrayList<T> getManyQuery(String query) throws DAOException {
         Connection conn = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -59,6 +59,29 @@ abstract class DAO<T> {
         try {
             conn = daoFactory.getConnection();
             preparedStatement = initPreparedStatement(conn, query, false);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                entities.add(map(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            silentClosures(resultSet, preparedStatement, conn);
+        }
+
+        return entities;
+    }
+
+    ArrayList<T> getManyQuery(String query, Object value) throws DAOException {
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        ArrayList<T> entities = new ArrayList<>();
+
+        try {
+            conn = daoFactory.getConnection();
+            preparedStatement = initPreparedStatement(conn, query, false, value);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {

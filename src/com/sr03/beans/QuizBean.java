@@ -3,6 +3,7 @@ package com.sr03.beans;
 import com.sr03.dao.DAOException;
 import com.sr03.dao.DAOFactory;
 import com.sr03.dao.QuizDAO;
+import com.sr03.entities.QuestionEntity;
 import com.sr03.entities.QuizEntity;
 
 import javax.faces.application.FacesMessage;
@@ -21,9 +22,6 @@ public class QuizBean {
     private Long editId;
 
     private List<String> errors = new ArrayList<>();
-
-    // UI
-    // List of questions
 
     public QuizBean() {
         this.quizDAO = DAOFactory.getInstance().getQuizDAO();
@@ -96,5 +94,22 @@ public class QuizBean {
         } else {
             return "quiz_form";
         }
+    }
+
+    public void addQuestion() {
+        ArrayList<QuestionEntity> questions = quiz.getQuestions();
+
+        if (questions == null) {
+            questions = new ArrayList<>();
+        }
+
+        questions.add(new QuestionEntity());
+        quiz.setQuestions(questions);
+    }
+
+    public void removeQuestion(int index) {
+        ArrayList<QuestionEntity> questions = quiz.getQuestions();
+        questions.remove(index);
+        quiz.setQuestions(questions);
     }
 }

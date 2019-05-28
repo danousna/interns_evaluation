@@ -1,7 +1,6 @@
 package com.sr03.dao;
 
 import com.sr03.entities.QuizEntity;
-import com.sr03.entities.SubjectEntity;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,10 +13,12 @@ public class QuizDAO extends DAO<QuizEntity> {
     private static final String SQL_CHANGE_AVAILABILITY = "UPDATE quizzes SET is_active = (is_active + 1)%2 WHERE id = ?";
 
     private SubjectDAO subjectDAO;
+    private QuestionDAO questionDAO;
 
     QuizDAO(DAOFactory daoFactory) {
         super(daoFactory, "quizzes");
-        this.subjectDAO = new SubjectDAO(daoFactory);
+        this.subjectDAO = DAOFactory.getInstance().getSubjetDAO();
+        this.questionDAO = DAOFactory.getInstance().getQuestionDAO();
     }
 
     @Override

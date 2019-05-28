@@ -7,50 +7,37 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:b="http://bootsfaces.net/ui">
 <f:metadata>
-    <f:viewAction action="#{subjectsBean.init}" />
+    <f:viewParam name="id" value="#{quizBean.editId}" />
+    <f:viewAction action="#{quizBean.init}" />
 </f:metadata>
 <ui:composition template="layout.xhtml">
     <ui:define name="content">
         <b:container>
-            <h1>Questionnaires</h1>
-            <b:row>
-                <b:column>
-                    <b:link
-                            look="primary"
-                            outcome="quiz_form"
-                            value="Créer un questionnaire"
-                            style="display: inline;"/>
-                    &nbsp;
-                    <b:link
-                            look="default"
-                            outcome="subjects"
-                            value="Gestion des sujets"
-                            style="display: inline;"/>
-                </b:column>
-            </b:row>
+            <h3>#{quizBean.quiz.name}</h3>
+
+            <p>#{quizBean.quiz.subject.name}</p>
         </b:container>
         <b:container>
-            <h3>Liste des questionnaires</h3>
+            <h3>Liste des questions</h3>
             <h:form>
-                <b:dataTable value="#{quizzesBean.quizzes}"
-                             var="quiz"
+                <b:dataTable value="#{quizBean.quiz.questions}"
+                             var="question"
                              id="quiz-table"
                 >
-                    <b:dataTableColumn value="#{quiz.id}" label="ID" />
-                    <b:dataTableColumn value="#{quiz.name}" label="Nom du questionnaire" />
-                    <b:dataTableColumn value="#{quiz.subject.getName()}" label="Sujet associé" />
+                    <b:dataTableColumn value="#{question.id}" label="ID" />
+                    <b:dataTableColumn value="#{question.body}" label="Nom du questionnaire" />
                     <b:dataTableColumn label="Actions">
                         <b:commandLink
                                 value="Détail"
                                 look="primary"
                                 outcome="quiz"
                                 style="display: inline;">
-                            <f:param name="id" value="#{quiz.id}" />
+                            <f:param name="id" value="#{question.id}" />
                         </b:commandLink>
                         &nbsp;
                         <b:commandButton
-                                value="#{quiz.is_active ? 'Désactiver' : 'Activer'}"
-                                action="#{quizzesBean.changeQuizAvailability(quiz.id)}" />
+                                value="#{question.is_active ? 'Désactiver' : 'Activer'}"
+                                action="#{quizBean.changeQuestionAvailability(question.id)}" />
                         &nbsp;
                         <b:commandLink
                                 display="inline-block"
@@ -58,13 +45,13 @@
                                 outcome="quiz_form"
                                 value="Modifier"
                                 style="display: inline;">
-                            <f:param name="id" value="#{quiz.id}" />
+                            <f:param name="id" value="#{question.id}" />
                         </b:commandLink>
                         &nbsp;
                         <b:commandButton
                                 look="danger"
                                 value="Supprimer"
-                                action="#{quizzesBean.delete(quiz.id)}" />
+                                action="#{quizBean.deleteQuestion(question.id)}" />
                     </b:dataTableColumn>
                 </b:dataTable>
             </h:form>
