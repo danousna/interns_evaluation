@@ -81,7 +81,7 @@ public class QuizDAO extends DAO<QuizEntity> {
                 throw new DAOException("Échec de la création du questionnaire.");
             }
 
-            // Quiz creation was a succes, we can create questions now.
+            // Quiz creation was a success, we can create questions now.
             for (QuestionEntity question : quiz.getQuestions()) {
                 try {
                     question.setQuiz_id(quiz.getId());
@@ -117,6 +117,21 @@ public class QuizDAO extends DAO<QuizEntity> {
             if (status == 0) {
                 throw new DAOException("Échec de la modification du sujet.");
             }
+
+            // Quiz update was a success, we can update/create questions now.
+            for (QuestionEntity question : quiz.getQuestions()) {
+                try {
+                    question.setQuiz_id(quiz.getId());
+                    if (question.getId() != null) {
+                        questionDAO.update(question);
+                    } else {
+                        questionDAO.create(question);
+                    }
+                } catch (DAOException e) {
+                    e.printStackTrace();
+                    throw new DAOException("Échec de l'enregistrement de la question : " + question.getBody());
+                }
+            }
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
@@ -124,7 +139,7 @@ public class QuizDAO extends DAO<QuizEntity> {
         }
     }
 
-    public void changeQuizAvailability(long id) throws DAOException {
+    public void changeQuizAvailability(Long id) throws DAOException {
         Connection conn = null;
         PreparedStatement preparedStatement = null;
 

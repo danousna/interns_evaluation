@@ -2,6 +2,7 @@ package com.sr03.beans;
 
 import com.sr03.dao.DAOException;
 import com.sr03.dao.DAOFactory;
+import com.sr03.dao.QuestionDAO;
 import com.sr03.dao.QuizDAO;
 import com.sr03.entities.AnswerEntity;
 import com.sr03.entities.QuestionEntity;
@@ -19,6 +20,7 @@ import java.util.List;
 public class QuizBean {
     private QuizEntity quiz;
     private QuizDAO quizDAO;
+    private QuestionDAO questionDAO;
 
     private Long id;
 
@@ -26,6 +28,7 @@ public class QuizBean {
 
     public QuizBean() {
         this.quizDAO = DAOFactory.getInstance().getQuizDAO();
+        this.questionDAO = DAOFactory.getInstance().getQuestionDAO();
         this.quiz = new QuizEntity();
     }
 
@@ -135,5 +138,33 @@ public class QuizBean {
         questions.get(index).setAnswers(answers);
 
         quiz.setQuestions(questions);
+    }
+
+    // Manage questions
+
+    public String changeQuestionAvailability(Long id) {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        questionDAO.changeQuizAvailability(id);
+        context.addMessage(null, new FacesMessage(
+                FacesMessage.SEVERITY_INFO,
+                "Succès de la modification.",
+                null
+        ));
+
+        return "quiz.xhtml?faces-redirect=true&id=" + this.id;
+    }
+
+    public String deleteQuestion(Long id) {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        questionDAO.delete(id);
+        context.addMessage(null, new FacesMessage(
+                FacesMessage.SEVERITY_INFO,
+                "Succès de la suppression.",
+                null
+        ));
+
+        return "quizzes.xhtml?faces-redirect=true&id=" + this.id;
     }
 }

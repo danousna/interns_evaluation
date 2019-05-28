@@ -79,7 +79,7 @@ public class QuestionDAO extends DAO<QuestionEntity> {
                 throw new DAOException("Échec de la création de la question.");
             }
 
-            // Question creation was a succes, we can create answers now.
+            // Question creation was a success, we can create answers now.
             for (AnswerEntity answer : question.getAnswers()) {
                 try {
                     answer.setQuestion_id(question.getId());
@@ -114,6 +114,41 @@ public class QuestionDAO extends DAO<QuestionEntity> {
 
             if (status == 0) {
                 throw new DAOException("Échec de la modification de la question.");
+            }
+
+            // Question update was a success, we can update/create answers now.
+            for (AnswerEntity answer : question.getAnswers()) {
+                try {
+                    answer.setQuestion_id(question.getId());
+                    if (answer.getId() != null) {
+                        answerDAO.update(answer);
+                    } else {
+                        answerDAO.create(answer);
+                    }
+                } catch (DAOException e) {
+                    e.printStackTrace();
+                    throw new DAOException("Échec de l'enregistrement de la réponse : " + answer.getBody());
+                }
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            silentClosures(preparedStatement, conn);
+        }
+    }
+
+    public void changeQuizAvailability(Long id) throws DAOException {
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            conn = daoFactory.getConnection();
+            preparedStatement = initPreparedStatement(conn, SQL_CHANGE_AVAILABILITY, false, id);
+            int status = preparedStatement.executeUpdate();
+
+            if (status == 0) {
+                throw new DAOException("Echec du changement de disponibilité de la question.");
             }
         } catch (SQLException e) {
             throw new DAOException(e);
