@@ -15,7 +15,11 @@
         <b:container>
             <h3>#{quizBean.quiz.name}</h3>
 
-            <p>Sujet : #{quizBean.quiz.subject.name}</p>
+            <p>
+                <b:link value="#{quizBean.quiz.subject.name}" outcome="subject">
+                    <f:param name="id" value="#{quizBean.quiz.subject.id}" />
+                </b:link> > #{quizBean.quiz.name}
+            </p>
         </b:container>
         <b:container>
             <h3>Liste des questions</h3>
