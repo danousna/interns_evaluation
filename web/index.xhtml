@@ -10,7 +10,7 @@
     <ui:composition template="layout.xhtml">
         <ui:define name="content">
             <b:container>
-                <h1>Bonjour !</h1>
+                <h1>Bonjour #{sessionScope.get('name')} !</h1>
             </b:container>
         </ui:define>
     </ui:composition>
