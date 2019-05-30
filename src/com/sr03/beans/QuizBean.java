@@ -1,9 +1,6 @@
 package com.sr03.beans;
 
-import com.sr03.dao.DAOException;
-import com.sr03.dao.DAOFactory;
-import com.sr03.dao.QuestionDAO;
-import com.sr03.dao.QuizDAO;
+import com.sr03.dao.*;
 import com.sr03.entities.AnswerEntity;
 import com.sr03.entities.QuestionEntity;
 import com.sr03.entities.QuizEntity;
@@ -21,6 +18,7 @@ public class QuizBean {
     private QuizEntity quiz;
     private QuizDAO quizDAO;
     private QuestionDAO questionDAO;
+    private AnswerDAO answerDAO;
 
     private Long id;
 
@@ -29,6 +27,7 @@ public class QuizBean {
     public QuizBean() {
         this.quizDAO = DAOFactory.getInstance().getQuizDAO();
         this.questionDAO = DAOFactory.getInstance().getQuestionDAO();
+        this.answerDAO = DAOFactory.getInstance().getAnswerDAO();
         this.quiz = new QuizEntity();
     }
 
@@ -150,6 +149,12 @@ public class QuizBean {
 
     public void removeQuestion(int index) {
         ArrayList<QuestionEntity> questions = quiz.getQuestions();
+        QuestionEntity question = questions.get(index);
+
+        if (question.getId() != null) {
+            questionDAO.delete(question.getId());
+        }
+
         questions.remove(index);
         quiz.setQuestions(questions);
     }
@@ -157,6 +162,11 @@ public class QuizBean {
     public void removeQuestionAnswer(int index, int answerIndex) {
         ArrayList<QuestionEntity> questions = quiz.getQuestions();
         ArrayList<AnswerEntity> answers = questions.get(index).getAnswers();
+        AnswerEntity answer = answers.get(answerIndex);
+
+        if (answer.getId() != null) {
+            answerDAO.delete(answer.getId());
+        }
 
         answers.remove(answerIndex);
         questions.get(index).setAnswers(answers);
@@ -189,6 +199,6 @@ public class QuizBean {
                 null
         ));
 
-        return "quizzes.xhtml?faces-redirect=true&id=" + this.id;
+        return "quiz.xhtml?faces-redirect=true&id=" + this.id;
     }
 }

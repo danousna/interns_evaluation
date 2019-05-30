@@ -124,19 +124,14 @@ public class QuizDAO extends DAO<QuizEntity> {
                 throw new DAOException("Échec de la modification du sujet.");
             }
 
-            // Update is tricky. We need to take into account potential questions that could have been deleted.
-            // To avoid a complex solution, we solve by simply deleting all the quiz questions
-            // and (re)creating all of the current ones.
-
-            ArrayList<QuestionEntity> questions = questionDAO.getManyQuery(SQL_SELECT_QUESTIONS_ALL, quiz.getId());
-            for (QuestionEntity question : questions) {
-                questionDAO.delete(question.getId());
-            }
-
             // Quiz update was a success, we can (re)create questions now.
             for (QuestionEntity question : quiz.getQuestions()) {
-                question.setQuiz_id(quiz.getId());
-                questionDAO.create(question);
+                if (question.getId() == null) {
+                    question.setQuiz_id(quiz.getId());
+                    questionDAO.create(question);
+                } else {
+                    questionDAO.update(question);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

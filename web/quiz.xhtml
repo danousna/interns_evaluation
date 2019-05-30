@@ -12,37 +12,49 @@
 </f:metadata>
 <ui:composition template="layout.xhtml">
     <ui:define name="content">
-        <b:container style="margin-bottom: 10px;">
-            <h3>#{quizBean.quiz.name}</h3>
-
-            <p>Sujet : #{quizBean.quiz.subject.name}</p>
-        </b:container>
-        <b:container>
-            <ui:repeat value="#{quizBean.quiz.questions}" var="question" varStatus="status">
+        <b:row>
+            <b:column span="3" />
+            <b:column span="6">
                 <div>
-                    <h4>Question #{status.index + 1} : #{question.body}</h4>
+                    <h3>#{quizBean.quiz.name}</h3>
 
-                    <h:outputText rendered="#{question.is_active}" value="(active)" /><br />
-                    <h:outputText rendered="#{!question.is_active}" value="(non active)" /><br />
+                    <p>Sujet : #{quizBean.quiz.subject.name}</p><br />
 
-                    <b>Réponses possibles :</b><br />
-
-                    <ui:repeat value="#{question.answers}" var="answer" varStatus="statusAnswer">
-                        <div style="margin-top: 10px;">
-                            <f:facet name="heading">
-                                <h:outputText value="Réponse #{statusAnswer.index + 1}" />
-                            </f:facet>
-
-                            - #{answer.body}<br />
-                            <h:outputText rendered="#{answer.is_active}" value="(active" />
-                            <h:outputText rendered="#{!answer.is_active}" value="(non active" />
-                            <h:outputText rendered="#{answer.is_correct}" value=", bonne réponse)" />
-                            <h:outputText rendered="#{!answer.is_correct}" value=")" />
-                        </div>
-                    </ui:repeat>
+                    <h:form>
+                        <b:commandLink
+                                look="primary"
+                                outcome="quiz_form"
+                                value="Modifier"
+                                style="display: inline;">
+                            <f:param name="id" value="#{quizBean.quiz.id}" />
+                        </b:commandLink>
+                    </h:form>
                 </div>
-            </ui:repeat>
-        </b:container>
+
+                <ui:repeat value="#{quizBean.quiz.questions}" var="question">
+                    <div style="margin-top: 30px;" class="#{question.is_active ? null : 'text-muted'}">
+                        <h4>Question #{question.order} : #{question.body}</h4>
+
+                        <ui:repeat value="#{question.answers}" var="answer" rendered="#{question.is_active}">
+                            <div style="margin-top: 10px;" class="#{answer.is_active ? null : 'text-muted'} #{answer.is_correct ? 'text-success' : null}">
+                                #{answer.order}.&nbsp;
+                                #{answer.body}
+                            </div>
+                        </ui:repeat>
+
+                        <br />
+
+                        <h:form>
+                            <b:commandButton
+                                look="default"
+                                value="#{question.is_active ? 'Désactiver' : 'Activer'}"
+                                action="#{quizBean.changeQuestionAvailability(question.id)}" />
+                        </h:form>
+                    </div>
+                </ui:repeat>
+            </b:column>
+            <b:column span="3" />
+        </b:row>
     </ui:define>
 </ui:composition>
 </html>

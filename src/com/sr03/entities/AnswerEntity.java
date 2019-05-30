@@ -62,6 +62,9 @@ public class AnswerEntity implements Comparable<AnswerEntity> {
 
     @Override
     public int compareTo(AnswerEntity a) {
+        if (order == null || a.order == null) {
+            return 1;
+        }
         return (int) (order - a.order);
     }
 }

@@ -114,27 +114,12 @@ public class QuestionDAO extends DAO<QuestionEntity> {
 
             // Question update was a success, we can update/create answers now.
             for (AnswerEntity answer : question.getAnswers()) {
-                answer.setQuestion_id(question.getId());
-                if (answer.getId() != null) {
-                    answerDAO.update(answer);
-                } else {
+                if (answer.getId() == null) {
+                    answer.setQuestion_id(question.getId());
                     answerDAO.create(answer);
+                } else {
+                    answerDAO.update(answer);
                 }
-            }
-
-            // Update is tricky. We need to take into account potential answers that could have been deleted.
-            // To avoid a complex solution, we solve by simply deleting all the question answers
-            // and (re)creating all of the current ones.
-
-            ArrayList<AnswerEntity> answers = answerDAO.getManyQuery(SQL_SELECT_ANSWERS_ALL, question.getId());
-            for (AnswerEntity answer : answers) {
-                answerDAO.delete(answer.getId());
-            }
-
-            // Question update was a success, we can (re)create answers now.
-            for (AnswerEntity answer : question.getAnswers()) {
-                answer.setQuestion_id(question.getId());
-                answerDAO.create(answer);
             }
         } catch (SQLException e) {
             throw new DAOException(e);
