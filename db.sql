@@ -51,9 +51,9 @@ CREATE TABLE users_answers (
     answer_id int,
 
     PRIMARY KEY (user_id, question_id),
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE,
-    FOREIGN KEY (answer_id) REFERENCES answers(id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (question_id) REFERENCES questions(id),
+    FOREIGN KEY (answer_id) REFERENCES answers(id)
 );
 
 CREATE TABLE courses (
@@ -63,6 +63,6 @@ CREATE TABLE courses (
     finished_at date,
     quiz_id int,
 
-    FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE
+    FOREIGN KEY (quiz_id) REFERENCES quizzes(id)
 );
 
