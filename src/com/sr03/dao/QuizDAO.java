@@ -5,6 +5,7 @@ import com.sr03.entities.QuizEntity;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static com.sr03.dao.DAOUtility.*;
 
@@ -41,7 +42,16 @@ public class QuizDAO extends DAO<QuizEntity> {
     public QuizEntity get(Long id) {
         QuizEntity quiz = super.get(id);
         quiz.setSubject(subjectDAO.get(quiz.getSubject_id()));
-        quiz.setQuestions(questionDAO.getManyQuery(SQL_SELECT_QUESTIONS_ALL, quiz.getId()));
+
+        ArrayList<QuestionEntity> questionsIds = questionDAO.getManyQuery(SQL_SELECT_QUESTIONS_ALL, quiz.getId());
+        ArrayList<QuestionEntity> questions = new ArrayList<>();
+
+        for (QuestionEntity question : questionsIds) {
+            questions.add(questionDAO.get(question.getId()));
+        }
+
+        quiz.setQuestions(questions);
+
         return quiz;
     }
 

@@ -85,11 +85,13 @@ public class UserBean extends HttpServlet {
 
                 return "users.xhtml?faces-redirect=true";
             } else {
-                context.addMessage(null, new FacesMessage(
-                        FacesMessage.SEVERITY_ERROR,
-                        "Echec lors de l'enregistrement de l'utilisateur.",
-                        null
-                ));
+                for (String error : errors) {
+                    context.addMessage(null, new FacesMessage(
+                            FacesMessage.SEVERITY_ERROR,
+                            error,
+                            null
+                    ));
+                }
             }
         } catch (DAOException e) {
             context.addMessage(null, new FacesMessage(
@@ -109,6 +111,11 @@ public class UserBean extends HttpServlet {
 
     private void processPassword() {
         String password = user.getPassword();
+
+        if (password.length() < 6) {
+            errors.add("Mot de passe trop court (< 6 caractères)");
+            return;
+        }
 
         /*
          * Utilisation de la lib Jasypt pour chiffrer le mot de passe.

@@ -61,6 +61,8 @@ public class QuizBean {
     public String save()  {
         FacesContext context = FacesContext.getCurrentInstance();
 
+        validateQuestions();
+
         try {
             if (errors.isEmpty()) {
                 if (id == null) {
@@ -78,11 +80,13 @@ public class QuizBean {
 
                 return "quizzes.xhtml?faces-redirect=true";
             } else {
-                context.addMessage(null, new FacesMessage(
-                        FacesMessage.SEVERITY_ERROR,
-                        "Echec lors de l'enregistrement du questionnaire.",
-                        null
-                ));
+                for (String error : errors) {
+                    context.addMessage(null, new FacesMessage(
+                            FacesMessage.SEVERITY_ERROR,
+                            error,
+                            null
+                    ));
+                }
             }
         } catch (DAOException e) {
             context.addMessage(null, new FacesMessage(
@@ -97,6 +101,22 @@ public class QuizBean {
             return "quiz_form?id=" + id;
         } else {
             return "quiz_form";
+        }
+    }
+
+    private void validateQuestions() {
+        for (QuestionEntity question : quiz.getQuestions()) {
+            int correctCount = 0;
+
+            for (AnswerEntity answer : question.getAnswers()) {
+                if (answer.getIs_correct()) {
+                    correctCount++;
+                }
+            }
+
+            if (correctCount > 1) {
+                errors.add("Une question ne peut avoir qu'une seule bonne réponse.");
+            }
         }
     }
 

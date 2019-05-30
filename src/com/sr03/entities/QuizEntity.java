@@ -2,6 +2,7 @@ package com.sr03.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -65,6 +66,7 @@ public class QuizEntity implements Serializable {
     }
 
     public void setQuestions(ArrayList<QuestionEntity> questions) {
+        Collections.sort(questions);
         this.questions = questions;
     }
 }

@@ -1,8 +1,9 @@
 package com.sr03.entities;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
-public class QuestionEntity {
+public class QuestionEntity implements Comparable<QuestionEntity> {
     private Long id;
     private String body;
     private Boolean is_active;
@@ -68,6 +69,12 @@ public class QuestionEntity {
     }
 
     public void setAnswers(ArrayList<AnswerEntity> answers) {
+        Collections.sort(answers);
         this.answers = answers;
+    }
+
+    @Override
+    public int compareTo(QuestionEntity q) {
+        return (int) (order - q.order);
     }
 }

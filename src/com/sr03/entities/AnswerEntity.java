@@ -1,6 +1,6 @@
 package com.sr03.entities;
 
-public class AnswerEntity {
+public class AnswerEntity implements Comparable<AnswerEntity> {
     private Long id;
     private String body;
     private Boolean is_active;
@@ -58,5 +58,10 @@ public class AnswerEntity {
 
     public void setQuestion_id(Long question_id) {
         this.question_id = question_id;
+    }
+
+    @Override
+    public int compareTo(AnswerEntity a) {
+        return (int) (order - a.order);
     }
 }
