@@ -12,6 +12,7 @@ public class QuestionEntity implements Comparable<QuestionEntity> {
 
     private QuizEntity quiz;
     private ArrayList<AnswerEntity> answers;
+    private Long answer;
 
     public QuestionEntity() {
     }
@@ -71,6 +72,14 @@ public class QuestionEntity implements Comparable<QuestionEntity> {
     public void setAnswers(ArrayList<AnswerEntity> answers) {
         Collections.sort(answers);
         this.answers = answers;
+    }
+
+    public Long getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(Long answer) {
+        this.answer = answer;
     }
 
     @Override

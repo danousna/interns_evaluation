@@ -56,6 +56,7 @@ public class AuthenticationBean implements Serializable {
             passwordEncryptor.setPlainDigest( false );
 
             if(passwordEncryptor.checkPassword(password, user.getPassword())) {
+                context.getExternalContext().getSessionMap().put("id", user.getId());
                 context.getExternalContext().getSessionMap().put("email", user.getEmail());
                 context.getExternalContext().getSessionMap().put("is_admin", user.getIs_admin());
                 context.getExternalContext().getSessionMap().put("name", user.getName());

@@ -10,7 +10,18 @@
     <ui:composition template="layout.xhtml">
         <ui:define name="content">
             <b:container>
-                <h1>Bonjour #{sessionScope.get('name')} !</h1>
+                <h2>Bonjour #{sessionScope.get('name')} !</h2>
+            </b:container>
+            <b:container>
+                <h3>Questionnaires disponibles :</h3>
+                <h:form>
+                <ui:repeat value="#{quizzesBean.activeQuizzes()}" var="quiz">
+                    <b:commandLink outcome="quiz">
+                        <f:param name="id" value="#{quiz.id}" />
+                        <h4 style="margin-top: 20px;">#{quiz.name} (#{quiz.subject.name})</h4>
+                    </b:commandLink>
+                </ui:repeat>
+                </h:form>
             </b:container>
         </ui:define>
     </ui:composition>

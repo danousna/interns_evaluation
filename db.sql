@@ -47,17 +47,6 @@ CREATE TABLE answers (
     FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE
 );
 
-CREATE TABLE users_answers (
-    user_id int,
-    question_id int,
-    answer_id int,
-
-    PRIMARY KEY (user_id, question_id),
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (question_id) REFERENCES questions(id),
-    FOREIGN KEY (answer_id) REFERENCES answers(id)
-);
-
 CREATE TABLE records (
     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
     quiz_id int,
@@ -67,5 +56,18 @@ CREATE TABLE records (
 
     FOREIGN KEY (quiz_id) REFERENCES quizzes(id),
     FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE users_answers (
+    user_id int,
+    record_id int,
+    question_id int,
+    answer_id int,
+
+    PRIMARY KEY (user_id, record_id, question_id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (record_id) REFERENCES records(id),
+    FOREIGN KEY (question_id) REFERENCES questions(id),
+    FOREIGN KEY (answer_id) REFERENCES answers(id)
 );
 
