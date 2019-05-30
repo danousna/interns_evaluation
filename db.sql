@@ -9,11 +9,13 @@ CREATE TABLE users (
     is_active bit,
     is_admin bit
 );
+INSERT INTO users VALUES (NULL, 'natan.danous@etu.utc.fr', 'A2S5NjPRf+JPbWdUwSJqVhFU8xV1YkeZvne9HILKbRPqwUHYpB9UPA==', 'Natan Danous', 'Psycle Research', '01 02 03 04 05', '2019-05-30', 1, 1), (NULL, 'john.smith@etu.utc.fr', 'A2S5NjPRf+JPbWdUwSJqVhFU8xV1YkeZvne9HILKbRPqwUHYpB9UPA==', 'John Smith', 'Psycle Research', '01 02 03 04 05', '2019-05-30', 1, 0), (NULL, 'olivia.random@etu.utc.fr', 'A2S5NjPRf+JPbWdUwSJqVhFU8xV1YkeZvne9HILKbRPqwUHYpB9UPA==', 'Olivia Random', 'Apple', '01 02 03 04 05', '2019-05-30', 1, 0);
 
 CREATE TABLE subjects (
     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
     name varchar(100)
 );
+INSERT INTO subjects VALUES (NULL, 'Programmation'), (NULL, 'Analyse de données'), (NULL, 'Web'), (NULL, 'Économie');
 
 CREATE TABLE quizzes (
     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,

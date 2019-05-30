@@ -12,33 +12,35 @@
 </f:metadata>
 <ui:composition template="layout.xhtml">
     <ui:define name="content">
-        <b:container>
+        <b:container style="margin-bottom: 10px;">
             <h3>#{quizBean.quiz.name}</h3>
 
             <p>Sujet : #{quizBean.quiz.subject.name}</p>
         </b:container>
         <b:container>
             <ui:repeat value="#{quizBean.quiz.questions}" var="question" varStatus="status">
-                <b:panel collapsible="false">
-                    <f:facet name="heading">
-                        <h:outputText value="Question #{status.index + 1}" />
-                    </f:facet>
+                <div>
+                    <h4>Question #{status.index + 1} : #{question.body}</h4>
 
-                    #{question.body}<br />
-                    Activée : #{question.is_active}
+                    <h:outputText rendered="#{question.is_active}" value="(active)" /><br />
+                    <h:outputText rendered="#{!question.is_active}" value="(non active)" /><br />
+
+                    <b>Réponses possibles :</b><br />
 
                     <ui:repeat value="#{question.answers}" var="answer" varStatus="statusAnswer">
-                        <b:panel collapsible="false">
+                        <div style="margin-top: 10px;">
                             <f:facet name="heading">
                                 <h:outputText value="Réponse #{statusAnswer.index + 1}" />
                             </f:facet>
 
-                            #{answer.body}<br />
-                            Est la bonne réponse : #{answer.is_correct}<br />
-                            Activée : #{answer.is_active}
-                        </b:panel>
+                            - #{answer.body}<br />
+                            <h:outputText rendered="#{answer.is_active}" value="(active" />
+                            <h:outputText rendered="#{!answer.is_active}" value="(non active" />
+                            <h:outputText rendered="#{answer.is_correct}" value=", bonne réponse)" />
+                            <h:outputText rendered="#{!answer.is_correct}" value=")" />
+                        </div>
                     </ui:repeat>
-                </b:panel>
+                </div>
             </ui:repeat>
         </b:container>
     </ui:define>
