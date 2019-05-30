@@ -58,13 +58,14 @@ CREATE TABLE users_answers (
     FOREIGN KEY (answer_id) REFERENCES answers(id)
 );
 
-CREATE TABLE courses (
+CREATE TABLE records (
     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    score int,
+    quiz_id int,
+    user_id int,
     started_at date,
     finished_at date,
-    quiz_id int,
 
-    FOREIGN KEY (quiz_id) REFERENCES quizzes(id)
+    FOREIGN KEY (quiz_id) REFERENCES quizzes(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
