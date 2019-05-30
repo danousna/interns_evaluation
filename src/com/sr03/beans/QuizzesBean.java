@@ -38,7 +38,7 @@ public class QuizzesBean extends HttpServlet {
                 null
         ));
 
-        return "quizzes.xhtml?faces-redirect=true";
+        return "quizzes.xhtml";
     }
 
     public String delete(Long id) {
@@ -51,6 +51,6 @@ public class QuizzesBean extends HttpServlet {
                 null
         ));
 
-        return "quizzes.xhtml?faces-redirect=true";
+        return "quizzes.xhtml";
     }
 }

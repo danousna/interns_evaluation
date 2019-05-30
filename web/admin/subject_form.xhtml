@@ -10,7 +10,7 @@
     <f:viewParam name="id" value="#{subjectBean.id}" />
     <f:viewAction action="#{subjectBean.init}" />
 </f:metadata>
-<ui:composition template="layout.xhtml">
+<ui:composition template="../layout.xhtml">
     <ui:define name="content">
         <b:container>
             <h3>#{empty subjectBean.subject.id ? "Créer" : "Modifier"} un sujet</h3>

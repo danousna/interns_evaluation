@@ -26,8 +26,15 @@ public class AuthenticationFilter implements Filter {
             String loginURI = request.getContextPath() + "/login.xhtml";
 
             boolean loggedIn = session != null && session.getAttribute("email") != null;
+            boolean isAdmin = session != null && session.getAttribute("is_admin") != null && session.getAttribute("is_admin").equals(true);
+
             boolean loginRequest = request.getRequestURI().equals(loginURI);
+            boolean adminOnlyRequest = request.getRequestURI().startsWith(request.getContextPath() + "/admin");
             boolean resourceRequest = request.getRequestURI().startsWith(request.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER);
+
+            if (!isAdmin && adminOnlyRequest) {
+                response.sendRedirect(request.getContextPath() + "/index.xhtml");
+            }
 
             if (loggedIn || loginRequest || resourceRequest) {
                 chain.doFilter(request, response);

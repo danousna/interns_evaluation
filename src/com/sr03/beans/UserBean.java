@@ -83,7 +83,7 @@ public class UserBean extends HttpServlet {
                         null
                 ));
 
-                return "users.xhtml?faces-redirect=true";
+                return "users.xhtml";
             } else {
                 for (String error : errors) {
                     context.addMessage(null, new FacesMessage(
@@ -103,9 +103,9 @@ public class UserBean extends HttpServlet {
         }
 
         if (id != null) {
-            return "user_form?id=" + id;
+            return "user_form.xhtml?id=" + id;
         } else {
-            return "user_form";
+            return "user_form.xhtml";
         }
     }
 

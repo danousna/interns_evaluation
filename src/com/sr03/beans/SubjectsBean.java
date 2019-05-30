@@ -42,6 +42,6 @@ public class SubjectsBean extends HttpServlet {
                 null
         ));
 
-        return "subjects.xhtml?faces-redirect=true";
+        return "subjects.xhtml";
     }
 }

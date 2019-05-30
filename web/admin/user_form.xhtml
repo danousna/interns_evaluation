@@ -10,7 +10,7 @@
     <f:viewParam name="id" value="#{userBean.id}" />
     <f:viewAction action="#{userBean.init}" />
 </f:metadata>
-<ui:composition template="layout.xhtml">
+<ui:composition template="../layout.xhtml">
     <ui:define name="content">
         <b:container>
             <h3>#{empty userBean.user.id ? "Créer" : "Modifier"} un utilisateur</h3>

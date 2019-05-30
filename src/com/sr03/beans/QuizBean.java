@@ -77,7 +77,7 @@ public class QuizBean {
                         null
                 ));
 
-                return "quizzes.xhtml?faces-redirect=true";
+                return "quizzes.xhtml";
             } else {
                 for (String error : errors) {
                     context.addMessage(null, new FacesMessage(
@@ -97,9 +97,9 @@ public class QuizBean {
         }
 
         if (id != null) {
-            return "quiz_form?id=" + id;
+            return "quiz_form.xhtml?id=" + id;
         } else {
-            return "quiz_form";
+            return "quiz_form.xhtml";
         }
     }
 
@@ -186,7 +186,7 @@ public class QuizBean {
                 null
         ));
 
-        return "quiz.xhtml?faces-redirect=true&id=" + this.id;
+        return "quiz.xhtml?id=" + this.id;
     }
 
     public String deleteQuestion(Long id) {
@@ -199,6 +199,6 @@ public class QuizBean {
                 null
         ));
 
-        return "quiz.xhtml?faces-redirect=true&id=" + this.id;
+        return "quiz.xhtml?id=" + this.id;
     }
 }
