@@ -7,10 +7,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:b="http://bootsfaces.net/ui">
 <f:metadata>
-    <f:viewParam name="id" value="#{subjectBean.editId}" />
+    <f:viewParam name="id" value="#{subjectBean.id}" />
     <f:viewAction action="#{subjectBean.init}" />
 </f:metadata>
-<ui:composition template="layout.xhtml">
+<ui:composition template="../layout.xhtml">
     <ui:define name="content">
         <b:container>
             <h3>#{empty subjectBean.subject.id ? "Créer" : "Modifier"} un sujet</h3>

@@ -40,7 +40,7 @@ public class UsersBean extends HttpServlet {
                 null
         ));
 
-        return "users.xhtml?faces-redirect=true";
+        return "users.xhtml";
     }
 
     public String delete(Long id) {
@@ -53,6 +53,6 @@ public class UsersBean extends HttpServlet {
                 null
         ));
 
-        return "users.xhtml?faces-redirect=true";
+        return "users.xhtml";
     }
 }

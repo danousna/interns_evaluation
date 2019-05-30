@@ -10,6 +10,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServlet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ManagedBean
 @ViewScoped
@@ -38,7 +39,7 @@ public class QuizzesBean extends HttpServlet {
                 null
         ));
 
-        return "quizzes.xhtml?faces-redirect=true";
+        return "quizzes.xhtml";
     }
 
     public String delete(Long id) {
@@ -51,6 +52,12 @@ public class QuizzesBean extends HttpServlet {
                 null
         ));
 
-        return "quizzes.xhtml?faces-redirect=true";
+        return "quizzes.xhtml";
+    }
+
+    public List<QuizEntity> activeQuizzes() {
+        return quizzes.stream()
+                .filter(quiz -> quiz.getIs_active())
+                .collect(Collectors.toList());
     }
 }

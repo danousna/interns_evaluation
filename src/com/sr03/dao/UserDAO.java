@@ -106,7 +106,7 @@ public class UserDAO extends DAO<UserEntity> {
         }
     }
 
-    public void changeUserActivity(long id) throws DAOException {
+    public void changeUserActivity(Long id) throws DAOException {
         Connection conn = null;
         PreparedStatement preparedStatement = null;
 

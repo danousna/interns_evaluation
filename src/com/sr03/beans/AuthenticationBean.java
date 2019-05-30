@@ -42,13 +42,24 @@ public class AuthenticationBean implements Serializable {
         UserEntity user= userDAO.get(email);
 
         if (user != null) {
+            if (!user.getIs_active()) {
+                context.addMessage(null, new FacesMessage(
+                        FacesMessage.SEVERITY_ERROR,
+                        "Connexion impossible.",
+                        "Compte désactivé, veuillez contacter un administrateur pour le réactiver."
+                ));
+                return;
+            }
+
             ConfigurablePasswordEncryptor passwordEncryptor = new ConfigurablePasswordEncryptor();
             passwordEncryptor.setAlgorithm( "SHA-256" );
             passwordEncryptor.setPlainDigest( false );
 
             if(passwordEncryptor.checkPassword(password, user.getPassword())) {
-                context.getExternalContext().getSessionMap().put("name", user.getName());
+                context.getExternalContext().getSessionMap().put("id", user.getId());
                 context.getExternalContext().getSessionMap().put("email", user.getEmail());
+                context.getExternalContext().getSessionMap().put("is_admin", user.getIs_admin());
+                context.getExternalContext().getSessionMap().put("name", user.getName());
 
                 try {
                     context.getExternalContext().redirect("index.xhtml");

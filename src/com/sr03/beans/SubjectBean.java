@@ -9,8 +9,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServlet;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +18,7 @@ public class SubjectBean {
     private SubjectEntity subject;
     private SubjectDAO subjectDAO;
 
-    private Long editId;
+    private Long id;
 
     private List<String> errors = new ArrayList<>();
 
@@ -30,8 +28,8 @@ public class SubjectBean {
     }
 
     public void init() {
-        if (editId != null) {
-            subject = subjectDAO.get(editId);
+        if (id != null) {
+            subject = subjectDAO.get(id);
         }
     }
 
@@ -47,12 +45,12 @@ public class SubjectBean {
         this.errors = errors;
     }
 
-    public Long getEditId() {
-        return editId;
+    public Long getId() {
+        return id;
     }
 
-    public void setEditId(Long editId) {
-        this.editId = editId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String save()  {
@@ -60,7 +58,7 @@ public class SubjectBean {
 
         try {
             if (errors.isEmpty()) {
-                if (editId == null) {
+                if (id == null) {
                     subjectDAO.create(subject);
                 } else {
                     subjectDAO.update(subject);
@@ -72,7 +70,7 @@ public class SubjectBean {
                         null
                 ));
 
-                return "subjects.xhtml?faces-redirect=true";
+                return "subjects.xhtml";
             } else {
                 context.addMessage(null, new FacesMessage(
                         FacesMessage.SEVERITY_ERROR,
@@ -89,10 +87,10 @@ public class SubjectBean {
             e.printStackTrace();
         }
 
-        if (editId != null) {
-            return "subject_form?id=" + editId;
+        if (id != null) {
+            return "subject_form.xhtml?id=" + id;
         } else {
-            return "subject_form";
+            return "subject_form.xhtml";
         }
     }
 }

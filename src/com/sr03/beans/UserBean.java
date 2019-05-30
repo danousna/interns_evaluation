@@ -21,7 +21,7 @@ public class UserBean extends HttpServlet {
     private UserEntity user;
     private UserDAO userDAO;
 
-    private Long editId;
+    private Long id;
 
     private List<String> errors = new ArrayList<>();
 
@@ -31,8 +31,8 @@ public class UserBean extends HttpServlet {
     }
 
     public void init() {
-        if (editId != null) {
-            user = userDAO.get(editId);
+        if (id != null) {
+            user = userDAO.get(id);
         }
     }
 
@@ -50,24 +50,24 @@ public class UserBean extends HttpServlet {
         this.errors = errors;
     }
 
-    public Long getEditId() {
-        return editId;
+    public Long getId() {
+        return id;
     }
 
-    public void setEditId(Long editId) {
-        this.editId = editId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String save()  {
         FacesContext context = FacesContext.getCurrentInstance();
 
         try {
-            if (editId == null) {
+            if (id == null) {
                 processPassword();
             }
 
             if (errors.isEmpty()) {
-                if (editId == null) {
+                if (id == null) {
                     Timestamp date = new Timestamp(System.currentTimeMillis());
                     user.setCreated_at(date);
                     user.setIs_active(true);
@@ -83,13 +83,15 @@ public class UserBean extends HttpServlet {
                         null
                 ));
 
-                return "users.xhtml?faces-redirect=true";
+                return "users.xhtml";
             } else {
-                context.addMessage(null, new FacesMessage(
-                        FacesMessage.SEVERITY_ERROR,
-                        "Echec lors de l'enregistrement de l'utilisateur.",
-                        null
-                ));
+                for (String error : errors) {
+                    context.addMessage(null, new FacesMessage(
+                            FacesMessage.SEVERITY_ERROR,
+                            error,
+                            null
+                    ));
+                }
             }
         } catch (DAOException e) {
             context.addMessage(null, new FacesMessage(
@@ -100,15 +102,20 @@ public class UserBean extends HttpServlet {
             e.printStackTrace();
         }
 
-        if (editId != null) {
-            return "user_form?id=" + editId;
+        if (id != null) {
+            return "user_form.xhtml?id=" + id;
         } else {
-            return "user_form";
+            return "user_form.xhtml";
         }
     }
 
     private void processPassword() {
         String password = user.getPassword();
+
+        if (password.length() < 6) {
+            errors.add("Mot de passe trop court (< 6 caractères)");
+            return;
+        }
 
         /*
          * Utilisation de la lib Jasypt pour chiffrer le mot de passe.

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
+<f:metadata>
+    <f:viewParam name="id" value="#{quizBean.id}" />
+    <f:viewAction action="#{quizBean.init}" />
+</f:metadata>
+<ui:composition template="../layout.xhtml">
+    <ui:define name="content">
+        <b:container>
+            <h3>#{empty quizBean.quiz.id ? "Créer" : "Modifier"} un questionnaire</h3>
+
+            <h:form>
+                <ui:repeat value="#{quizBean.errors}" var="error" rendered="#{!quizBean.errors.isEmpty()}">
+                    <p>#{error}</p>
+                </ui:repeat>
+
+                <b:selectOneMenu id="subject_id" value="#{quizBean.quiz.subject_id}" required="true" label="Sujet" requiredMessage="Veuillez saisir un sujet">
+                    <f:selectItems value="#{subjectsBean.subjects}" var="subj" itemValue="#{subj.id}" itemLabel="#{subj.name}" itemDescription="#{subj.name}"/>
+                </b:selectOneMenu>
+
+                <b:message id="subject_idMessage" for="subject_id" />
+
+                <b:inputText id="name" value="#{quizBean.quiz.name}" required="true" maxlength="60" label="Nom" requiredMessage="Veuillez saisir un nom" />
+                <b:message id="nameMessage" for="name" />
+
+                <ui:repeat value="#{quizBean.quiz.questions}" var="question" varStatus="status">
+                    <b:panel collapsible="false">
+                        <f:facet name="heading">
+                            <h:outputText value="Question #{status.index + 1}" />
+                            &nbsp;
+                            <b:commandButton value="Supprimer" action="#{quizBean.removeQuestion(status.index)}" immediate="true" />
+                        </f:facet>
+
+                        <b:row>
+                            <b:inputText id="body" value="#{question.body}" required="true" label="Énoncé de la question" requiredMessage="Veuillez saisir un énoncé" span="6" />
+                            <b:inputText id="orderAnswer" value="#{question.order}" label="Ordre" required="true" requiredMessage="Veuillez saisir un ordre" span="6" />
+                        </b:row>
+
+                        <b:selectBooleanCheckbox value="#{question.is_active}" caption="Est activée" />
+
+                        <ui:repeat value="#{question.answers}" var="answer" varStatus="statusAnswer">
+                            <b:panel collapsible="false">
+                                <f:facet name="heading">
+                                    <h:outputText value="Réponse #{statusAnswer.index + 1}" />
+                                    &nbsp;
+                                    <b:commandButton value="Supprimer" action="#{quizBean.removeQuestionAnswer(status.index, statusAnswer.index)}" immediate="true" />
+                                </f:facet>
+                                <b:row>
+                                    <b:inputText id="bodyAnswer" value="#{answer.body}" required="true" label="Valeur" requiredMessage="Veuillez saisir une réponse" span="6" />
+                                    <b:inputText id="orderAnswer" value="#{answer.order}" label="Ordre" required="true" requiredMessage="Veuillez saisir un ordre" span="6" />
+                                </b:row>
+                                <b:row>
+                                    <b:selectBooleanCheckbox value="#{answer.is_correct}" caption="Est la bonne réponse" span="2" />
+                                    <b:selectBooleanCheckbox value="#{answer.is_active}" caption="Est activée" span="10" />
+                                </b:row>
+                            </b:panel>
+                        </ui:repeat>
+
+                        <b:commandButton value="Ajouter une réponse possible" action="#{quizBean.addQuestionAnswer(status.index)}"  />
+                    </b:panel>
+                </ui:repeat>
+
+                <b:commandButton value="Ajouter une question" action="#{quizBean.addQuestion}" />
+                &nbsp;
+                <b:commandButton look="primary" value="Créer" action="#{quizBean.save}" rendered="#{empty quizBean.quiz.id}" />
+                <b:commandButton look="primary" value="Enregistrer" action="#{quizBean.save}" rendered="#{!empty quizBean.quiz.id}" />
+            </h:form>
+        </b:container>
+    </ui:define>
+</ui:composition>
+</html>
