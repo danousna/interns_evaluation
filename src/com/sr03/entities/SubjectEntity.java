@@ -1,13 +1,6 @@
 package com.sr03.entities;
 
-import java.io.Serializable;
-
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-
-@ManagedBean
-@RequestScoped
-public class SubjectEntity implements Serializable {
+public class SubjectEntity {
     private Long id;
     private String name;
 

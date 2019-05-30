@@ -86,4 +86,6 @@ public class DAOFactory {
     public AnswerDAO getAnswerDAO() {
         return new AnswerDAO(this);
     }
+
+    public RecordDAO getRecordDAO() { return new RecordDAO(this); }
 }
