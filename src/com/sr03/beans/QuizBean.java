@@ -107,7 +107,9 @@ public class QuizBean {
             questions = new ArrayList<>();
         }
 
-        questions.add(new QuestionEntity());
+        QuestionEntity question = new QuestionEntity();
+        question.setIs_active(true);
+        questions.add(question);
         quiz.setQuestions(questions);
     }
 
@@ -118,7 +120,9 @@ public class QuizBean {
         if (answers == null) {
             answers = new ArrayList<>();
         }
-        answers.add(new AnswerEntity());
+        AnswerEntity answer = new AnswerEntity();
+        answer.setIs_active(true);
+        answers.add(answer);
         questions.get(index).setAnswers(answers);
 
         quiz.setQuestions(questions);
