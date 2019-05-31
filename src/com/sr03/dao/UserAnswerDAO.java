@@ -7,6 +7,7 @@ import java.sql.*;
 import static com.sr03.dao.DAOUtility.*;
 
 public class UserAnswerDAO extends DAO<UserAnswerEntity> {
+    private static final String SQL_SELECT_ONE = "SELECT * FROM {0} WHERE user_id = ? AND record_id = ?";
     private static final String SQL_INSERT = "INSERT INTO users_answers (user_id, record_id, question_id, answer_id) VALUES (?, ?, ?, ?)";
     private static final String SQL_UPDATE = "UPDATE users_answers SET user_id = ?, record_id = ?, question_id = ?, answer_id = ? WHERE id = ?";
 
@@ -28,9 +29,26 @@ public class UserAnswerDAO extends DAO<UserAnswerEntity> {
         return userAnswer;
     }
 
-    @Override
-    public UserAnswerEntity get(Long id) {
-        UserAnswerEntity userAnswer = super.get(id);
+    public UserAnswerEntity get(Long user_id, Long record_id) {
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        UserAnswerEntity userAnswer = null;
+
+        try {
+            conn = daoFactory.getConnection();
+            preparedStatement = initPreparedStatement(conn, SQL_SELECT_ONE, false, user_id, record_id);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                userAnswer = map(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            silentClosures(resultSet, preparedStatement, conn);
+        }
+
         return userAnswer;
     }
 
