@@ -44,26 +44,17 @@
                         <h:column rendered="#{question.is_active}">
                             <div style="margin-top: 30px;">
                                 <h4>Question #{question.order} : #{question.body}</h4>
-
-                                <h:selectOneRadio
-                                        value="#{question.answer}"
-                                        var="answer"
-                                        rendered="#{question.is_active}"
-                                        varStatus="status"
-                                >
-                                    <f:selectItems
-                                            value="#{question.answers}"
-                                            var="a"
-                                            itemValue="#{a.id}"
-                                            itemLabel="#{a.body}"
-
-                                    />
-                                </h:selectOneRadio>
-                            </div>
-                        </h:column>
-                    </ui:repeat>
-                    <br />
-                    <b:commandButton look="primary" value="Valider" action="#{recordBean.save}" />
+                    <h:selectOneRadio value="#{question.answer}" var="answer" rendered="#{question.is_active}" varStatus="status">
+                        <f:selectItems value="#{question.answers}"
+                                       var="a"
+                                       itemValue="#{a.id}"
+                                       itemLabel="#{a.body}"
+                                       />
+                    </h:selectOneRadio>
+                        </div>
+                    </h:column>
+                </ui:repeat>
+                    <b:commandButton look="primary" value="valider" action="#{recordBean.save}" />
                 </h:form>
             </b:column>
             <b:column span="3" />

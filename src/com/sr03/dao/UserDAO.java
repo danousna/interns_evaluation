@@ -11,6 +11,7 @@ public class UserDAO extends DAO<UserEntity> {
     private static final String SQL_INSERT = "INSERT INTO users (email, name, password, company, phone, created_at, is_active, is_admin) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String SQL_UPDATE = "UPDATE users SET email = ?, name = ?, password = ?, company = ?, phone = ?, is_active = ?, is_admin = ? WHERE id = ?";
     private static final String SQL_CHANGE_ACTIVITY = "UPDATE users SET is_active = (is_active + 1)%2 WHERE id = ?";
+    private static final String SQL_STATS_BY_USER = "SELECT * FROM users INNER JOIN"
 
     UserDAO(DAOFactory daoFactory) {
         super(daoFactory, "users");

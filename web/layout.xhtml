@@ -18,9 +18,9 @@
                 <c:if test="#{sessionScope.get('is_admin') == true}">
                     <b:navLink value="Utilisateurs" href="/sr03_interns_evaluation_war_exploded/admin/users.xhtml" active="#{view.viewId eq '/admin/users.xhtml' ? 'true' : ''}" />
                     <b:navLink value="Questionnaires" href="/sr03_interns_evaluation_war_exploded/admin/quizzes.xhtml" active="#{view.viewId eq '/admin/quizzes.xhtml' ? 'true' : ''}" />
+                    <b:navLink value="Statistiques" href="/sr03_interns_evaluation_war_exploded/admin/stats.xhtml"  active="#{view.viewId eq '/admin/stats.xhtml' ? 'true' : ''}" />
                     <b:navLink value="PhpMyAdmin" href="http://localhost/phpmyadmin" rendered="#{sessionScope.get('is_admin')}" />
                 </c:if>
-
                 <b:navCommandLink action="#{authenticationBean.logout}" value="Déconnexion" rendered="#{sessionScope.get('email') != null}" />
             </b:navbarLinks>
         </b:navBar>
