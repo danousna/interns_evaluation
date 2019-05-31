@@ -1,6 +1,8 @@
 package com.sr03.dao;
 
+import com.sr03.entities.AnswerEntity;
 import com.sr03.entities.RecordEntity;
+import com.sr03.entities.UserAnswerEntity;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -8,13 +10,20 @@ import java.util.ArrayList;
 import static com.sr03.dao.DAOUtility.*;
 
 public class RecordDAO extends DAO<RecordEntity> {
-    private static final String SQL_SELECT_USER_ANSWERS_ALL = "SELECT * FROM users_answers WHERE record_id = ?";
-    private static final String SQL_INSERT = "INSERT INTO records (quiz_id, user_id, started_at, finished_at) VALUES (?, ?, ?, ?)";
-    private static final String SQL_UPDATE = "UPDATE records SET quiz_id = ?, user_id = ?, started_at = ?, finished_at = ? WHERE id = ?";
+    private static final String SQL_SELECT_ALL_USER_RECORDS = "SELECT * FROM records WHERE user_id = ?";
+    private static final String SQL_SELECT_ALL_RECORD_ANSWERS = "SELECT * FROM users_answers WHERE record_id = ?";
+    private static final String SQL_INSERT = "INSERT INTO records (quiz_id, user_id, score, started_at, finished_at) VALUES (?, ?, ?, ?, ?)";
+    private static final String SQL_UPDATE = "UPDATE records SET quiz_id = ?, user_id = ?, score = ?, started_at = ?, finished_at = ? WHERE id = ?";
+
+    private QuizDAO quizDAO;
+    private QuestionDAO questionDAO;
+    private UserAnswerDAO userAnswerDAO;
 
     RecordDAO(DAOFactory daoFactory) {
         super(daoFactory, "records");
-        // this.subjectDAO = DAOFactory.getInstance().getSubjetDAO();
+        this.quizDAO = DAOFactory.getInstance().getQuizDAO();
+        this.questionDAO = DAOFactory.getInstance().getQuestionDAO();
+        this.userAnswerDAO = DAOFactory.getInstance().getUserAnswerDAO();
     }
 
     @Override
@@ -24,6 +33,7 @@ public class RecordDAO extends DAO<RecordEntity> {
             record.setId(resultSet.getLong("id"));
             record.setQuiz_id(resultSet.getLong("quiz_id"));
             record.setUser_id(resultSet.getLong("user_id"));
+            record.setScore(resultSet.getLong("score"));
             record.setStarted_at(resultSet.getTimestamp("started_at"));
             record.setFinished_at(resultSet.getTimestamp("finished_at"));
         } catch (SQLException e) {
@@ -32,10 +42,29 @@ public class RecordDAO extends DAO<RecordEntity> {
         return record;
     }
 
-    @Override
-    public RecordEntity get(Long id) {
-        RecordEntity record = super.get(id);
-        return record;
+    public ArrayList<RecordEntity> getAllUserRecords(Long userId) {
+        ArrayList<RecordEntity> records = getManyQuery(SQL_SELECT_ALL_USER_RECORDS, userId);
+
+        for (RecordEntity record : records) {
+            int score = 0;
+            ArrayList<UserAnswerEntity> answers = userAnswerDAO.getManyQuery(SQL_SELECT_ALL_RECORD_ANSWERS, record.getId());
+            record.setAnswers(answers);
+            record.setQuiz(quizDAO.get(record.getQuiz_id()));
+
+            for (UserAnswerEntity answer : answers) {
+                answer.setQuestion(questionDAO.get(answer.getQuestion_id()));
+
+                for (AnswerEntity a : answer.getQuestion().getAnswers()) {
+                    if (a.getIs_correct() && answer.getAnswer_id().equals(a.getId())) {
+                        score++;
+                    }
+                }
+            }
+
+            record.setScore(score);
+        }
+
+        return records;
     }
 
     @Override
@@ -49,6 +78,7 @@ public class RecordDAO extends DAO<RecordEntity> {
             preparedStatement = initPreparedStatement(conn, SQL_INSERT, true,
                     record.getQuiz_id(),
                     record.getUser_id(),
+                    record.getScore(),
                     record.getStarted_at(),
                     record.getFinished_at()
             );
@@ -83,6 +113,7 @@ public class RecordDAO extends DAO<RecordEntity> {
             preparedStatement = initPreparedStatement(conn, SQL_UPDATE, false,
                     record.getQuiz_id(),
                     record.getUser_id(),
+                    record.getScore(),
                     record.getStarted_at(),
                     record.getFinished_at(),
                     record.getId()

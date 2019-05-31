@@ -25,6 +25,7 @@ CREATE TABLE quizzes (
 
     FOREIGN KEY (subject_id) REFERENCES subjects(id) ON DELETE CASCADE
 );
+INSERT INTO quizzes VALUES (NULL, 'Python', 1, 1), (NULL, 'K-Means', 1, 2);
 
 CREATE TABLE questions (
     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -35,6 +36,7 @@ CREATE TABLE questions (
 
     FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE
 );
+INSERT INTO questions VALUES (NULL, 'Quelle est la dernière version de Python ?', 1, 1, 1), (NULL, 'Python est un language ...', 1, 2, 1), (NULL, 'Comment définit on une fonction ?', 1, 3, 1);
 
 CREATE TABLE answers (
     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -46,11 +48,13 @@ CREATE TABLE answers (
 
     FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE
 );
+INSERT INTO answers VALUES (NULL, 'Python 2', 1, 0, 1, 1), (NULL, 'Python 3', 1, 1, 2, 1), (NULL, 'Python 4', 1, 0, 3, 1), (NULL, 'interprété', 1, 1, 1, 2), (NULL, 'compilé', 1, 0, 2, 2), (NULL, 'def maFonction()', 1, 1, 1, 3), (NULL, 'func maFonction()', 1, 0, 2, 3), (NULL, 'function maFonction()', 1, 0, 3, 3);
 
 CREATE TABLE records (
     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
     quiz_id int,
     user_id int,
+    score int,
     started_at date,
     finished_at date,
 

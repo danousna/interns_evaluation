@@ -23,6 +23,16 @@
                 </ui:repeat>
                 </h:form>
             </b:container>
+            <b:container>
+                <h3>Les questionnaires auxquels j'ai répondu :</h3>
+                <h:form>
+                    <ui:repeat value="#{recordsBean.userRecords}" var="record">
+                        <h5 style="margin-top: 20px;">#{record.quiz.name} (#{record.quiz.subject.name}) :</h5>
+                        Score : #{record.score}<br />
+                        Durée : #{record.started_at}<br />
+                    </ui:repeat>
+                </h:form>
+            </b:container>
         </ui:define>
     </ui:composition>
 </h:body>
