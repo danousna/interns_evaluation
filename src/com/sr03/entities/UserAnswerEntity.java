@@ -2,6 +2,7 @@ package com.sr03.entities;
 
 public class UserAnswerEntity {
     private Long user_id;
+    private Long record_id;
     private Long question_id;
     private Long answer_id;
 
@@ -11,6 +12,14 @@ public class UserAnswerEntity {
 
     public void setUser_id(Long user_id) {
         this.user_id = user_id;
+    }
+
+    public Long getRecord_id() {
+        return record_id;
+    }
+
+    public void setRecord_id(Long record_id) {
+        this.record_id = record_id;
     }
 
     public Long getQuestion_id() {

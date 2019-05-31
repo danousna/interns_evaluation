@@ -3,8 +3,6 @@ package com.sr03.dao;
 import com.sr03.entities.RecordEntity;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collections;
 
 import static com.sr03.dao.DAOUtility.*;
 
