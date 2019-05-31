@@ -16,9 +16,18 @@ public class RecordsBean extends HttpServlet {
     private ArrayList<RecordEntity> userRecords;
     private RecordDAO recordDAO;
 
+    private Long id;
+
     public RecordsBean() {
         this.recordDAO = DAOFactory.getInstance().getRecordDAO();
         this.userRecords = recordDAO.getAllUserRecords((Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("id"));
+    }
+
+    public void init() {
+        Boolean isAdmin = (Boolean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("is_admin");
+        if (id != null && isAdmin) {
+            userRecords = recordDAO.getAllUserRecords(id);
+        }
     }
 
     public ArrayList<RecordEntity> getUserRecords() {
@@ -35,5 +44,13 @@ public class RecordsBean extends HttpServlet {
 
     public void setRecordDAO(RecordDAO recordDAO) {
         this.recordDAO = recordDAO;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

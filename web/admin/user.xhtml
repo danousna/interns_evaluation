@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
+<f:metadata>
+    <f:viewParam name="id" value="#{userBean.id}" />
+    <f:viewParam name="id" value="#{recordsBean.id}" />
+    <f:viewAction action="#{userBean.init}" />
+    <f:viewAction action="#{recordsBean.init}" />
+</f:metadata>
+<ui:composition template="../layout.xhtml">
+    <ui:define name="content">
+        <b:container>
+            <h3>#{userBean.user.name}</h3>
+
+            <h:form>
+                <b:commandLink
+                        look="primary"
+                        outcome="user_form"
+                        value="Modifier"
+                        style="display: inline;">
+                    <f:param name="id" value="#{userBean.user.id}" />
+                </b:commandLink>
+            </h:form>
+        </b:container>
+        <b:container>
+            <h3>Questionnaires effectués</h3>
+            <h:form>
+                <b:dataTable value="#{recordsBean.userRecords}"
+                             var="record"
+                             id="records-table"
+                >
+                    <b:dataTableColumn value="#{record.id}" label="ID" />
+                    <b:dataTableColumn value="#{record.quiz.name}" label="Nom du questionnaire" />
+                    <b:dataTableColumn value="#{record.score}" label="Score" />
+                </b:dataTable>
+            </h:form>
+        </b:container>
+    </ui:define>
+</ui:composition>
+</html>

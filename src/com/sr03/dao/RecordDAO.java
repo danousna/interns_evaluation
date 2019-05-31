@@ -1,6 +1,5 @@
 package com.sr03.dao;
 
-import com.sr03.entities.AnswerEntity;
 import com.sr03.entities.RecordEntity;
 import com.sr03.entities.UserAnswerEntity;
 
