@@ -13,6 +13,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -30,10 +31,20 @@ public class QuizRest {
     }
 
     @GET
+    @Path("/AutoXML/{id}")
+    @Produces(MediaType.TEXT_XML)
+    public Response.ResponseBuilder getQuizSimpleXML(@PathParam("id") Long id) {
+        QuizEntity quiz = quizDAO.get(id);
+        return Response.ok(quiz);
+    }
+
+    @GET
     @Path("/{id}")
     @Produces(MediaType.TEXT_XML)
     public String getQuiz(@PathParam("id") Long id) {
         QuizEntity quiz = quizDAO.get(id);
+
+        // Document setup
 
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder;
@@ -43,14 +54,15 @@ public class QuizRest {
             e.printStackTrace();
             return "";
         }
-
         Document document = documentBuilder.newDocument();
 
+        // Root <quiz>
         Element root = document.createElement("quiz");
         root.setAttribute("subject", quiz.getSubject().getName());
         root.setAttribute("id", quiz.getId().toString());
         document.appendChild(root);
 
+        // For each question, create new <question> element inside quiz.
         for (QuestionEntity question : quiz.getQuestions()) {
             Element questionElt = document.createElement("question");
             questionElt.setAttribute("id", question.getId().toString());
@@ -58,6 +70,7 @@ public class QuizRest {
             body.appendChild(document.createTextNode(question.getBody()));
             questionElt.appendChild(body);
 
+            // For each answer, create new <answer> element inside question.
             for (AnswerEntity answer : question.getAnswers()) {
                 Element answerElt = document.createElement("answer");
                 answerElt.setAttribute("correct", answer.getIs_correct().toString());
@@ -67,6 +80,8 @@ public class QuizRest {
 
             root.appendChild(questionElt);
         }
+
+        // Transformer setup
 
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer;
@@ -78,6 +93,8 @@ public class QuizRest {
             e.printStackTrace();
             return "";
         }
+
+        // Convert document to string
 
         StringWriter stringWriter = new StringWriter();
 
