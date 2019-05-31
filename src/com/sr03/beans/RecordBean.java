@@ -90,4 +90,10 @@ public class RecordBean extends HttpServlet {
     public void setAnswers(HashMap<Long, Long> answers) {
         this.answers = answers;
     }
+
+    public void save() {
+        for (QuestionEntity question : quiz.getQuestions()) {
+            System.out.println(question.getAnswer());
+        }
+    }
 }
