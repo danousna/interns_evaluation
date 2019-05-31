@@ -1,15 +1,9 @@
 package com.sr03.entities;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-
-@ManagedBean
-@RequestScoped
-public class QuizEntity implements Serializable {
+public class QuizEntity {
     private Long id;
     private String name;
     private Boolean is_active;

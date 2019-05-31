@@ -4,13 +4,12 @@ import com.sr03.entities.RecordEntity;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import static com.sr03.dao.DAOUtility.*;
 
 public class RecordDAO extends DAO<RecordEntity> {
     private static final String SQL_SELECT_USER_ANSWERS_ALL = "SELECT * FROM users_answers WHERE record_id = ?";
-    private static final String SQL_INSERT = "INSERT INTO records (quiz_id, user_id, started_at) VALUES (?, ?, ?)";
+    private static final String SQL_INSERT = "INSERT INTO records (quiz_id, user_id, started_at, finished_at) VALUES (?, ?, ?, ?)";
     private static final String SQL_UPDATE = "UPDATE records SET quiz_id = ?, user_id = ?, started_at = ?, finished_at = ? WHERE id = ?";
 
     RecordDAO(DAOFactory daoFactory) {
@@ -50,7 +49,8 @@ public class RecordDAO extends DAO<RecordEntity> {
             preparedStatement = initPreparedStatement(conn, SQL_INSERT, true,
                     record.getQuiz_id(),
                     record.getUser_id(),
-                    record.getStarted_at()
+                    record.getStarted_at(),
+                    record.getFinished_at()
             );
 
             int status = preparedStatement.executeUpdate();

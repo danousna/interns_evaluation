@@ -1,45 +1,43 @@
 package com.sr03.beans;
 
-import com.sr03.dao.DAOFactory;
-import com.sr03.dao.QuizDAO;
-import com.sr03.dao.RecordDAO;
-import com.sr03.entities.QuestionEntity;
-import com.sr03.entities.QuizEntity;
-import com.sr03.entities.RecordEntity;
+import com.sr03.dao.*;
+import com.sr03.entities.*;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServlet;
-import java.util.HashMap;
+import java.sql.Timestamp;
 
 @ManagedBean
 @ViewScoped
 public class RecordBean extends HttpServlet {
     private RecordEntity record;
     private QuizEntity quiz;
-    private HashMap<Long, Long> answers;
+    private int score;
 
     private RecordDAO recordDAO;
     private QuizDAO quizDAO;
+    private UserAnswerDAO userAnswerDAO;
 
     private Long quizId;
 
     public RecordBean() {
         this.record = new RecordEntity();
         this.quiz = new QuizEntity();
-        this.answers = new HashMap<>();
 
         this.recordDAO = DAOFactory.getInstance().getRecordDAO();
         this.quizDAO = DAOFactory.getInstance().getQuizDAO();
+        this.userAnswerDAO = DAOFactory.getInstance().getUserAnswerDAO();
     }
 
     public void init() {
         if (quizId != null) {
             quiz = quizDAO.get(quizId);
 
-            for (QuestionEntity question : quiz.getQuestions()) {
-                answers.put(question.getId(), null);
-            }
+            record.setQuiz_id(quiz.getId());
+            record.setUser_id((Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("id"));
+            record.setStarted_at(new Timestamp(System.currentTimeMillis()));
         }
     }
 
@@ -75,25 +73,39 @@ public class RecordBean extends HttpServlet {
         this.quiz = quiz;
     }
 
-    public QuizDAO getQuizDAO() {
-        return quizDAO;
+    public int getScore() {
+        return score;
     }
 
-    public void setQuizDAO(QuizDAO quizDAO) {
-        this.quizDAO = quizDAO;
-    }
-
-    public HashMap<Long, Long> getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(HashMap<Long, Long> answers) {
-        this.answers = answers;
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public void save() {
-        for (QuestionEntity question : quiz.getQuestions()) {
-            System.out.println(question.getAnswer());
+        try {
+            score = 0;
+
+            record.setFinished_at(new Timestamp(System.currentTimeMillis()));
+            recordDAO.create(record);
+
+            for (QuestionEntity question : quiz.getQuestions()) {
+                if (question.getAnswer() != null) {
+                    UserAnswerEntity userAnswer = new UserAnswerEntity();
+                    userAnswer.setUser_id(record.getUser_id());
+                    userAnswer.setRecord_id(record.getId());
+                    userAnswer.setQuestion_id(question.getId());
+                    userAnswer.setAnswer_id(question.getAnswer());
+                    userAnswerDAO.create(userAnswer);
+
+                    for (AnswerEntity answer : question.getAnswers()) {
+                        if (answer.getIs_correct() && question.getAnswer().equals(answer.getId())) {
+                            score++;
+                        }
+                    }
+                }
+            }
+        } catch (DAOException e) {
+            e.printStackTrace();
         }
     }
 }

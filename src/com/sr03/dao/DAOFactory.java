@@ -88,4 +88,6 @@ public class DAOFactory {
     }
 
     public RecordDAO getRecordDAO() { return new RecordDAO(this); }
+
+    public UserAnswerDAO getUserAnswerDAO() { return new UserAnswerDAO(this); }
 }
