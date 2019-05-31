@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 public class RecordBean extends HttpServlet {
     private RecordEntity record;
     private QuizEntity quiz;
-    private int score;
+    private Long score;
 
     private RecordDAO recordDAO;
     private QuizDAO quizDAO;
@@ -73,19 +73,28 @@ public class RecordBean extends HttpServlet {
         this.quiz = quiz;
     }
 
-    public int getScore() {
+    public Long getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(Long score) {
         this.score = score;
     }
 
     public void save() {
         try {
-            score = 0;
-
+            score = Long.getLong("0");
             record.setFinished_at(new Timestamp(System.currentTimeMillis()));
+            for (QuestionEntity question : quiz.getQuestions()) {
+                if (question.getAnswer() != null) {
+                    for (AnswerEntity answer : question.getAnswers()) {
+                        if (answer.getIs_correct() && question.getAnswer().equals(answer.getId())) {
+                            score = score + 1;
+                        }
+                    }
+                }
+            }
+            record.setScore(score);
             recordDAO.create(record);
 
             for (QuestionEntity question : quiz.getQuestions()) {
@@ -96,12 +105,6 @@ public class RecordBean extends HttpServlet {
                     userAnswer.setQuestion_id(question.getId());
                     userAnswer.setAnswer_id(question.getAnswer());
                     userAnswerDAO.create(userAnswer);
-
-                    for (AnswerEntity answer : question.getAnswers()) {
-                        if (answer.getIs_correct() && question.getAnswer().equals(answer.getId())) {
-                            score++;
-                        }
-                    }
                 }
             }
         } catch (DAOException e) {

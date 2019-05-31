@@ -46,22 +46,12 @@ public class RecordDAO extends DAO<RecordEntity> {
         ArrayList<RecordEntity> records = getManyQuery(SQL_SELECT_ALL_USER_RECORDS, userId);
 
         for (RecordEntity record : records) {
-            int score = 0;
             ArrayList<UserAnswerEntity> answers = userAnswerDAO.getManyQuery(SQL_SELECT_ALL_RECORD_ANSWERS, record.getId());
-            record.setAnswers(answers);
             record.setQuiz(quizDAO.get(record.getQuiz_id()));
-
             for (UserAnswerEntity answer : answers) {
                 answer.setQuestion(questionDAO.get(answer.getQuestion_id()));
-
-                for (AnswerEntity a : answer.getQuestion().getAnswers()) {
-                    if (a.getIs_correct() && answer.getAnswer_id().equals(a.getId())) {
-                        score++;
-                    }
-                }
             }
-
-            record.setScore(score);
+            record.setAnswers(answers);
         }
 
         return records;
