@@ -21,7 +21,7 @@
                 </div>
 
                 <h:form styleClass="question-form" rendered="#{recordBean.record.finished_at == null}">
-                    <h:column rendered="#{recordBean.currentQuestion().is_active}">
+                    <h:column>
                         <div style="margin-top: 30px;">
                             <h4>Question #{recordBean.currentQuestion().order} : #{recordBean.currentQuestion().body}</h4>
 

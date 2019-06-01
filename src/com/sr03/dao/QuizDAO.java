@@ -5,12 +5,11 @@ import com.sr03.entities.QuizEntity;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import static com.sr03.dao.DAOUtility.*;
 
 public class QuizDAO extends DAO<QuizEntity> {
-    private static final String SQL_SELECT_QUESTIONS_ALL = "SELECT * FROM questions WHERE quiz_id = ?";
+    private static final String SQL_SELECT_ALL_QUESTIONS = "SELECT * FROM questions WHERE quiz_id = ?";
     private static final String SQL_INSERT = "INSERT INTO quizzes (name, is_active, subject_id) VALUES (?, ?, ?)";
     private static final String SQL_UPDATE = "UPDATE quizzes SET name = ?, is_active = ?, subject_id = ? WHERE id = ?";
     private static final String SQL_CHANGE_AVAILABILITY = "UPDATE quizzes SET is_active = (is_active + 1)%2 WHERE id = ?";
@@ -43,7 +42,7 @@ public class QuizDAO extends DAO<QuizEntity> {
         QuizEntity quiz = super.get(id);
         quiz.setSubject(subjectDAO.get(quiz.getSubject_id()));
 
-        ArrayList<QuestionEntity> questionsIds = questionDAO.getManyQuery(SQL_SELECT_QUESTIONS_ALL, quiz.getId());
+        ArrayList<QuestionEntity> questionsIds = questionDAO.getManyQuery(SQL_SELECT_ALL_QUESTIONS, quiz.getId());
         ArrayList<QuestionEntity> questions = new ArrayList<>();
 
         for (QuestionEntity question : questionsIds) {

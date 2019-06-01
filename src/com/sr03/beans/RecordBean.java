@@ -8,6 +8,8 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServlet;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 @ManagedBean
 @ViewScoped
@@ -35,6 +37,11 @@ public class RecordBean extends HttpServlet {
     public void init() {
         if (quizId != null) {
             quiz = quizDAO.get(quizId);
+
+            quiz.setQuestions(quiz.getQuestions().stream()
+                    .filter(QuestionEntity::getIs_active)
+                    .collect(Collectors.toCollection(ArrayList::new))
+            );
 
             score = 0;
             questionIndex = 0;
