@@ -23,6 +23,13 @@
                 </ui:repeat>
                 </h:form>
             </b:container>
+            <b:container>
+                <h2>Statistiques personnelles</h2>
+                <b:row>
+                    <b:column mediumScreen="1">Global :</b:column>
+                    <b:column mediumScreen="1">#{usersBean.getGlobalStats(sessionScope.get('id'))}% de bonnes réponses</b:column>
+                </b:row>
+            </b:container>
         </ui:define>
     </ui:composition>
 </h:body>

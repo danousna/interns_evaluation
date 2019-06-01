@@ -55,4 +55,8 @@ public class UsersBean extends HttpServlet {
 
         return "users.xhtml";
     }
+
+    public Long getGlobalStats(Long id) {
+       return userDAO.getGlobalStats(id);
+    }
 }
