@@ -20,14 +20,14 @@
                     <p>Sujet : #{recordBean.quiz.subject.name}</p>
                 </div>
 
-                <h:form styleClass="question-form">
+                <h:form styleClass="question-form" rendered="#{recordBean.record.finished_at == null}">
                     <h:column rendered="#{recordBean.currentQuestion().is_active}">
                         <div style="margin-top: 30px;">
                             <h4>Question #{recordBean.currentQuestion().order} : #{recordBean.currentQuestion().body}</h4>
 
-                            <ui:repeat value="#{recordBean.currentQuestion().answers}" var="answer">
-                                <b:radiobutton value="#{recordBean.currentQuestion().answer}" itemLabel="#{answer.body}" itemValue="#{answer.id}" />
-                            </ui:repeat>
+                            <b:radiobutton value="#{recordBean.currentQuestion().answer}">
+                                <f:selectItems value="#{recordBean.currentQuestion().answers}" var="a" itemLabel="#{a.body}" itemValue="#{a.id}" />
+                            </b:radiobutton>
                         </div>
                     </h:column>
                     <br />
@@ -46,6 +46,17 @@
                             rendered="#{recordBean.questionIndex == (recordBean.quiz.questions.size() - 1)}"
                     />
                 </h:form>
+
+                <h:column rendered="#{recordBean.score != null and recordBean.record.finished_at != null}">
+                    <b>
+                        Durée :
+                        <h:outputText value="#{recordBean.record.finished_at.getTime() - recordBean.record.started_at.getTime()}">
+                            <f:convertDateTime type="time" pattern="HH:mm:ss" />
+                        </h:outputText>
+                        <br />
+                        Score : #{recordBean.score}
+                    </b>
+                </h:column>
             </b:column>
             <b:column span="3" />
         </b:row>

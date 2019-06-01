@@ -36,6 +36,7 @@ public class RecordBean extends HttpServlet {
         if (quizId != null) {
             quiz = quizDAO.get(quizId);
 
+            score = 0;
             questionIndex = 0;
 
             record.setQuiz_id(quiz.getId());
@@ -97,22 +98,21 @@ public class RecordBean extends HttpServlet {
     }
 
     public void next() {
+        System.out.println(currentQuestion().getAnswer());
+        for (AnswerEntity answer : currentQuestion().getAnswers()) {
+            if (answer.getIs_correct() && currentQuestion().getAnswer().equals(answer.getId())) {
+                score++;
+            }
+        }
         questionIndex++;
     }
 
     public void save() {
+        // Call for last answer.
+        next();
+
         try {
-            score = 0;
             record.setFinished_at(new Timestamp(System.currentTimeMillis()));
-            for (QuestionEntity question : quiz.getQuestions()) {
-                if (question.getAnswer() != null) {
-                    for (AnswerEntity answer : question.getAnswers()) {
-                        if (answer.getIs_correct() && question.getAnswer().equals(answer.getId())) {
-                            score++;
-                        }
-                    }
-                }
-            }
             record.setScore(score);
             recordDAO.create(record);
 
