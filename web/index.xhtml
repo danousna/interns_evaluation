@@ -31,8 +31,13 @@
                         <h:form>
                             <ui:repeat value="#{recordsBean.userRecords}" var="record">
                                 <h5 style="margin-top: 20px;">#{record.quiz.name} (#{record.quiz.subject.name}) :</h5>
-                                Score : #{record.score}<br />
-                                Durée : #{record.finished_at.getTime() - record.started_at.getTime()}<br />
+                                Score : #{record.score}
+                                <br />
+                                Durée :
+                                <h:outputText value="#{record.finished_at.getTime() - record.started_at.getTime()}">
+                                    <f:convertDateTime type="time" pattern="HH:mm:ss" />
+                                </h:outputText>
+                                <br />
                             </ui:repeat>
                         </h:form>
                     </div>
