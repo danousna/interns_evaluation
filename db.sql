@@ -5,7 +5,7 @@ CREATE TABLE users (
     name varchar(60),
     company varchar(100),
     phone varchar(30),
-    created_at date,
+    created_at datetime,
     is_active bit,
     is_admin bit
 );
@@ -51,8 +51,8 @@ CREATE TABLE records (
     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
     quiz_id int,
     user_id int,
-    started_at date,
-    finished_at date,
+    started_at datetime,
+    finished_at datetime,
 
     FOREIGN KEY (quiz_id) REFERENCES quizzes(id),
     FOREIGN KEY (user_id) REFERENCES users(id)

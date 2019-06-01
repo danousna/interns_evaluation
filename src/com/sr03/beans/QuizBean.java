@@ -186,7 +186,7 @@ public class QuizBean {
                 null
         ));
 
-        return "quiz.xhtml?faces-redirect=true&id=" + this.id;
+        return "quiz.xhtml?faces-redirect=true&id=  " + this.id;
     }
 
     public String deleteQuestion(Long id) {

@@ -60,4 +60,12 @@ public class QuizzesBean extends HttpServlet {
                 .filter(quiz -> quiz.getIs_active())
                 .collect(Collectors.toList());
     }
+
+    public Boolean HasCompleteQuiz(Long idUser, Long idQuiz) {
+        return quizDAO.HasCompleteQuiz(idUser, idQuiz);
+    }
+
+    public Long GetQuizResult(Long idUser, Long idQuiz) {
+        return quizDAO.GetQuizResult(idUser, idQuiz);
+    }
 }

@@ -9,6 +9,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServlet;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.List;
 
 @ManagedBean
@@ -58,5 +60,13 @@ public class UsersBean extends HttpServlet {
 
     public Long getGlobalStats(Long id) {
        return userDAO.getGlobalStats(id);
+    }
+
+    public Timestamp getAVGTime(Long id) {
+        return userDAO.getAVGTime(id);
+    }
+
+    public Timestamp getSumTime(Long id) {
+        return userDAO.getSumTime(id);
     }
 }

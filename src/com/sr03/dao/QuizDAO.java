@@ -14,6 +14,18 @@ public class QuizDAO extends DAO<QuizEntity> {
     private static final String SQL_INSERT = "INSERT INTO quizzes (name, is_active, subject_id) VALUES (?, ?, ?)";
     private static final String SQL_UPDATE = "UPDATE quizzes SET name = ?, is_active = ?, subject_id = ? WHERE id = ?";
     private static final String SQL_CHANGE_AVAILABILITY = "UPDATE quizzes SET is_active = (is_active + 1)%2 WHERE id = ?";
+    private static final String SQL_HAS_COMPLETE_A_QUIZ = "SELECT COUNT(*) AS complete FROM records WHERE user_id = ? AND quiz_id = ?";
+    private static final String SQL_GET_QUIZ_RESULT = "SELECT SUM(a.is_correct)*100/COUNT(*) AS result\n" +
+            "FROM records r\n" +
+            "INNER JOIN users_answers ua\n" +
+            "\tON r.id = ua.record_id\n" +
+            "INNER JOIN questions q\n" +
+            "\tON q.id = ua.question_id\n" +
+            "INNER JOIN answers a\n" +
+            "\tON a.question_id = q.id\n" +
+            "WHERE r.user_id = ?\n" +
+            "\tAND ua.answer_id = a.id\n" +
+            "    AND r.quiz_id = ?";
 
     private SubjectDAO subjectDAO;
     private QuestionDAO questionDAO;
@@ -160,5 +172,55 @@ public class QuizDAO extends DAO<QuizEntity> {
         } finally {
             silentClosures(preparedStatement, conn);
         }
+    }
+
+    public Boolean HasCompleteQuiz(Long idUser, Long idQuiz) throws DAOException {
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Boolean entity = null;
+
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            conn = daoFactory.getConnection();
+            preparedStatement = initPreparedStatement(conn, SQL_HAS_COMPLETE_A_QUIZ, false, idUser, idQuiz);
+            resultSet = preparedStatement.executeQuery();
+
+            /* Parcours de la ligne de données de l'eventuel ResultSet retourné */
+            if (resultSet.next()) {
+                entity = resultSet.getBoolean("complete");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            silentClosures(resultSet, preparedStatement, conn);
+        }
+
+        return entity;
+    }
+
+    public Long GetQuizResult(Long idUser, Long idQuiz) throws DAOException {
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Long entity = null;
+
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            conn = daoFactory.getConnection();
+            preparedStatement = initPreparedStatement(conn, SQL_GET_QUIZ_RESULT, false, idUser, idQuiz);
+            resultSet = preparedStatement.executeQuery();
+
+            /* Parcours de la ligne de données de l'eventuel ResultSet retourné */
+            if (resultSet.next()) {
+                entity = resultSet.getLong("result");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            silentClosures(resultSet, preparedStatement, conn);
+        }
+
+        return entity;
     }
 }
