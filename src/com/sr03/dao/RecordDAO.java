@@ -32,7 +32,7 @@ public class RecordDAO extends DAO<RecordEntity> {
             record.setId(resultSet.getLong("id"));
             record.setQuiz_id(resultSet.getLong("quiz_id"));
             record.setUser_id(resultSet.getLong("user_id"));
-            record.setScore(resultSet.getLong("score"));
+            record.setScore(resultSet.getInt("score"));
             record.setStarted_at(resultSet.getTimestamp("started_at"));
             record.setFinished_at(resultSet.getTimestamp("finished_at"));
         } catch (SQLException e) {

@@ -7,7 +7,7 @@ public class RecordEntity {
     private Long id;
     private Long quiz_id;
     private Long user_id;
-    private Long score;
+    private int score;
     private Timestamp started_at;
     private Timestamp finished_at;
 
@@ -39,11 +39,11 @@ public class RecordEntity {
         this.user_id = user_id;
     }
 
-    public Long getScore() {
+    public int getScore() {
         return score;
     }
 
-    public void setScore(Long score) {
+    public void setScore(int score) {
         this.score = score;
     }
 

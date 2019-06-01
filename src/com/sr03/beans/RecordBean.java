@@ -14,13 +14,14 @@ import java.sql.Timestamp;
 public class RecordBean extends HttpServlet {
     private RecordEntity record;
     private QuizEntity quiz;
-    private Long score;
+    private int score;
 
     private RecordDAO recordDAO;
     private QuizDAO quizDAO;
     private UserAnswerDAO userAnswerDAO;
 
     private Long quizId;
+    private int questionIndex;
 
     public RecordBean() {
         this.record = new RecordEntity();
@@ -34,6 +35,8 @@ public class RecordBean extends HttpServlet {
     public void init() {
         if (quizId != null) {
             quiz = quizDAO.get(quizId);
+
+            questionIndex = 0;
 
             record.setQuiz_id(quiz.getId());
             record.setUser_id((Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("id"));
@@ -73,23 +76,39 @@ public class RecordBean extends HttpServlet {
         this.quiz = quiz;
     }
 
-    public Long getScore() {
+    public int getScore() {
         return score;
     }
 
-    public void setScore(Long score) {
+    public void setScore(int score) {
         this.score = score;
+    }
+
+    public int getQuestionIndex() {
+        return questionIndex;
+    }
+
+    public void setQuestionIndex(int questionIndex) {
+        this.questionIndex = questionIndex;
+    }
+
+    public QuestionEntity currentQuestion() {
+        return quiz.getQuestions().get(questionIndex);
+    }
+
+    public void next() {
+        questionIndex++;
     }
 
     public void save() {
         try {
-            score = Long.getLong("0");
+            score = 0;
             record.setFinished_at(new Timestamp(System.currentTimeMillis()));
             for (QuestionEntity question : quiz.getQuestions()) {
                 if (question.getAnswer() != null) {
                     for (AnswerEntity answer : question.getAnswers()) {
                         if (answer.getIs_correct() && question.getAnswer().equals(answer.getId())) {
-                            score = score + 1;
+                            score++;
                         }
                     }
                 }

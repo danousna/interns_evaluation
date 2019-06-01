@@ -32,7 +32,7 @@
                             <ui:repeat value="#{recordsBean.userRecords}" var="record">
                                 <h5 style="margin-top: 20px;">#{record.quiz.name} (#{record.quiz.subject.name}) :</h5>
                                 Score : #{record.score}<br />
-                                Durée : #{record.started_at}<br />
+                                Durée : #{record.finished_at.getTime() - record.started_at.getTime()}<br />
                             </ui:repeat>
                         </h:form>
                     </div>
