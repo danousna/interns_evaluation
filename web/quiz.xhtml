@@ -56,6 +56,31 @@
                         <br />
                         Score : #{recordBean.score}
                     </b>
+
+                    <ui:repeat value="#{recordBean.quiz.questions}" var="question">
+                        <h:column rendered="#{question.is_active}">
+                        <div style="margin-top: 30px;" >
+                            <h4>Question #{question.order} : #{question.body}</h4>
+
+                            <ui:repeat value="#{question.answers}" var="answer">
+                                <h:column rendered="#{answer.is_active}">
+                                <div
+                                    style="margin-top: 10px;"
+                                    class="#{answer.is_correct ? 'text-success' : null}"
+                                >
+                                    #{answer.order}.&nbsp;
+                                    #{answer.body}
+                                    <h:outputText value="(votre réponse)" rendered="#{question.answer != null and question.answer == answer.id}" />
+                                </div>
+                                </h:column>
+                            </ui:repeat>
+                        </div>
+                        </h:column>
+                    </ui:repeat>
+
+                    <br />
+
+                    <b:link value="Retourner à l'accueil" outcome="index" />
                 </h:column>
             </b:column>
             <b:column span="3" />

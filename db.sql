@@ -58,8 +58,8 @@ CREATE TABLE records (
     started_at datetime,
     finished_at datetime,
 
-    FOREIGN KEY (quiz_id) REFERENCES quizzes(id),
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE users_answers (
@@ -69,9 +69,9 @@ CREATE TABLE users_answers (
     answer_id int,
 
     PRIMARY KEY (user_id, record_id, question_id),
-    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (record_id) REFERENCES records(id) ON DELETE CASCADE,
-    FOREIGN KEY (question_id) REFERENCES questions(id),
-    FOREIGN KEY (answer_id) REFERENCES answers(id)
+    FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE,
+    FOREIGN KEY (answer_id) REFERENCES answers(id) ON DELETE CASCADE
 );
 
