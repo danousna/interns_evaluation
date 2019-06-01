@@ -38,10 +38,19 @@ public class RecordBean extends HttpServlet {
         if (quizId != null) {
             quiz = quizDAO.get(quizId);
 
-            quiz.setQuestions(quiz.getQuestions().stream()
-                    .filter(QuestionEntity::getIs_active)
-                    .collect(Collectors.toCollection(ArrayList::new))
-            );
+            ArrayList<QuestionEntity> questions = new ArrayList<>();
+            for (QuestionEntity question : quiz.getQuestions()) {
+                // Only display active questions
+                if (question.getIs_active()) {
+                    // Only display active answers
+                    question.setAnswers(question.getAnswers().stream()
+                            .filter(AnswerEntity::getIs_active)
+                            .collect(Collectors.toCollection(ArrayList::new))
+                    );
+                    questions.add(question);
+                }
+            }
+            quiz.setQuestions(questions);
 
             score = 0;
             questionIndex = 0;
