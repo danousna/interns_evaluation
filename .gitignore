@@ -25,5 +25,5 @@ hs_err_pid*
 
 out/
 *.idea
-dao.properties
+env.properties
 sr03_interns_evaluation.iml
