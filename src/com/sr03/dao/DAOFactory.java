@@ -9,10 +9,10 @@ import java.util.Properties;
 
 public class DAOFactory {
     private static final String PROP_FILE       = "/com/sr03/config/env.properties";
-    private static final String PROP_URL        = "DB_HOST";
-    private static final String PROP_DRIVER     = "DB_DRIVER";
-    private static final String PROP_USER       = "DB_USER";
-    private static final String PROP_PASSWORD   = "DB_PASSWORD";
+    private static final String PROP_URL        = "db.url";
+    private static final String PROP_DRIVER     = "db.driver";
+    private static final String PROP_USER       = "db.user";
+    private static final String PROP_PASSWORD   = "db.password";
 
     private String url;
     private String username;

@@ -4,6 +4,7 @@ import com.sr03.dao.DAOException;
 import com.sr03.dao.DAOFactory;
 import com.sr03.dao.UserDAO;
 import com.sr03.entities.UserEntity;
+import com.sr03.utilities.mail.MailFactory;
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 import javax.faces.application.FacesMessage;
@@ -73,6 +74,12 @@ public class UserBean extends HttpServlet {
                     user.setIs_active(true);
 
                     userDAO.create(user);
+                    MailFactory.getInstance().send(
+                            "sr03_interns_evaluation@utc.fr",
+                            "natan.danous@gmail.com",
+                            "Test mail",
+                            "Ceci est un test."
+                    );
                 } else {
                     userDAO.update(user);
                 }
