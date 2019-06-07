@@ -25,7 +25,25 @@
                                 </b:commandLink>
                             </h4>
                         </b:column>
-                        <b:column rendered="#{quizzesBean.HasCompleteQuiz(sessionScope.get('id'), quiz.id)}">#{quizzesBean.GetQuizResult(sessionScope.get('id'), quiz.id)}% de réussite</b:column>
+                        <b:column>
+                            <b:row>
+                                <b:column rendered="#{quizzesBean.HasCompleteQuiz(sessionScope.get('id'), quiz.id)}">
+                                    <h:outputText value="#{quizzesBean.GetQuizResult(sessionScope.get('id'), quiz.id)[0]}% de réussite">
+                                    </h:outputText>
+                                </b:column>
+                                <b:column rendered="#{quizzesBean.HasCompleteQuiz(sessionScope.get('id'), quiz.id)}">
+                                    <h:outputText value="#{quizzesBean.GetQuizResult(sessionScope.get('id'), quiz.id)[1]}">
+                                        <f:convertDateTime type="date" pattern="'Temps passé sur le questionnaire : 'm'min' ss'sec'" timeZone="Europe/Paris" />
+                                    </h:outputText>
+                                </b:column>
+                                <b:column rendered="#{quizzesBean.GetBestInternByScore(quiz.id)[0] != null}">
+                                    Meilleur stagiaire : #{quizzesBean.GetBestInternByScore(quiz.id)[0]} avec #{quizzesBean.GetBestInternByScore(quiz.id)[1]}% de réussite en
+                                    <h:outputText value="#{quizzesBean.GetBestInternByScore(quiz.id)[2]}">
+                                        <f:convertDateTime type="date" pattern="m'min' ss'sec'" timeZone="Europe/Paris" />
+                                    </h:outputText>
+                                </b:column>
+                            </b:row>
+                        </b:column>
                     </b:row>
                 </ui:repeat>
                 </h:form>
@@ -41,7 +59,7 @@
                 <b:row>
                     <b:column mediumScreen="2">Temps moyen passé par questionnaire :</b:column>
                     <b:column mediumScreen="2">
-                        <h:outputText value="#{usersBean.getAVGTime(sessionScope.get('id'))}">
+                        <h:outputText value="#{usersBean.getAvgSumTime(sessionScope.get('id'))[0]}">
                             <f:convertDateTime type="date" pattern="m'min' ss'sec'" timeZone="Europe/Paris" />
                         </h:outputText>
                     </b:column>
@@ -49,7 +67,7 @@
                 <b:row>
                     <b:column mediumScreen="2">Temps total passé sur les questionnaires :</b:column>
                     <b:column mediumScreen="2">
-                        <h:outputText value="#{usersBean.getSumTime(sessionScope.get('id'))}">
+                        <h:outputText value="#{usersBean.getAvgSumTime(sessionScope.get('id'))[1]}">
                             <f:convertDateTime type="date" pattern="m'min' ss'sec'" timeZone="Europe/Paris" />
                         </h:outputText>
                     </b:column>

@@ -65,7 +65,11 @@ public class QuizzesBean extends HttpServlet {
         return quizDAO.HasCompleteQuiz(idUser, idQuiz);
     }
 
-    public Long GetQuizResult(Long idUser, Long idQuiz) {
+    public Object[] GetQuizResult(Long idUser, Long idQuiz) {
         return quizDAO.GetQuizResult(idUser, idQuiz);
+    }
+
+    public Object[] GetBestInternByScore(Long idQuiz) {
+        return quizDAO.GetBestInternByScore(idQuiz);
     }
 }

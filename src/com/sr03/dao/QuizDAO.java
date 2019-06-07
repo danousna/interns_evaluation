@@ -14,7 +14,7 @@ public class QuizDAO extends DAO<QuizEntity> {
     private static final String SQL_UPDATE = "UPDATE quizzes SET name = ?, is_active = ?, subject_id = ? WHERE id = ?";
     private static final String SQL_CHANGE_AVAILABILITY = "UPDATE quizzes SET is_active = (is_active + 1)%2 WHERE id = ?";
     private static final String SQL_HAS_COMPLETE_A_QUIZ = "SELECT COUNT(*) AS complete FROM records WHERE user_id = ? AND quiz_id = ?";
-    private static final String SQL_GET_QUIZ_RESULT = "SELECT SUM(a.is_correct)*100/COUNT(*) AS result\n" +
+    private static final String SQL_GET_QUIZ_RESULT = "SELECT SUM(a.is_correct)*100/COUNT(*) AS result, STR_TO_DATE(finished_at - started_at, \"%s\") AS result_time\n" +
             "FROM records r\n" +
             "INNER JOIN users_answers ua\n" +
             "\tON r.id = ua.record_id\n" +
@@ -24,7 +24,22 @@ public class QuizDAO extends DAO<QuizEntity> {
             "\tON a.question_id = q.id\n" +
             "WHERE r.user_id = ?\n" +
             "\tAND ua.answer_id = a.id\n" +
-            "    AND r.quiz_id = ?";
+            "\tAND r.quiz_id = ?";
+    private static final String SQL_GET_BEST_INTERN_BY_SCORE = "SELECT u.name AS name, SUM(a.is_correct)*100/COUNT(*) AS score , STR_TO_DATE(finished_at-started_at, \"%s\") as duration\n"+
+            "FROM records r\n"+
+            "INNER JOIN users_answers ua\n"+
+            "ON r.id = ua.record_id\n"+
+            "INNER JOIN questions q\n"+
+            "    ON q.id = ua.question_id\n"+
+            "INNER JOIN answers a\n"+
+            "\tON a.question_id = q.id\n"+
+            "INNER JOIN users u\n"+
+            "\tON u.id = r.user_id\n"+
+            "WHERE ua.answer_id = a.id\n"+
+            "\tAND r.quiz_id = ?\n"+
+            "GROUP BY r.user_id\n"+
+            "ORDER BY 2 DESC\n"+
+            "LIMIT 1";
 
     private SubjectDAO subjectDAO;
     private QuestionDAO questionDAO;
@@ -65,6 +80,8 @@ public class QuizDAO extends DAO<QuizEntity> {
 
         return quiz;
     }
+
+
 
     @Override
     public ArrayList<QuizEntity> getAll() {
@@ -198,11 +215,11 @@ public class QuizDAO extends DAO<QuizEntity> {
         return entity;
     }
 
-    public Long GetQuizResult(Long idUser, Long idQuiz) throws DAOException {
+    public Object[] GetQuizResult(Long idUser, Long idQuiz) throws DAOException {
         Connection conn = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        Long entity = null;
+        Object[] entity = new Object[2];
 
         try {
             /* Récupération d'une connexion depuis la Factory */
@@ -212,7 +229,35 @@ public class QuizDAO extends DAO<QuizEntity> {
 
             /* Parcours de la ligne de données de l'eventuel ResultSet retourné */
             if (resultSet.next()) {
-                entity = resultSet.getLong("result");
+                entity[0] = resultSet.getLong("result");
+                entity[1] = resultSet.getTimestamp("result_time");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            silentClosures(resultSet, preparedStatement, conn);
+        }
+
+        return entity;
+    }
+
+    public Object[] GetBestInternByScore(Long idQuiz) throws DAOException {
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Object[] entity = new Object[3];
+
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            conn = daoFactory.getConnection();
+            preparedStatement = initPreparedStatement(conn, SQL_GET_BEST_INTERN_BY_SCORE, false, idQuiz);
+            resultSet = preparedStatement.executeQuery();
+
+            /* Parcours de la ligne de données de l'eventuel ResultSet retourné */
+            if (resultSet.next()) {
+                entity[0] = resultSet.getString("name");
+                entity[1] = resultSet.getInt("score");
+                entity[2] = resultSet.getTimestamp("duration");
             }
         } catch (SQLException e) {
             throw new DAOException(e);
