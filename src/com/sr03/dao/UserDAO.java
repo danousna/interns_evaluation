@@ -11,6 +11,22 @@ public class UserDAO extends DAO<UserEntity> {
     private static final String SQL_INSERT = "INSERT INTO users (email, name, password, company, phone, created_at, is_active, is_admin) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String SQL_UPDATE = "UPDATE users SET email = ?, name = ?, password = ?, company = ?, phone = ?, is_active = ?, is_admin = ? WHERE id = ?";
     private static final String SQL_CHANGE_ACTIVITY = "UPDATE users SET is_active = (is_active + 1)%2 WHERE id = ?";
+    private static final String SQL_STATS_BY_USER = "SELECT SUM(a.is_correct)*100/COUNT(*) AS global_stats\n" +
+            "FROM records r\n" +
+            "INNER JOIN users_answers ua\n" +
+            "\tON r.id = ua.record_id\n" +
+            "INNER JOIN questions q\n" +
+            "\tON q.id = ua.question_id\n" +
+            "INNER JOIN answers a\n" +
+            "\tON a.question_id = q.id\n" +
+            "WHERE r.user_id = ?\n" +
+            "\tAND ua.answer_id = a.id";
+    private static final String SQL_AVG_TIME = "SELECT STR_TO_DATE(AVG(TIMEDIFF(finished_at, started_at)), \"%s\") AS avg_time\n" +
+            "FROM records r\n" +
+            "WHERE r.user_id = ?";
+    private static final String SQL_SUM_TIME = "SELECT STR_TO_DATE(SUM(TIMEDIFF(finished_at, started_at)), \"%s\") AS sum_time\n" +
+            "FROM records r\n" +
+            "WHERE r.user_id = ?";
 
     UserDAO(DAOFactory daoFactory) {
         super(daoFactory, "users");
@@ -123,6 +139,82 @@ public class UserDAO extends DAO<UserEntity> {
         } finally {
             silentClosures(preparedStatement, conn);
         }
+    }
+
+    public Long getGlobalStats(Long id) throws DAOException {
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Long entity = null;
+
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            conn = daoFactory.getConnection();
+            preparedStatement = initPreparedStatement(conn, SQL_STATS_BY_USER, false, id);
+            resultSet = preparedStatement.executeQuery();
+
+            /* Parcours de la ligne de données de l'eventuel ResultSet retourné */
+            if (resultSet.next()) {
+                entity = resultSet.getLong("global_stats");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            silentClosures(resultSet, preparedStatement, conn);
+        }
+
+        return entity;
+    }
+
+
+    public Timestamp getAVGTime(Long id) throws DAOException {
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Timestamp entity = null;
+
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            conn = daoFactory.getConnection();
+            preparedStatement = initPreparedStatement(conn, SQL_AVG_TIME, false, id);
+            resultSet = preparedStatement.executeQuery();
+
+            /* Parcours de la ligne de données de l'eventuel ResultSet retourné */
+            if (resultSet.next()) {
+                entity = resultSet.getTimestamp("avg_time");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            silentClosures(resultSet, preparedStatement, conn);
+        }
+
+        return entity;
+    }
+
+    public Timestamp getSumTime(Long id) throws DAOException {
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Timestamp entity = null;
+
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            conn = daoFactory.getConnection();
+            preparedStatement = initPreparedStatement(conn, SQL_SUM_TIME, false, id);
+            resultSet = preparedStatement.executeQuery();
+
+            /* Parcours de la ligne de données de l'eventuel ResultSet retourné */
+            if (resultSet.next()) {
+                entity = resultSet.getTimestamp("sum_time");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            silentClosures(resultSet, preparedStatement, conn);
+        }
+
+        return entity;
     }
 }
 
