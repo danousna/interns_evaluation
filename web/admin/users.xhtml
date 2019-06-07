@@ -39,6 +39,14 @@
                         </h:outputText>
                     </b:dataTableColumn>
                     <b:dataTableColumn label="Actions">
+                        <b:commandLink
+                                value="Détail"
+                                look="primary"
+                                outcome="user"
+                                style="display: inline;">
+                            <f:param name="id" value="#{user.id}" />
+                        </b:commandLink>
+                        &nbsp;
                         <b:commandButton
                                 value="#{user.is_active ? 'Désactiver' : 'Activer'}"
                                 action="#{usersBean.changeUserActivity(user.id)}" />

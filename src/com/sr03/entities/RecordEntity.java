@@ -7,8 +7,11 @@ public class RecordEntity {
     private Long id;
     private Long quiz_id;
     private Long user_id;
+    private int score;
     private Timestamp started_at;
     private Timestamp finished_at;
+
+    private QuizEntity quiz;
 
     private ArrayList<UserAnswerEntity> answers;
 
@@ -36,6 +39,14 @@ public class RecordEntity {
         this.user_id = user_id;
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
     public Timestamp getStarted_at() {
         return started_at;
     }
@@ -58,5 +69,13 @@ public class RecordEntity {
 
     public void setAnswers(ArrayList<UserAnswerEntity> answers) {
         this.answers = answers;
+    }
+
+    public QuizEntity getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(QuizEntity quiz) {
+        this.quiz = quiz;
     }
 }

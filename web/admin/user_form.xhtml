@@ -25,9 +25,6 @@
                 <b:inputText id="email" value="#{userBean.user.email}" required="true" maxlength="60" label="Adresse email" requiredMessage="Veuillez saisir une adresse email" />
                 <b:message for="@previous" />
 
-                <b:inputSecret id="password" value="#{userBean.user.password}" required="true" minlength="6" maxlength="60" label="Mot de passe" requiredMessage="Veuillez saisir un mot de passe" rendered="#{empty userBean.user.id}" />
-                <b:message for="@previous" />
-
                 <b:inputText id="company" value="#{userBean.user.company}" required="true" maxlength="60" label="Entreprise" requiredMessage="Veuillez saisir une entreprise" />
                 <b:message for="@previous" />
 

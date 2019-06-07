@@ -6,6 +6,8 @@ public class UserAnswerEntity {
     private Long question_id;
     private Long answer_id;
 
+    private QuestionEntity question;
+
     public Long getUser_id() {
         return user_id;
     }
@@ -36,5 +38,13 @@ public class UserAnswerEntity {
 
     public void setAnswer_id(Long answer_id) {
         this.answer_id = answer_id;
+    }
+
+    public QuestionEntity getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(QuestionEntity question) {
+        this.question = question;
     }
 }

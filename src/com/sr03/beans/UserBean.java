@@ -4,6 +4,8 @@ import com.sr03.dao.DAOException;
 import com.sr03.dao.DAOFactory;
 import com.sr03.dao.UserDAO;
 import com.sr03.entities.UserEntity;
+import com.sr03.utilities.mail.MailFactory;
+import com.sr03.utilities.security.PasswordGenerator;
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 import javax.faces.application.FacesMessage;
@@ -12,6 +14,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServlet;
 import java.sql.Timestamp;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,8 +74,21 @@ public class UserBean extends HttpServlet {
                     Timestamp date = new Timestamp(System.currentTimeMillis());
                     user.setCreated_at(date);
                     user.setIs_active(true);
+                    user.setPassword(PasswordGenerator.get(10));
+
+                    System.out.println(user.getPassword());
 
                     userDAO.create(user);
+
+                    String body = "Bonjour {0} !\n\n Votre compte a été crée par un administrateur. Voici vos identifiants :\nEmail : {1}\nMot de passe : {2}\n\nAdios !";
+                    body = MessageFormat.format(body, user.getName(), user.getEmail(), user.getPassword());
+
+                    MailFactory.getInstance().send(
+                            "admin@sr03-interns-evaluation.fr",
+                            user.getEmail(),
+                            "SR03 Interns Evaluation - Vos identifiants",
+                            body
+                    );
                 } else {
                     userDAO.update(user);
                 }
@@ -111,11 +127,6 @@ public class UserBean extends HttpServlet {
 
     private void processPassword() {
         String password = user.getPassword();
-
-        if (password.length() < 6) {
-            errors.add("Mot de passe trop court (< 6 caractères)");
-            return;
-        }
 
         /*
          * Utilisation de la lib Jasypt pour chiffrer le mot de passe.

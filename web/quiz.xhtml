@@ -17,45 +17,71 @@
             <b:column span="6">
                 <div>
                     <h3>#{recordBean.quiz.name}</h3>
-
-                    <p>Sujet : #{recordBean.quiz.subject.name}</p><br />
-
-                    <b>
-                        Début :
-                        <h:outputText value="#{recordBean.record.started_at}">
-                            <f:convertDateTime type="date" pattern="dd-MM-yyyy à HH:mm:ss" timeZone="Europe/Paris" />
-                        </h:outputText>
-                    </b>
-                    <br />
-                    <h:column rendered="#{recordBean.score != null and recordBean.record.finished_at != null}">
-                        <b>
-                            Fin :
-                            <h:outputText value="#{recordBean.record.finished_at}">
-                                <f:convertDateTime type="date" pattern="dd-MM-yyyy à HH:mm:ss" timeZone="Europe/Paris" />
-                            </h:outputText>
-                            <br />
-                            Score : #{recordBean.score}
-                        </b>
-                    </h:column>
+                    <p>Sujet : #{recordBean.quiz.subject.name}</p>
                 </div>
 
-                <h:form>
-                    <ui:repeat value="#{recordBean.quiz.questions}" var="question">
-                        <h:column rendered="#{question.is_active}">
-                            <div style="margin-top: 30px;">
-                                <h4>Question #{question.order} : #{question.body}</h4>
-                    <h:selectOneRadio value="#{question.answer}" var="answer" rendered="#{question.is_active}" varStatus="status">
-                        <f:selectItems value="#{question.answers}"
-                                       var="a"
-                                       itemValue="#{a.id}"
-                                       itemLabel="#{a.body}"
-                                       />
-                    </h:selectOneRadio>
+                <h:form styleClass="question-form" rendered="#{recordBean.record.finished_at == null}">
+                    <h:column>
+                        <div style="margin-top: 30px;">
+                            <h4>Question #{recordBean.currentQuestion().order} : #{recordBean.currentQuestion().body}</h4>
+
+                            <b:radiobutton value="#{recordBean.currentQuestion().answer}">
+                                <f:selectItems value="#{recordBean.currentQuestion().answers}" var="a" itemLabel="#{a.body}" itemValue="#{a.id}" />
+                            </b:radiobutton>
                         </div>
                     </h:column>
-                </ui:repeat>
-                    <b:commandButton look="primary" value="valider" action="#{recordBean.save}" />
+                    <br />
+                    <b:commandButton
+                            look="primary"
+                            value="Question suivante"
+                            ajax="true"
+                            update="@(.question-form)"
+                            onclick="ajax:recordBean.next()"
+                            rendered="#{recordBean.questionIndex lt (recordBean.quiz.questions.size() - 1)}"
+                    />
+                    <b:commandButton
+                            look="primary"
+                            value="Terminer"
+                            action="#{recordBean.save}"
+                            rendered="#{recordBean.questionIndex == (recordBean.quiz.questions.size() - 1)}"
+                    />
                 </h:form>
+
+                <h:column rendered="#{recordBean.score != null and recordBean.record.finished_at != null}">
+                    <b>
+                        Durée :
+                        <h:outputText value="#{recordBean.record.finished_at.getTime() - recordBean.record.started_at.getTime()}">
+                            <f:convertDateTime type="time" pattern="HH:mm:ss" />
+                        </h:outputText>
+                        <br />
+                        Score : #{recordBean.score}
+                    </b>
+
+                    <ui:repeat value="#{recordBean.quiz.questions}" var="question">
+                        <h:column rendered="#{question.is_active}">
+                        <div style="margin-top: 30px;" >
+                            <h4>Question #{question.order} : #{question.body}</h4>
+
+                            <ui:repeat value="#{question.answers}" var="answer">
+                                <h:column rendered="#{answer.is_active}">
+                                <div
+                                    style="margin-top: 10px;"
+                                    class="#{answer.is_correct ? 'text-success' : null}"
+                                >
+                                    #{answer.order}.&nbsp;
+                                    #{answer.body}
+                                    <h:outputText value="(votre réponse)" rendered="#{question.answer != null and question.answer == answer.id}" />
+                                </div>
+                                </h:column>
+                            </ui:repeat>
+                        </div>
+                        </h:column>
+                    </ui:repeat>
+
+                    <br />
+
+                    <b:link value="Retourner à l'accueil" outcome="index" />
+                </h:column>
             </b:column>
             <b:column span="3" />
         </b:row>

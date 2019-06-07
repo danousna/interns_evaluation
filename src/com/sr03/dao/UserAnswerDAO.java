@@ -29,6 +29,11 @@ public class UserAnswerDAO extends DAO<UserAnswerEntity> {
         return userAnswer;
     }
 
+    @Override
+    public UserAnswerEntity get(Long id) {
+        throw new DAOException("Impossible d'utliser cette méthode : UserAnswerEntity n'a pas de propriété id.");
+    }
+
     public UserAnswerEntity get(Long user_id, Long record_id) {
         Connection conn = null;
         PreparedStatement preparedStatement = null;

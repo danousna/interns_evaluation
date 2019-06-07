@@ -8,11 +8,11 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DAOFactory {
-    private static final String PROP_FILE       = "/com/sr03/dao/dao.properties";
-    private static final String PROP_URL        = "url";
-    private static final String PROP_DRIVER     = "driver";
-    private static final String PROP_USER       = "user";
-    private static final String PROP_PASSWORD   = "password";
+    private static final String PROP_FILE       = "/com/sr03/config/env.properties";
+    private static final String PROP_URL        = "db.url";
+    private static final String PROP_DRIVER     = "db.driver";
+    private static final String PROP_USER       = "db.user";
+    private static final String PROP_PASSWORD   = "db.password";
 
     private String url;
     private String username;
