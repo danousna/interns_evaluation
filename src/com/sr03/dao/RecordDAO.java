@@ -10,6 +10,7 @@ import static com.sr03.dao.DAOUtility.*;
 
 public class RecordDAO extends DAO<RecordEntity> {
     private static final String SQL_SELECT_ALL_USER_RECORDS = "SELECT * FROM records WHERE user_id = ?";
+    private static final String SQL_SELECT_ALL_QUIZ_RECORDS = "SELECT * FROM records WHERE quiz_id = ?";
     private static final String SQL_SELECT_ALL_RECORD_ANSWERS = "SELECT * FROM users_answers WHERE record_id = ?";
     private static final String SQL_INSERT = "INSERT INTO records (quiz_id, user_id, score, started_at, finished_at) VALUES (?, ?, ?, ?, ?)";
     private static final String SQL_UPDATE = "UPDATE records SET quiz_id = ?, user_id = ?, score = ?, started_at = ?, finished_at = ? WHERE id = ?";
@@ -39,6 +40,10 @@ public class RecordDAO extends DAO<RecordEntity> {
             e.printStackTrace();
         }
         return record;
+    }
+
+    public ArrayList<RecordEntity> getAll(Long quiz_id) {
+        return getManyQuery(SQL_SELECT_ALL_QUIZ_RECORDS, quiz_id);
     }
 
     public ArrayList<RecordEntity> getAllUserRecords(Long userId) {

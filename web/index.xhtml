@@ -9,52 +9,58 @@
 <h:body>
     <ui:composition template="layout.xhtml">
         <ui:define name="content">
-            <b:container>
-                <h2>Bonjour #{sessionScope.get('name')} !</h2>
-            </b:container>
-            <b:container>
-                <h3>Questionnaires disponibles :</h3>
-                <h:form>
-                <ui:repeat value="#{quizzesBean.activeQuizzes()}" var="quiz">
-                    <b:row>
-                        <b:column>
-                            <h4 style="margin-top: 20px;" >
-                                <b:commandLink outcome="quiz">
-                                    <f:param name="id" value="#{quiz.id}" />
-                                    #{quiz.name} (#{quiz.subject.name})
-                                </b:commandLink>
-                            </h4>
-                        </b:column>
-                        <b:column rendered="#{quizzesBean.HasCompleteQuiz(sessionScope.get('id'), quiz.id)}">#{quizzesBean.GetQuizResult(sessionScope.get('id'), quiz.id)}% de réussite</b:column>
-                    </b:row>
-                </ui:repeat>
-                </h:form>
-            </b:container>
-            <b:container>
-                <h2>Statistiques personnelles</h2>
-                <b:row>
-                    <b:column mediumScreen="2">Global :</b:column>
-                    <b:column mediumScreen="2">
-                        #{usersBean.getGlobalStats(sessionScope.get('id'))}% de bonnes réponses
-                    </b:column>
-                </b:row>
-                <b:row>
-                    <b:column mediumScreen="2">Temps moyen passé par questionnaire :</b:column>
-                    <b:column mediumScreen="2">
-                        <h:outputText value="#{usersBean.getAVGTime(sessionScope.get('id'))}">
-                            <f:convertDateTime type="date" pattern="m'min' ss'sec'" timeZone="Europe/Paris" />
-                        </h:outputText>
-                    </b:column>
-                </b:row>
-                <b:row>
-                    <b:column mediumScreen="2">Temps total passé sur les questionnaires :</b:column>
-                    <b:column mediumScreen="2">
-                        <h:outputText value="#{usersBean.getSumTime(sessionScope.get('id'))}">
-                            <f:convertDateTime type="date" pattern="m'min' ss'sec'" timeZone="Europe/Paris" />
-                        </h:outputText>
-                    </b:column>
-                </b:row>
-            </b:container>
+            <b:row>
+                <b:column span="3" />
+                <b:column span="6">
+                    <div>
+                        <h2>Bonjour #{sessionScope.get('name')} !</h2>
+                    </div>
+                    <div>
+                        <h3>Questionnaires disponibles :</h3>
+                        <h:form>
+                        <ui:repeat value="#{quizzesBean.availableQuizzes(sessionScope.get('id'))}" var="quiz">
+                            <b:row>
+                                <b:column>
+                                    <h4 style="margin-top: 20px;" >
+                                        <b:commandLink outcome="quiz">
+                                            <f:param name="id" value="#{quiz.id}" />
+                                            #{quiz.name} (#{quiz.subject.name})
+                                        </b:commandLink>
+                                    </h4>
+                                </b:column>
+                                <b:column rendered="#{quizzesBean.HasCompleteQuiz(sessionScope.get('id'), quiz.id)}">#{quizzesBean.GetQuizResult(sessionScope.get('id'), quiz.id)}% de réussite</b:column>
+                            </b:row>
+                        </ui:repeat>
+                        </h:form>
+                    </div>
+                    <div>
+                        <h3>Statistiques personnelles</h3>
+                        <b:row>
+                            <b:column span="6">Global :</b:column>
+                            <b:column span="6">
+                                #{usersBean.getGlobalStats(sessionScope.get('id'))}% de bonnes réponses
+                            </b:column>
+                        </b:row>
+                        <b:row>
+                            <b:column span="6">Temps moyen passé par questionnaire :</b:column>
+                            <b:column span="6">
+                                <h:outputText value="#{usersBean.getAVGTime(sessionScope.get('id'))}">
+                                    <f:convertDateTime type="date" pattern="m'min' ss'sec'" timeZone="Europe/Paris" />
+                                </h:outputText>
+                            </b:column>
+                        </b:row>
+                        <b:row>
+                            <b:column span="6">Temps total passé sur les questionnaires :</b:column>
+                            <b:column span="6">
+                                <h:outputText value="#{usersBean.getSumTime(sessionScope.get('id'))}">
+                                    <f:convertDateTime type="date" pattern="m'min' ss'sec'" timeZone="Europe/Paris" />
+                                </h:outputText>
+                            </b:column>
+                        </b:row>
+                    </div>
+                </b:column>
+                <b:column span="3" />
+            </b:row>
         </ui:define>
     </ui:composition>
 </h:body>

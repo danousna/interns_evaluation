@@ -127,6 +127,11 @@ public class RecordBean extends HttpServlet {
         // Call for last answer.
         next();
 
+        // Add security, just in case.
+        if (quizDAO.HasCompleteQuiz((Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("id"), quiz.getId())) {
+            return;
+        }
+
         try {
             record.setFinished_at(new Timestamp(System.currentTimeMillis()));
             record.setScore(score);

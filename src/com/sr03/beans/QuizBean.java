@@ -19,6 +19,7 @@ public class QuizBean {
     private QuizDAO quizDAO;
     private QuestionDAO questionDAO;
     private AnswerDAO answerDAO;
+    private RecordDAO recordDAO;
 
     private Long id;
 
@@ -28,12 +29,15 @@ public class QuizBean {
         this.quizDAO = DAOFactory.getInstance().getQuizDAO();
         this.questionDAO = DAOFactory.getInstance().getQuestionDAO();
         this.answerDAO = DAOFactory.getInstance().getAnswerDAO();
+        this.recordDAO = DAOFactory.getInstance().getRecordDAO();
         this.quiz = new QuizEntity();
     }
 
     public void init() {
         if (id != null) {
             quiz = quizDAO.get(id);
+            quiz.setRecords(recordDAO.getAll(quiz.getId()));
+
         }
     }
 
@@ -68,7 +72,9 @@ public class QuizBean {
                     quiz.setIs_active(true);
                     quizDAO.create(quiz);
                 } else {
-                    quizDAO.update(quiz);
+                    if (quiz.getRecords().size() == 0) {
+                        quizDAO.update(quiz);
+                    }
                 }
 
                 context.addMessage(null, new FacesMessage(
