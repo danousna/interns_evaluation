@@ -128,7 +128,7 @@ public class RecordBean extends HttpServlet {
         next();
 
         // Add security, just in case.
-        if (quizDAO.HasCompleteQuiz((Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("id"), quiz.getId())) {
+        if (quizDAO.hasCompletedQuiz((Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("id"), quiz.getId())) {
             return;
         }
 

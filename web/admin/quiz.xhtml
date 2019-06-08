@@ -29,6 +29,11 @@
                                 style="display: inline;">
                             <f:param name="id" value="#{quizBean.quiz.id}" />
                         </b:commandLink>
+                        &nbsp;
+                        <h:outputText
+                                rendered="#{quizBean.quiz.records.size() > 0}"
+                                value="Vous ne pouvez pas modifer ce questionnaire, des utilisateurs y ont répondu."
+                        />
                     </h:form>
                 </div>
 

@@ -62,7 +62,7 @@ public class UsersBean extends HttpServlet {
        return userDAO.getGlobalStats(id);
     }
 
-    public Object[] getAvgSumTime(Long id) {
+    public Object[] avgSumTime(Long id) {
         return userDAO.getAvgSumTime(id);
     }
 

@@ -61,22 +61,23 @@ public class QuizzesBean extends HttpServlet {
         return "quizzes.xhtml";
     }
 
-    public List<QuizEntity> availableQuizzes(Long user_id) {
+    public List<QuizEntity> availableQuizzes() {
+        Long user_id = (Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("id");
         return quizzes.stream()
                 .filter(QuizEntity::getIs_active)
-                .filter(quiz -> !quizDAO.HasCompleteQuiz(user_id, quiz.getId()))
+                .filter(quiz -> !quizDAO.hasCompletedQuiz(user_id, quiz.getId()))
                 .collect(Collectors.toList());
     }
 
-    public Boolean HasCompleteQuiz(Long idUser, Long idQuiz) {
-        return quizDAO.HasCompleteQuiz(idUser, idQuiz);
+    public Boolean hasCompletedQuiz(Long user_id, Long quiz_id) {
+        return quizDAO.hasCompletedQuiz(user_id, quiz_id);
     }
 
-    public Object[] GetQuizResult(Long idUser, Long idQuiz) {
-        return quizDAO.GetQuizResult(idUser, idQuiz);
+    public Object[] quizResult(Long user_id, Long quiz_id) {
+        return quizDAO.getQuizResult(user_id, quiz_id);
     }
 
-    public Object[] GetBestInternByScore(Long idQuiz) {
-        return quizDAO.GetBestInternByScore(idQuiz);
+    public Object[] bestInternByScore(Long quiz_id) {
+        return quizDAO.getBestInternByScore(quiz_id);
     }
 }
