@@ -66,7 +66,7 @@
                                 <h:column rendered="#{answer.is_active}">
                                 <div
                                     style="margin-top: 10px;"
-                                    class="#{answer.is_correct ? 'text-success' : null}"
+                                    class="#{answer.is_correct ? 'text-success' : (question.answer != null and question.answer == answer.id ? 'text-danger' : null)}"
                                 >
                                     #{answer.order}.&nbsp;
                                     #{answer.body}
