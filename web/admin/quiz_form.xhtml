@@ -69,7 +69,7 @@
                 <b:commandButton value="Ajouter une question" action="#{quizBean.addQuestion}" />
                 &nbsp;
                 <b:commandButton look="primary" value="Créer" action="#{quizBean.save}" rendered="#{empty quizBean.quiz.id}" />
-                <b:commandButton look="primary" value="Enregistrer" action="#{quizBean.save}" rendered="#{!empty quizBean.quiz.id}" />
+                <b:commandButton look="primary" value="Enregistrer" action="#{quizBean.save}" rendered="#{!empty quizBean.quiz.id}" disabled="#{quizBean.quiz.records.size() > 0}" />
             </h:form>
         </b:container>
     </ui:define>

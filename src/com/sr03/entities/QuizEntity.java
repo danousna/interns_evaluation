@@ -12,6 +12,7 @@ public class QuizEntity {
 
     private SubjectEntity subject;
     private ArrayList<QuestionEntity> questions;
+    private ArrayList<RecordEntity> records;
 
     public QuizEntity() {
     }
@@ -63,5 +64,13 @@ public class QuizEntity {
     public void setQuestions(ArrayList<QuestionEntity> questions) {
         Collections.sort(questions);
         this.questions = questions;
+    }
+
+    public ArrayList<RecordEntity> getRecords() {
+        return records;
+    }
+
+    public void setRecords(ArrayList<RecordEntity> records) {
+        this.records = records;
     }
 }

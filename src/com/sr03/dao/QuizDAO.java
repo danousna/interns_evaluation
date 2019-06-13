@@ -13,7 +13,7 @@ public class QuizDAO extends DAO<QuizEntity> {
     private static final String SQL_INSERT = "INSERT INTO quizzes (name, is_active, subject_id) VALUES (?, ?, ?)";
     private static final String SQL_UPDATE = "UPDATE quizzes SET name = ?, is_active = ?, subject_id = ? WHERE id = ?";
     private static final String SQL_CHANGE_AVAILABILITY = "UPDATE quizzes SET is_active = (is_active + 1)%2 WHERE id = ?";
-    private static final String SQL_HAS_COMPLETE_A_QUIZ = "SELECT COUNT(*) AS complete FROM records WHERE user_id = ? AND quiz_id = ?";
+    private static final String SQL_HAS_COMPLETED_A_QUIZ = "SELECT COUNT(*) AS complete FROM records WHERE user_id = ? AND quiz_id = ?";
     private static final String SQL_GET_QUIZ_RESULT = "SELECT SUM(a.is_correct)*100/COUNT(*) AS result, STR_TO_DATE(finished_at - started_at, \"%s\") AS result_time\n" +
             "FROM records r\n" +
             "INNER JOIN users_answers ua\n" +
@@ -37,7 +37,7 @@ public class QuizDAO extends DAO<QuizEntity> {
             "\tON u.id = r.user_id\n"+
             "WHERE ua.answer_id = a.id\n"+
             "\tAND r.quiz_id = ?\n"+
-            "GROUP BY r.user_id\n"+
+            "GROUP BY r.user_id, r.finished_at, r.started_at\n"+
             "ORDER BY 2 DESC\n"+
             "LIMIT 1";
 
@@ -80,8 +80,6 @@ public class QuizDAO extends DAO<QuizEntity> {
 
         return quiz;
     }
-
-
 
     @Override
     public ArrayList<QuizEntity> getAll() {
@@ -190,7 +188,7 @@ public class QuizDAO extends DAO<QuizEntity> {
         }
     }
 
-    public Boolean HasCompleteQuiz(Long idUser, Long idQuiz) throws DAOException {
+    public Boolean hasCompletedQuiz(Long idUser, Long quiz_id) throws DAOException {
         Connection conn = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -199,7 +197,7 @@ public class QuizDAO extends DAO<QuizEntity> {
         try {
             /* Récupération d'une connexion depuis la Factory */
             conn = daoFactory.getConnection();
-            preparedStatement = initPreparedStatement(conn, SQL_HAS_COMPLETE_A_QUIZ, false, idUser, idQuiz);
+            preparedStatement = initPreparedStatement(conn, SQL_HAS_COMPLETED_A_QUIZ, false, idUser, quiz_id);
             resultSet = preparedStatement.executeQuery();
 
             /* Parcours de la ligne de données de l'eventuel ResultSet retourné */
@@ -215,7 +213,7 @@ public class QuizDAO extends DAO<QuizEntity> {
         return entity;
     }
 
-    public Object[] GetQuizResult(Long idUser, Long idQuiz) throws DAOException {
+    public Object[] getQuizResult(Long idUser, Long quiz_id) throws DAOException {
         Connection conn = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -224,7 +222,7 @@ public class QuizDAO extends DAO<QuizEntity> {
         try {
             /* Récupération d'une connexion depuis la Factory */
             conn = daoFactory.getConnection();
-            preparedStatement = initPreparedStatement(conn, SQL_GET_QUIZ_RESULT, false, idUser, idQuiz);
+            preparedStatement = initPreparedStatement(conn, SQL_GET_QUIZ_RESULT, false, idUser, quiz_id);
             resultSet = preparedStatement.executeQuery();
 
             /* Parcours de la ligne de données de l'eventuel ResultSet retourné */
@@ -241,7 +239,7 @@ public class QuizDAO extends DAO<QuizEntity> {
         return entity;
     }
 
-    public Object[] GetBestInternByScore(Long idQuiz) throws DAOException {
+    public Object[] getBestInternByScore(Long quiz_id) throws DAOException {
         Connection conn = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -250,7 +248,7 @@ public class QuizDAO extends DAO<QuizEntity> {
         try {
             /* Récupération d'une connexion depuis la Factory */
             conn = daoFactory.getConnection();
-            preparedStatement = initPreparedStatement(conn, SQL_GET_BEST_INTERN_BY_SCORE, false, idQuiz);
+            preparedStatement = initPreparedStatement(conn, SQL_GET_BEST_INTERN_BY_SCORE, false, quiz_id);
             resultSet = preparedStatement.executeQuery();
 
             /* Parcours de la ligne de données de l'eventuel ResultSet retourné */

@@ -2,6 +2,7 @@ package com.sr03.beans;
 
 import com.sr03.dao.DAOFactory;
 import com.sr03.dao.QuizDAO;
+import com.sr03.dao.RecordDAO;
 import com.sr03.entities.QuizEntity;
 
 import javax.faces.application.FacesMessage;
@@ -17,10 +18,15 @@ import java.util.stream.Collectors;
 public class QuizzesBean extends HttpServlet {
     private List<QuizEntity> quizzes;
     private QuizDAO quizDAO;
+    private RecordDAO recordDAO;
 
     public QuizzesBean() {
         this.quizDAO = DAOFactory.getInstance().getQuizDAO();
+        this.recordDAO = DAOFactory.getInstance().getRecordDAO();
         this.quizzes = quizDAO.getAll();
+        for(QuizEntity quiz : this.quizzes) {
+            quiz.setRecords(recordDAO.getAll(quiz.getId()));
+        }
     }
 
     public List<QuizEntity> getQuizzes() {
@@ -55,21 +61,23 @@ public class QuizzesBean extends HttpServlet {
         return "quizzes.xhtml";
     }
 
-    public List<QuizEntity> activeQuizzes() {
+    public List<QuizEntity> availableQuizzes() {
+        Long user_id = (Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("id");
         return quizzes.stream()
-                .filter(quiz -> quiz.getIs_active())
+                .filter(QuizEntity::getIs_active)
+                .filter(quiz -> !quizDAO.hasCompletedQuiz(user_id, quiz.getId()))
                 .collect(Collectors.toList());
     }
 
-    public Boolean HasCompleteQuiz(Long idUser, Long idQuiz) {
-        return quizDAO.HasCompleteQuiz(idUser, idQuiz);
+    public Boolean hasCompletedQuiz(Long user_id, Long quiz_id) {
+        return quizDAO.hasCompletedQuiz(user_id, quiz_id);
     }
 
-    public Object[] GetQuizResult(Long idUser, Long idQuiz) {
-        return quizDAO.GetQuizResult(idUser, idQuiz);
+    public Object[] quizResult(Long user_id, Long quiz_id) {
+        return quizDAO.getQuizResult(user_id, quiz_id);
     }
 
-    public Object[] GetBestInternByScore(Long idQuiz) {
-        return quizDAO.GetBestInternByScore(idQuiz);
+    public Object[] bestInternByScore(Long quiz_id) {
+        return quizDAO.getBestInternByScore(quiz_id);
     }
 }
