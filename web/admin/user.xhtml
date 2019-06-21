@@ -36,6 +36,15 @@
                 >
                     <b:dataTableColumn value="#{record.id}" label="ID" />
                     <b:dataTableColumn value="#{record.quiz.name}" label="Nom du questionnaire" />
+                    <b:dataTableColumn label="Détail">
+                        <b:commandLink
+                                value="Détail"
+                                look="primary"
+                                outcome="record"
+                                style="display: inline;">
+                            <f:param name="id" value="#{record.id}" />
+                        </b:commandLink>
+                    </b:dataTableColumn>
                     <b:dataTableColumn value="#{record.score}" label="Score" />
                 </b:dataTable>
             </h:form>
