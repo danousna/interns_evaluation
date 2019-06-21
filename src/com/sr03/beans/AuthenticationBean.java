@@ -67,6 +67,14 @@ public class AuthenticationBean implements Serializable {
                     e.printStackTrace();
                 }
             }
+            else {
+                context.addMessage(null, new FacesMessage(
+                        FacesMessage.SEVERITY_ERROR,
+                        "Connexion impossible.",
+                        "Vérifiez vos identifiants de connexion"
+                ));
+            }
+
         } else {
             context.addMessage(null, new FacesMessage(
                     FacesMessage.SEVERITY_ERROR,
