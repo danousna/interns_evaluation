@@ -76,7 +76,7 @@ public class UserBean extends HttpServlet {
 
                     userDAO.create(user);
 
-                    String body = "Bonjour {0} !\n\n Votre compte a été crée par un administrateur. Voici vos identifiants :\nEmail : {1}\nMot de passe : {2}\n\nAdios !";
+                    String body = "<p>Bonjour {0} !</p><p>Votre compte a été crée par un administrateur. Voici vos identifiants :</p><p>Email : {1}</p><p>Mot de passe : {2}</p><p>Adios !</p>";
                     body = MessageFormat.format(body, user.getName(), user.getEmail(), password);
 
                     MailFactory.getInstance().send(
